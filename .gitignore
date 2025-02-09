@@ -11,3 +11,4 @@ Vagrantfile
 my_references/
 playbook.yml
 upgrade_venv_packages.sh
+.venv/
