@@ -28,48 +28,43 @@ from .. import ivi
 from .. import dcpwr
 from .. import scpi
 
-TrackingType = set(['parallel', 'series'])
+TrackingType = set(["parallel", "series"])
+
 
 class tektronixPS2520G(scpi.dcpwr.Base, scpi.dcpwr.Measurement):
     "Tektronix PS2520G DC power supply driver"
-    
+
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', 'PS2520G')
-        
+        self.__dict__.setdefault("_instrument_id", "PS2520G")
+
         super(tektronixPS2520G, self).__init__(*args, **kwargs)
-        
+
         self._output_count = 3
-        
+
         self._output_spec = [
             {
-                'range': {
-                    'P36V': (37.0, 1.5)
-                },
-                'ovp_max': 38.5,
-                'voltage_max': 37.0,
-                'current_max': 1.5
+                "range": {"P36V": (37.0, 1.5)},
+                "ovp_max": 38.5,
+                "voltage_max": 37.0,
+                "current_max": 1.5,
             },
             {
-                'range': {
-                    'P36V': (37.0, 1.5)
-                },
-                'ovp_max': 38.5,
-                'voltage_max': 37.0,
-                'current_max': 1.5
+                "range": {"P36V": (37.0, 1.5)},
+                "ovp_max": 38.5,
+                "voltage_max": 37.0,
+                "current_max": 1.5,
             },
             {
-                'range': {
-                    'P6V': (6.5, 3.0)
-                },
-                'ovp_max': 7.0,
-                'voltage_max': 6.5,
-                'current_max': 3.0
-            }
+                "range": {"P6V": (6.5, 3.0)},
+                "ovp_max": 7.0,
+                "voltage_max": 6.5,
+                "current_max": 3.0,
+            },
         ]
-        
+
         self._couple_tracking_enabled = False
-        self._couple_tracking_type = 'series'
-        
+        self._couple_tracking_type = "series"
+
         self._identity_description = "Tektronix PS2520G DC power supply driver"
         self._identity_identifier = ""
         self._identity_revision = ""
@@ -79,54 +74,55 @@ class tektronixPS2520G(scpi.dcpwr.Base, scpi.dcpwr.Measurement):
         self._identity_instrument_firmware_revision = ""
         self._identity_specification_major_version = 3
         self._identity_specification_minor_version = 0
-        self._identity_supported_instrument_models = ['PS2520G','PS2521G']
-        
-        self._add_property('couple.tracking.enabled',
-                        self._get_couple_tracking_enabled,
-                        self._set_couple_tracking_enabled)
-        self._add_property('couple.tracking.type',
-                        self._get_couple_tracking_type,
-                        self._set_couple_tracking_type)
-        
+        self._identity_supported_instrument_models = ["PS2520G", "PS2521G"]
+
+        self._add_property(
+            "couple.tracking.enabled",
+            self._get_couple_tracking_enabled,
+            self._set_couple_tracking_enabled,
+        )
+        self._add_property(
+            "couple.tracking.type",
+            self._get_couple_tracking_type,
+            self._set_couple_tracking_type,
+        )
+
         self._init_outputs()
-    
+
     def _get_tracking(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
             value = self._ask(":instrument:couple:tracking?").lower()
-            if value == 'none':
+            if value == "none":
                 self._couple_tracking_enabled = False
             else:
                 self._couple_tracking_enabled = True
                 self._couple_tracking_type = value
             self._set_cache_valid()
-    
+
     def _set_tracking(self):
         if not self._driver_operation_simulate:
             value = self._couple_tracking_type
             if not self._couple_tracking_enabled:
-                value = 'none'
+                value = "none"
             self._write(":instrument:couple:tracking %s" % value)
         self._set_cache_valid()
-    
+
     def _get_couple_tracking_enabled(self):
         self._get_tracking()
         return self._couple_tracking_enabled
-    
+
     def _set_couple_tracking_enabled(self, value):
         value = bool(value)
         self._couple_tracking_enabled = value
         self._set_tracking()
-    
+
     def _get_couple_tracking_type(self):
         self._get_tracking()
         return self._couple_tracking_type
-    
+
     def _set_couple_tracking_type(self, value):
         value = str(value)
         if value not in TrackingType:
             raise ivi.ValueNotSupportedException()
         self._couple_tracking_type = value
         self._set_tracking()
-    
-    
-

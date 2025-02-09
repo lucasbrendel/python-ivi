@@ -26,29 +26,25 @@ THE SOFTWARE.
 
 from .chroma62000p import *
 
+
 class chroma62006p10025(chroma62000p):
     "Chroma ATE 62006P-100-25 series IVI DC power supply driver"
-    
+
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', '62006P-100-25')
-        
+        self.__dict__.setdefault("_instrument_id", "62006P-100-25")
+
         super(chroma62006p10025, self).__init__(*args, **kwargs)
-        
+
         self._output_count = 1
-        
+
         self._output_spec = [
             {
-                'range': {
-                    'P100V': (100.0, 25.0)
-                },
-                'ovp_max': 110.0,
-                'ocp_max': 27.5,
-                'voltage_max': 100.0,
-                'current_max': 25.0
+                "range": {"P100V": (100.0, 25.0)},
+                "ovp_max": 110.0,
+                "ocp_max": 27.5,
+                "voltage_max": 100.0,
+                "current_max": 25.0,
             }
         ]
 
         self._init_outputs()
-        
-    
-    

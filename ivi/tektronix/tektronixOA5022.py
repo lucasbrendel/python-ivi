@@ -26,12 +26,11 @@ THE SOFTWARE.
 
 from .tektronixOA5000 import *
 
+
 class tektronixOA5022(tektronixOA5000):
     "Tektronix OA5022 optical attenuator driver"
-    
+
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', 'OA5022')
-        
+        self.__dict__.setdefault("_instrument_id", "OA5022")
+
         super(tektronixOA5022, self).__init__(*args, **kwargs)
-        
-    

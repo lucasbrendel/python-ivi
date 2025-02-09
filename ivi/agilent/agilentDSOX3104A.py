@@ -26,19 +26,18 @@ THE SOFTWARE.
 
 from .agilent3000A import *
 
+
 class agilentDSOX3104A(agilent3000A):
     "Agilent InfiniiVision DSOX3104A IVI oscilloscope driver"
-    
+
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', 'DSO-X 3104A')
-        
+        self.__dict__.setdefault("_instrument_id", "DSO-X 3104A")
+
         super(agilentDSOX3104A, self).__init__(*args, **kwargs)
-        
+
         self._analog_channel_count = 4
         self._digital_channel_count = 0
         self._channel_count = self._analog_channel_count + self._digital_channel_count
         self._bandwidth = 1e9
-        
+
         self._init_channels()
-    
-    

@@ -26,39 +26,32 @@ THE SOFTWARE.
 
 from .agilentE3600A import *
 
+
 class agilentE3648A(agilentE3600A):
     "Agilent E3648A IVI DC power supply driver"
-    
+
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', 'E3648A')
-        
+        self.__dict__.setdefault("_instrument_id", "E3648A")
+
         super(agilentE3648A, self).__init__(*args, **kwargs)
-        
+
         self._output_count = 2
-        
+
         self._output_spec = [
             {
-                'range': {
-                    'P8V': (8.24, 5.15),
-                    'P20V': (20.6, 2.575)
-                },
-                'ovp_max': 22.0,
-                'voltage_max': 8.24,
-                'current_max': 5.15
+                "range": {"P8V": (8.24, 5.15), "P20V": (20.6, 2.575)},
+                "ovp_max": 22.0,
+                "voltage_max": 8.24,
+                "current_max": 5.15,
             },
             {
-                'range': {
-                    'P8V': (8.24, 5.15),
-                    'P20V': (20.6, 2.575)
-                },
-                'ovp_max': 22.0,
-                'voltage_max': 8.24,
-                'current_max': 5.15
-            }
+                "range": {"P8V": (8.24, 5.15), "P20V": (20.6, 2.575)},
+                "ovp_max": 22.0,
+                "voltage_max": 8.24,
+                "current_max": 5.15,
+            },
         ]
-        
+
         self._memory_size = 5
-        
+
         self._init_outputs()
-    
-    

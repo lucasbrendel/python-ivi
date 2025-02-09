@@ -26,45 +26,38 @@ THE SOFTWARE.
 
 from .agilentE3600A import *
 
+
 class agilentE3631A(agilentE3600A):
     "Agilent E3631A IVI DC power supply driver"
-    
+
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', 'E3631A')
-        
+        self.__dict__.setdefault("_instrument_id", "E3631A")
+
         super(agilentE3631A, self).__init__(*args, **kwargs)
-        
+
         self._output_count = 3
-        
+
         self._output_spec = [
             {
-                'range': {
-                    'P6V': (6.18, 5.15)
-                },
-                'ovp_max': 0,
-                'voltage_max': 6.18,
-                'current_max': 5.15
+                "range": {"P6V": (6.18, 5.15)},
+                "ovp_max": 0,
+                "voltage_max": 6.18,
+                "current_max": 5.15,
             },
             {
-                'range': {
-                    'P25V': (25.75, 1.03)
-                },
-                'ovp_max': 0,
-                'voltage_max': 25.75,
-                'current_max': 1.03
+                "range": {"P25V": (25.75, 1.03)},
+                "ovp_max": 0,
+                "voltage_max": 25.75,
+                "current_max": 1.03,
             },
             {
-                'range': {
-                    'N25V': (-25.75, 1.03)
-                },
-                'ovp_max': 0,
-                'voltage_max': -25.75,
-                'current_max': 1.03
-            }
+                "range": {"N25V": (-25.75, 1.03)},
+                "ovp_max": 0,
+                "voltage_max": -25.75,
+                "current_max": 1.03,
+            },
         ]
-        
+
         self._memory_size = 3
-        
+
         self._init_outputs()
-    
-    

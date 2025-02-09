@@ -33,135 +33,170 @@ from .. import scpi
 from .. import extra
 
 AcquisitionTypeMapping = {
-    'normal': 'norm',
-    'peak_detect': 'peak',
-    'high_resolution': 'hres',
-    'average': 'aver'}
-VerticalCoupling = set(['ac', 'dc', 'gnd'])
-InputImpedance = set([1000000, 50, 'gnd'])
+    "normal": "norm",
+    "peak_detect": "peak",
+    "high_resolution": "hres",
+    "average": "aver",
+}
+VerticalCoupling = set(["ac", "dc", "gnd"])
+InputImpedance = set([1000000, 50, "gnd"])
 # Bandwidth Limits, OFF = none, ON = 20 MHz, 200MHZ = 200 MHz
-BandwidthLimit = set(['OFF', 'ON', '200MHZ'])
-TriggerModes = set(['auto', 'norm', 'single', 'stop'])
+BandwidthLimit = set(["OFF", "ON", "200MHZ"])
+TriggerModes = set(["auto", "norm", "single", "stop"])
 
 TriggerTypes = set(
-    ['drop', 'edge', 'ev', 'glit', 'ht', 'hv', 'hv2', 'il', 'intv', 'is', 'i2', 'off', 'pl', 'ps', 'p2', 'ql', 'sng',
-     'sq', 'sr', 'teq', 'ti', 'tl'])
+    [
+        "drop",
+        "edge",
+        "ev",
+        "glit",
+        "ht",
+        "hv",
+        "hv2",
+        "il",
+        "intv",
+        "is",
+        "i2",
+        "off",
+        "pl",
+        "ps",
+        "p2",
+        "ql",
+        "sng",
+        "sq",
+        "sr",
+        "teq",
+        "ti",
+        "tl",
+    ]
+)
 
 TriggerCouplingMapping = {
-    'ac': ('ac', 0, 0),
-    'dc': ('dc', 0, 0),
-    'hf_reject': ('dc', 0, 1),
-    'lf_reject': ('lfr', 0, 0),
-    'noise_reject': ('dc', 1, 0),
-    'hf_reject_ac': ('ac', 0, 1),
-    'noise_reject_ac': ('ac', 1, 0),
-    'hf_noise_reject': ('dc', 1, 1),
-    'hf_noise_reject_ac': ('ac', 1, 1),
-    'lf_noise_reject': ('lfr', 1, 0)}
-TVTriggerEventMapping = {'field1': 'fie1',
-                         'field2': 'fie2',
-                         'any_field': 'afi',
-                         'any_line': 'alin',
-                         'line_number': 'lfi1',
-                         'vertical': 'vert',
-                         'line_field1': 'lfi1',
-                         'line_field2': 'lfi2',
-                         'line': 'line',
-                         'line_alternate': 'lalt',
-                         'lvertical': 'lver'}
-TVTriggerFormatMapping = {'generic': 'gen',
-                          'ntsc': 'ntsc',
-                          'pal': 'pal',
-                          'palm': 'palm',
-                          'secam': 'sec',
-                          'p480l60hz': 'p480',
-                          'p480': 'p480',
-                          'p720l60hz': 'p720',
-                          'p720': 'p720',
-                          'p1080l24hz': 'p1080',
-                          'p1080': 'p1080',
-                          'p1080l25hz': 'p1080l25hz',
-                          'p1080l50hz': 'p1080l50hz',
-                          'p1080l60hz': 'p1080l60hz',
-                          'i1080l50hz': 'i1080l50hz',
-                          'i1080': 'i1080l50hz',
-                          'i1080l60hz': 'i1080l60hz'}
-PolarityMapping = {'positive': 'pos',
-                   'negative': 'neg'}
-GlitchConditionMapping = {'less_than': 'less',
-                          'greater_than': 'gre'}
-WidthConditionMapping = {'within': 'rang'}
-SampleModeMapping = {'real_time': 'rtim',
-                     'equivalent_time': 'etim'}
+    "ac": ("ac", 0, 0),
+    "dc": ("dc", 0, 0),
+    "hf_reject": ("dc", 0, 1),
+    "lf_reject": ("lfr", 0, 0),
+    "noise_reject": ("dc", 1, 0),
+    "hf_reject_ac": ("ac", 0, 1),
+    "noise_reject_ac": ("ac", 1, 0),
+    "hf_noise_reject": ("dc", 1, 1),
+    "hf_noise_reject_ac": ("ac", 1, 1),
+    "lf_noise_reject": ("lfr", 1, 0),
+}
+TVTriggerEventMapping = {
+    "field1": "fie1",
+    "field2": "fie2",
+    "any_field": "afi",
+    "any_line": "alin",
+    "line_number": "lfi1",
+    "vertical": "vert",
+    "line_field1": "lfi1",
+    "line_field2": "lfi2",
+    "line": "line",
+    "line_alternate": "lalt",
+    "lvertical": "lver",
+}
+TVTriggerFormatMapping = {
+    "generic": "gen",
+    "ntsc": "ntsc",
+    "pal": "pal",
+    "palm": "palm",
+    "secam": "sec",
+    "p480l60hz": "p480",
+    "p480": "p480",
+    "p720l60hz": "p720",
+    "p720": "p720",
+    "p1080l24hz": "p1080",
+    "p1080": "p1080",
+    "p1080l25hz": "p1080l25hz",
+    "p1080l50hz": "p1080l50hz",
+    "p1080l60hz": "p1080l60hz",
+    "i1080l50hz": "i1080l50hz",
+    "i1080": "i1080l50hz",
+    "i1080l60hz": "i1080l60hz",
+}
+PolarityMapping = {"positive": "pos", "negative": "neg"}
+GlitchConditionMapping = {"less_than": "less", "greater_than": "gre"}
+WidthConditionMapping = {"within": "rang"}
+SampleModeMapping = {"real_time": "rtim", "equivalent_time": "etim"}
 SlopeMapping = {
-    'positive': 'pos',
-    'negative': 'neg',
-    'either': 'eith',
-    'alternating': 'alt'}
+    "positive": "pos",
+    "negative": "neg",
+    "either": "eith",
+    "alternating": "alt",
+}
 MeasurementFunctionMapping = {
-    'rise_time': 'risetime',
-    'fall_time': 'falltime',
-    'frequency': 'frequency',
-    'period': 'period',
-    'voltage_rms': 'vrms display',
-    'voltage_peak_to_peak': 'vpp',
-    'voltage_max': 'vmax',
-    'voltage_min': 'vmin',
-    'voltage_high': 'vtop',
-    'voltage_low': 'vbase',
-    'voltage_average': 'vaverage display',
-    'width_negative': 'nwidth',
-    'width_positive': 'pwidth',
-    'duty_cycle_positive': 'dutycycle',
-    'amplitude': 'vamplitude',
-    'voltage_cycle_rms': 'vrms cycle',
-    'voltage_cycle_average': 'vaverage cycle',
-    'overshoot': 'overshoot',
-    'preshoot': 'preshoot',
-    'ratio': 'vratio',
-    'phase': 'phase',
-    'delay': 'delay'}
+    "rise_time": "risetime",
+    "fall_time": "falltime",
+    "frequency": "frequency",
+    "period": "period",
+    "voltage_rms": "vrms display",
+    "voltage_peak_to_peak": "vpp",
+    "voltage_max": "vmax",
+    "voltage_min": "vmin",
+    "voltage_high": "vtop",
+    "voltage_low": "vbase",
+    "voltage_average": "vaverage display",
+    "width_negative": "nwidth",
+    "width_positive": "pwidth",
+    "duty_cycle_positive": "dutycycle",
+    "amplitude": "vamplitude",
+    "voltage_cycle_rms": "vrms cycle",
+    "voltage_cycle_average": "vaverage cycle",
+    "overshoot": "overshoot",
+    "preshoot": "preshoot",
+    "ratio": "vratio",
+    "phase": "phase",
+    "delay": "delay",
+}
 MeasurementFunctionMappingDigital = {
-    'rise_time': 'risetime',
-    'fall_time': 'falltime',
-    'frequency': 'frequency',
-    'period': 'period',
-    'width_negative': 'nwidth',
-    'width_positive': 'pwidth',
-    'duty_cycle_positive': 'dutycycle'}
+    "rise_time": "risetime",
+    "fall_time": "falltime",
+    "frequency": "frequency",
+    "period": "period",
+    "width_negative": "nwidth",
+    "width_positive": "pwidth",
+    "duty_cycle_positive": "dutycycle",
+}
 ScreenshotImageFormatMapping = {
-    'bmp': 'bmp',
-    'bmp24': 'bmp',
-    'bmp8': 'bmpcomp',
-    'jpeg': 'jpeg',
-    'png': 'png',
-    'png24': 'png',
-    'psd': 'psd',
-    'tiff': 'tiff'}
-TimebaseModeMapping = {
-    'main': 'main',
-    'window': 'wind',
-    'xy': 'xy',
-    'roll': 'roll'}
-TimebaseReferenceMapping = {
-    'left': 'left',
-    'center': 'cent',
-    'right': 'righ'}
+    "bmp": "bmp",
+    "bmp24": "bmp",
+    "bmp8": "bmpcomp",
+    "jpeg": "jpeg",
+    "png": "png",
+    "png24": "png",
+    "psd": "psd",
+    "tiff": "tiff",
+}
+TimebaseModeMapping = {"main": "main", "window": "wind", "xy": "xy", "roll": "roll"}
+TimebaseReferenceMapping = {"left": "left", "center": "cent", "right": "righ"}
 
 
-class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.common.Reset,
-                       scpi.common.SelfTest, scpi.common.Memory,
-                       scope.Base, scope.TVTrigger,
-                       scope.GlitchTrigger, scope.WidthTrigger, scope.AcLineTrigger,
-                       scope.WaveformMeasurement, scope.MinMaxWaveform,
-                       scope.ContinuousAcquisition, scope.AverageAcquisition,
-                       scope.SampleMode, scope.AutoSetup,
-                       extra.common.SystemSetup, extra.common.Screenshot,
-                       ivi.Driver):
+class lecroyBaseScope(
+    scpi.common.IdnCommand,
+    scpi.common.ErrorQuery,
+    scpi.common.Reset,
+    scpi.common.SelfTest,
+    scpi.common.Memory,
+    scope.Base,
+    scope.TVTrigger,
+    scope.GlitchTrigger,
+    scope.WidthTrigger,
+    scope.AcLineTrigger,
+    scope.WaveformMeasurement,
+    scope.MinMaxWaveform,
+    scope.ContinuousAcquisition,
+    scope.AverageAcquisition,
+    scope.SampleMode,
+    scope.AutoSetup,
+    extra.common.SystemSetup,
+    extra.common.Screenshot,
+    ivi.Driver,
+):
     "LeCroy generic IVI oscilloscope driver"
 
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', '')
+        self.__dict__.setdefault("_instrument_id", "")
         self._analog_channel_name = list()
         self._analog_channel_count = 4
         self._digital_channel_name = list()
@@ -190,16 +225,16 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
         self._horizontal_divisions = 10
         self._vertical_divisions = 8
 
-        self._timebase_mode = 'main'
-        self._timebase_reference = 'center'
+        self._timebase_mode = "main"
+        self._timebase_reference = "center"
         self._timebase_position = 0.0
         self._timebase_range = 1e-3
         self._timebase_scale = 100e-6
         self._timebase_window_position = 0.0
         self._timebase_window_range = 5e-6
         self._timebase_window_scale = 500e-9
-        self._trigger_mode = 'auto'
-        self._trigger_type = 'edge'
+        self._trigger_mode = "auto"
+        self._trigger_type = "edge"
 
         self._display_vectors = True
         self._display_labels = True
@@ -214,67 +249,88 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
         self._identity_instrument_firmware_revision = ""
         self._identity_specification_major_version = 4
         self._identity_specification_minor_version = 1
-        self._identity_supported_instrument_models = ['WR204MXI-A', 'WR204XI-A', 'WR104MXI-A', 'WR104XI-A', 'WR64MXI-A',
-                                                      'WR64XI-A',
-                                                      'WR62XI-A', 'WR44MXI-A', 'WR44XI-A']
+        self._identity_supported_instrument_models = [
+            "WR204MXI-A",
+            "WR204XI-A",
+            "WR104MXI-A",
+            "WR104XI-A",
+            "WR64MXI-A",
+            "WR64XI-A",
+            "WR62XI-A",
+            "WR44MXI-A",
+            "WR44XI-A",
+        ]
 
         # Turn off the command header to remove extra information from all responses
         self._write("CHDR OFF")
 
-        self._add_property('channels[].bw_limit',
-                           self._get_channel_bw_limit,
-                           self._set_channel_bw_limit,
-                           None,
-                           ivi.Doc("""
+        self._add_property(
+            "channels[].bw_limit",
+            self._get_channel_bw_limit,
+            self._set_channel_bw_limit,
+            None,
+            ivi.Doc("""
                         Commands an internal low-pass filter.  When the filter is on, the
                         bandwidth of the channel is limited to approximately 20 MHz.
-                        """))
-        self._add_property('channels[].invert',
-                           self._get_channel_invert,
-                           self._set_channel_invert,
-                           None,
-                           ivi.Doc("""
+                        """),
+        )
+        self._add_property(
+            "channels[].invert",
+            self._get_channel_invert,
+            self._set_channel_invert,
+            None,
+            ivi.Doc("""
                         Selects whether or not to invert the channel.
-                        """))
-        self._add_property('channels[].label',
-                           self._get_channel_label,
-                           self._set_channel_label,
-                           None,
-                           ivi.Doc("""
+                        """),
+        )
+        self._add_property(
+            "channels[].label",
+            self._get_channel_label,
+            self._set_channel_label,
+            None,
+            ivi.Doc("""
                         Sets the channel label.  Setting a channel label also adds the label to
                         the nonvolatile label list. Setting the label will turn it's display on.
-                        """))
-        self._add_property('channels[].label_position',
-                           self._get_channel_label_position,
-                           self._set_channel_label_position,
-                           None,
-                           ivi.Doc("""
+                        """),
+        )
+        self._add_property(
+            "channels[].label_position",
+            self._get_channel_label_position,
+            self._set_channel_label_position,
+            None,
+            ivi.Doc("""
                         Set the channel label positions
-                        """))
-        self._add_property('channels[].probe_skew',
-                           self._get_channel_probe_skew,
-                           self._set_channel_probe_skew,
-                           None,
-                           ivi.Doc("""
+                        """),
+        )
+        self._add_property(
+            "channels[].probe_skew",
+            self._get_channel_probe_skew,
+            self._set_channel_probe_skew,
+            None,
+            ivi.Doc("""
                         Specifies the channel-to-channel skew factor for the channel.  Each analog
                         channel can be adjusted + or - 100 ns for a total of 200 ns difference
                         between channels.  This can be used to compensate for differences in cable
                         delay.  Units are seconds.
-                        """))
-        self._add_property('channels[].scale',
-                           self._get_channel_scale,
-                           self._set_channel_scale,
-                           None,
-                           ivi.Doc("""
+                        """),
+        )
+        self._add_property(
+            "channels[].scale",
+            self._get_channel_scale,
+            self._set_channel_scale,
+            None,
+            ivi.Doc("""
                         Specifies the vertical scale, or units per division, of the channel.  Units
                         are volts.
-                        """))
+                        """),
+        )
 
-        self._add_property('channels[].trigger_level',
-                        self._get_channel_trigger_level,
-                        self._set_channel_trigger_level,
-                        None,
-                        ivi.Doc("""
+        self._add_property(
+            "channels[].trigger_level",
+            self._get_channel_trigger_level,
+            self._set_channel_trigger_level,
+            None,
+            ivi.Doc("""
                         Specifies the voltage threshold for the trigger sub-system. The units are
                         volts. This attribute affects instrument behavior only when the Trigger
                         Type is set to one of the following values: Edge Trigger, Glitch Trigger,
@@ -283,26 +339,30 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
                         This attribute, along with the Trigger Slope, Trigger Source, and Trigger
                         Coupling attributes, defines the trigger event when the Trigger Type is
                         set to Edge Trigger.
-                        """))
+                        """),
+        )
 
         # TODO: delete following if not used in LeCroy
-        self._add_property('timebase.mode',
-                           self._get_timebase_mode,
-                           self._set_timebase_mode,
-                           None,
-                           ivi.Doc("""
+        self._add_property(
+            "timebase.mode",
+            self._get_timebase_mode,
+            self._set_timebase_mode,
+            None,
+            ivi.Doc("""
                         Sets the current time base. There are four time base modes:
 
                         * 'main': normal timebase
                         * 'window': zoomed or delayed timebase
                         * 'xy': channels are plotted against each other, no timebase
                         * 'roll': data moves continuously from left to right
-                        """))
-        self._add_property('timebase.reference',
-                           self._get_timebase_reference,
-                           self._set_timebase_reference,
-                           None,
-                           ivi.Doc("""
+                        """),
+        )
+        self._add_property(
+            "timebase.reference",
+            self._get_timebase_reference,
+            self._set_timebase_reference,
+            None,
+            ivi.Doc("""
                         Sets the time reference to one division from the left side of the screen,
                         to the center of the screen, or to one division from the right side of the
                         screen. Time reference is the point on the display where the trigger point
@@ -312,73 +372,89 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
                         * 'left'
                         * 'center'
                         * 'right'
-                        """))
-        self._add_property('timebase.position',
-                           self._get_timebase_position,
-                           self._set_timebase_position,
-                           None,
-                           ivi.Doc("""
+                        """),
+        )
+        self._add_property(
+            "timebase.position",
+            self._get_timebase_position,
+            self._set_timebase_position,
+            None,
+            ivi.Doc("""
                         Sets the time interval between the trigger event and the display reference
                         point on the screen. The display reference point is either left, right, or
                         center and is set with the timebase.reference property. The maximum
                         position value depends on the time/division settings.
-                        """))
-        self._add_property('timebase.range',
-                           self._get_timebase_range,
-                           self._set_timebase_range,
-                           None,
-                           ivi.Doc("""
+                        """),
+        )
+        self._add_property(
+            "timebase.range",
+            self._get_timebase_range,
+            self._set_timebase_range,
+            None,
+            ivi.Doc("""
                         Sets the full-scale horizontal time in seconds for the main window. The
                         range is 10 times the current time-per-division setting.
-                        """))
-        self._add_property('timebase.scale',
-                           self._get_timebase_scale,
-                           self._set_timebase_scale,
-                           None,
-                           ivi.Doc("""
+                        """),
+        )
+        self._add_property(
+            "timebase.scale",
+            self._get_timebase_scale,
+            self._set_timebase_scale,
+            None,
+            ivi.Doc("""
                         Sets the horizontal scale or units per division for the main window.
-                        """))
-        self._add_property('timebase.window.position',
-                           self._get_timebase_window_position,
-                           self._set_timebase_window_position,
-                           None,
-                           ivi.Doc("""
+                        """),
+        )
+        self._add_property(
+            "timebase.window.position",
+            self._get_timebase_window_position,
+            self._set_timebase_window_position,
+            None,
+            ivi.Doc("""
                         Sets the horizontal position in the zoomed (delayed) view of the main
                         sweep. The main sweep range and the main sweep horizontal position
                         determine the range for this command. The value for this command must
                         keep the zoomed view window within the main sweep range.
-                        """))
-        self._add_property('timebase.window.range',
-                           self._get_timebase_window_range,
-                           self._set_timebase_window_range,
-                           None,
-                           ivi.Doc("""
+                        """),
+        )
+        self._add_property(
+            "timebase.window.range",
+            self._get_timebase_window_range,
+            self._set_timebase_window_range,
+            None,
+            ivi.Doc("""
                         Sets the fullscale horizontal time in seconds for the zoomed (delayed)
                         window. The range is 10 times the current zoomed view window seconds per
                         division setting. The main sweep range determines the range for this
                         command. The maximum value is one half of the timebase.range value.
-                        """))
-        self._add_property('timebase.window.scale',
-                           self._get_timebase_window_scale,
-                           self._set_timebase_window_scale,
-                           None,
-                           ivi.Doc("""
+                        """),
+        )
+        self._add_property(
+            "timebase.window.scale",
+            self._get_timebase_window_scale,
+            self._set_timebase_window_scale,
+            None,
+            ivi.Doc("""
                         Sets the zoomed (delayed) window horizontal scale (seconds/division). The
                         main sweep scale determines the range for this command. The maximum value
                         is one half of the timebase.scale value.
-                        """))
-        self._add_property('display.vectors',
-                           self._get_display_vectors,
-                           self._set_display_vectors,
-                           None,
-                           ivi.Doc("""
+                        """),
+        )
+        self._add_property(
+            "display.vectors",
+            self._get_display_vectors,
+            self._set_display_vectors,
+            None,
+            ivi.Doc("""
                         When enabled, draws a line between consecutive waveform data points.
-                        """))
-        self._add_property('display.grid',
-                           self._get_grid_mode,
-                           self._set_grid_mode,
-                           None,
-                           ivi.Doc("""
+                        """),
+        )
+        self._add_property(
+            "display.grid",
+            self._get_grid_mode,
+            self._set_grid_mode,
+            None,
+            ivi.Doc("""
                         Sets the current grid used in the display. There are multiple grid modes.
 
                         Values:
@@ -390,12 +466,14 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
                         * 'xy'
                         * 'xysingle'
                         * 'xydual'
-                        """))
-        self._add_property('trigger.mode',
-                           self._get_trigger_mode,
-                           self._set_trigger_mode,
-                           None,
-                           ivi.Doc("""
+                        """),
+        )
+        self._add_property(
+            "trigger.mode",
+            self._get_trigger_mode,
+            self._set_trigger_mode,
+            None,
+            ivi.Doc("""
                         Specifies the trigger mode of the oscilloscope.
 
                         Values:
@@ -404,44 +482,57 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
                         * 'norm'
                         * 'single'
                         * 'stop'
-                        """))
-        self._add_method('system.fetch_setup',
-                         self._system_fetch_setup,
-                         ivi.Doc("""
+                        """),
+        )
+        self._add_method(
+            "system.fetch_setup",
+            self._system_fetch_setup,
+            ivi.Doc("""
                         Returns the current oscilloscope setup in the form of a binary block.  The
                         setup can be stored in memory or written to a file and then reloaded to the
                         oscilloscope at a later time with system.load_setup.
-                        """))
-        self._add_method('system.load_setup',
-                         self._system_load_setup,
-                         ivi.Doc("""
+                        """),
+        )
+        self._add_method(
+            "system.load_setup",
+            self._system_load_setup,
+            ivi.Doc("""
                         Transfers a binary block of setup data to the scope to reload a setup
                         previously saved with system.fetch_setup.
-                        """))
-        self._add_method('system.display_string',
-                         self._system_display_string,
-                         ivi.Doc("""
+                        """),
+        )
+        self._add_method(
+            "system.display_string",
+            self._system_display_string,
+            ivi.Doc("""
                         Writes a string to the advisory line on the instrument display.  Send None
                         or an empty string to clear the advisory line.  
-                        """))
-        self._add_method('display.fetch_screenshot',
-                         self._display_fetch_screenshot,
-                         ivi.Doc("""
+                        """),
+        )
+        self._add_method(
+            "display.fetch_screenshot",
+            self._display_fetch_screenshot,
+            ivi.Doc("""
                         Captures the oscilloscope screen and transfers it in the specified format.
                         The display graticule is optionally inverted.
-                        """))
-        self._add_method('memory.save',
-                         self._memory_save,
-                         ivi.Doc("""
+                        """),
+        )
+        self._add_method(
+            "memory.save",
+            self._memory_save,
+            ivi.Doc("""
                         Stores the current state of the instrument into an internal storage
                         register.  Use memory.recall to restore the saved state.
-                        """))
-        self._add_method('memory.recall',
-                         self._memory_recall,
-                         ivi.Doc("""
+                        """),
+        )
+        self._add_method(
+            "memory.recall",
+            self._memory_recall,
+            ivi.Doc("""
                         Recalls the state of the instrument from an internal storage register
                         that was previously saved with memory.save.
-                        """))
+                        """),
+        )
 
         self._init_channels()
 
@@ -460,9 +551,11 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
         if id_query and not self._driver_operation_simulate:
             id = self.identity.instrument_model
             id_check = self._instrument_id
-            id_short = id[:len(id_check)]
+            id_short = id[: len(id_check)]
             if id_short != id_check:
-                raise Exception("Instrument ID mismatch, expecting %s, got %s", id_check, id_short)
+                raise Exception(
+                    "Instrument ID mismatch, expecting %s, got %s", id_check, id_short
+                )
         # reset
         if reset:
             self.utility.reset()
@@ -472,15 +565,17 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
         if self._driver_operation_simulate:
             self._identity_instrument_manufacturer = "Not available while simulating"
             self._identity_instrument_model = "Not available while simulating"
-            self._identity_instrument_firmware_revision = "Not available while simulating"
+            self._identity_instrument_firmware_revision = (
+                "Not available while simulating"
+            )
         else:
             lst = self._ask("*IDN?").split(",")
             self._identity_instrument_manufacturer = lst[0]
             self._identity_instrument_model = lst[1]
             self._identity_instrument_firmware_revision = lst[3]
-            self._set_cache_valid(True, 'identity_instrument_manufacturer')
-            self._set_cache_valid(True, 'identity_instrument_model')
-            self._set_cache_valid(True, 'identity_instrument_firmware_revision')
+            self._set_cache_valid(True, "identity_instrument_manufacturer")
+            self._set_cache_valid(True, "identity_instrument_model")
+            self._set_cache_valid(True, "identity_instrument_firmware_revision")
 
     def _get_identity_instrument_manufacturer(self):
         if self._get_cache_valid():
@@ -508,7 +603,7 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
         error_code = 0
         error_message = "No error"
         if not self._driver_operation_simulate:
-            error_code, error_message = self._ask(":system:error?").split(',')
+            error_code, error_message = self._ask(":system:error?").split(",")
             error_code = int(error_code)
             error_message = error_message.strip(' "')
         return (error_code, error_message)
@@ -564,7 +659,7 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
             self._channel_name.append("C%d" % (i + 1))
             self._channel_label.append("%d" % (i + 1))
             self._channel_label_position.append(0)
-            self._channel_noise_filter.append('None')
+            self._channel_noise_filter.append("None")
             self._channel_interpolation.append("Linear")
             self._analog_channel_name.append("C%d" % (i + 1))
             self._channel_probe_skew.append(0)
@@ -575,10 +670,9 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
             self._channel_input_impedance.append(0)
             self._channel_trigger_level.append(0)
 
-
         # digital channels
         self._digital_channel_name = list()
-        if (self._digital_channel_count > 0):
+        if self._digital_channel_count > 0:
             for i in range(self._digital_channel_count):
                 self._channel_name.append("digital%d" % i)
                 self._channel_label.append("D%d" % i)
@@ -588,8 +682,8 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
                 self._channel_input_frequency_max[i] = 1e9
                 self._channel_probe_attenuation[i] = 1
                 # self._channel_coupling[i] = 'dc'
-                #self._channel_input_impedance[i] = 1000000
-                #self._channel_coupling[i] = 'D1M'
+                # self._channel_input_impedance[i] = 1000000
+                # self._channel_coupling[i] = 'D1M'
                 self._channel_offset[i] = 0
                 self._channel_range[i] = 1
 
@@ -599,7 +693,7 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
     # TODO: how to implement the following on LeCroy scope?
     def _system_fetch_setup(self):
         if self._driver_operation_simulate:
-            return b''
+            return b""
 
         self._write(":system:setup?")
 
@@ -610,7 +704,7 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
         if self._driver_operation_simulate:
             return
 
-        self._write_ieee_block(data, ':system:setup ')
+        self._write_ieee_block(data, ":system:setup ")
 
         self.driver_operation.invalidate_all_attributes()
 
@@ -620,12 +714,12 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
             string = ""
 
         if not self._driver_operation_simulate:
-            self._write("MESSAGE \"%s\"" % string)
+            self._write('MESSAGE "%s"' % string)
 
     # Modified for LeCroy, working
-    def _display_fetch_screenshot(self, format='png', invert=True):
+    def _display_fetch_screenshot(self, format="png", invert=True):
         if self._driver_operation_simulate:
-            return b''
+            return b""
 
         if format not in ScreenshotImageFormatMapping:
             raise ivi.ValueNotSupportedException()
@@ -637,7 +731,9 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
         else:
             color = "WHITE"
         self._write(
-            "HCSU DEV,%s,FORMAT,PORTRAIT,BCKG,%s,DEST,\"REMOTE\",PORT,\"NET\",AREA,GRIDAREAONLY" % (str(format), color))
+            'HCSU DEV,%s,FORMAT,PORTRAIT,BCKG,%s,DEST,"REMOTE",PORT,"NET",AREA,GRIDAREAONLY'
+            % (str(format), color)
+        )
         self._write("SCDP")
         return self._read_raw()
 
@@ -645,7 +741,9 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
     def _get_timebase_mode(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
             value = self._ask(":timebase:mode?").lower()
-            self._timebase_mode = [k for k, v in TimebaseModeMapping.items() if v == value][0]
+            self._timebase_mode = [
+                k for k, v in TimebaseModeMapping.items() if v == value
+            ][0]
             self._set_cache_valid
         return self._timebase_mode
 
@@ -660,7 +758,9 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
     def _get_timebase_reference(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
             value = self._ask(":timebase:reference?").lower()
-            self._timebase_reference = [k for k, v in TimebaseReferenceMapping.items() if v == value][0]
+            self._timebase_reference = [
+                k for k, v in TimebaseReferenceMapping.items() if v == value
+            ][0]
             self._set_cache_valid
         return self._timebase_reference
 
@@ -691,7 +791,7 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
             self._timebase_scale = float(self._ask("TDIV?"))
             self._timebase_range = self._timebase_scale * self._horizontal_divisions
             self._set_cache_valid()
-            self._set_cache_valid(True, 'timebase_scale')
+            self._set_cache_valid(True, "timebase_scale")
         return self._timebase_range
 
     # Modified for LeCroy, working
@@ -702,7 +802,7 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
         self._timebase_scale = value / self._horizontal_divisions
         self._timebase_range = value
         self._set_cache_valid()
-        self._set_cache_valid(True, 'timebase_scale')
+        self._set_cache_valid(True, "timebase_scale")
 
     # Modified for LeCroy, working
     def _get_timebase_scale(self):
@@ -710,7 +810,7 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
             self._timebase_scale = float(self._ask("TDIV?"))
             self._timebase_range = self._timebase_scale * self._horizontal_divisions
             self._set_cache_valid()
-            self._set_cache_valid(True, 'timebase_range')
+            self._set_cache_valid(True, "timebase_range")
         return self._timebase_scale
 
     # Modified for LeCroy, working
@@ -721,11 +821,13 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
         self._timebase_scale = value
         self._timebase_range = value * self._horizontal_divisions
         self._set_cache_valid()
-        self._set_cache_valid(True, 'timebase_range')
+        self._set_cache_valid(True, "timebase_range")
 
     def _get_timebase_window_position(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
-            self._timebase_window_position = float(self._ask(":timebase:window:position?"))
+            self._timebase_window_position = float(
+                self._ask(":timebase:window:position?")
+            )
             self._set_cache_valid()
         return self._timebase_window_position
 
@@ -739,9 +841,11 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
     def _get_timebase_window_range(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
             self._timebase_window_range = float(self._ask(":timebase:window:range?"))
-            self._timebase_window_scale = self._timebase_window_range / self._horizontal_divisions
+            self._timebase_window_scale = (
+                self._timebase_window_range / self._horizontal_divisions
+            )
             self._set_cache_valid()
-            self._set_cache_valid(True, 'timebase_window_scale')
+            self._set_cache_valid(True, "timebase_window_scale")
         return self._timebase_window_range
 
     def _set_timebase_window_range(self, value):
@@ -751,14 +855,16 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
         self._timebase_window_range = value
         self._timebase_window_scale = value / self._horizontal_divisions
         self._set_cache_valid()
-        self._set_cache_valid(True, 'timebase_window_scale')
+        self._set_cache_valid(True, "timebase_window_scale")
 
     def _get_timebase_window_scale(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
             self._timebase_window_scale = float(self._ask(":timebase:window:scale?"))
-            self._timebase_window_range = self._timebase_window_scale * self._horizontal_divisions
+            self._timebase_window_range = (
+                self._timebase_window_scale * self._horizontal_divisions
+            )
             self._set_cache_valid()
-            self._set_cache_valid(True, 'timebase_window_range')
+            self._set_cache_valid(True, "timebase_window_range")
         return self._timebase_window_scale
 
     def _set_timebase_window_scale(self, value):
@@ -768,7 +874,7 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
         self._timebase_window_scale = value
         self._timebase_window_range = value * self._horizontal_divisions
         self._set_cache_valid()
-        self._set_cache_valid(True, 'timebase_window_range')
+        self._set_cache_valid(True, "timebase_window_range")
 
     def _get_display_vectors(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
@@ -814,7 +920,9 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
     def _get_acquisition_type(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
             value = self._ask(":acquire:type?").lower()
-            self._acquisition_type = [k for k, v in AcquisitionTypeMapping.items() if v == value][0]
+            self._acquisition_type = [
+                k for k, v in AcquisitionTypeMapping.items() if v == value
+            ][0]
             self._set_cache_valid()
         return self._acquisition_type
 
@@ -843,7 +951,9 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
     # Modified for LeCroy, WORKING ON WR104XI-A
     def _get_acquisition_time_per_record(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
-            self._acquisition_time_per_record = float(self._ask("TDIV?")) * self._horizontal_divisions
+            self._acquisition_time_per_record = (
+                float(self._ask("TDIV?")) * self._horizontal_divisions
+            )
             self._set_cache_valid()
         return self._acquisition_time_per_record
 
@@ -854,13 +964,17 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
             self._write("TDIV %e" % (value / self._horizontal_divisions))
         self._acquisition_time_per_record = value * self._horizontal_divisions
         self._set_cache_valid()
-        self._set_cache_valid(False, 'acquisition_start_time')
+        self._set_cache_valid(False, "acquisition_start_time")
 
     # This method implemented differently in WRXIA, not tested with other LeCroy scope
     def _get_channel_label(self, index):
         index = ivi.get_index(self._channel_name, index)
-        if not self._driver_operation_simulate and not self._get_cache_valid(index=index):
-            self._channel_label[index] = self._ask(":%s:label?" % self._channel_name[index]).strip('"')
+        if not self._driver_operation_simulate and not self._get_cache_valid(
+            index=index
+        ):
+            self._channel_label[index] = self._ask(
+                ":%s:label?" % self._channel_name[index]
+            ).strip('"')
             self._set_cache_valid(index=index)
         return self._channel_label[index]
 
@@ -869,14 +983,16 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
         value = str(value)
         index = ivi.get_index(self._channel_name, index)
         if not self._driver_operation_simulate:
-            self._write(":%s:label \"%s\"" % (self._channel_name[index], value))
+            self._write(':%s:label "%s"' % (self._channel_name[index], value))
         self._channel_label[index] = value
         self._set_cache_valid(index=index)
 
     # Modified for LeCroy, WORKING ON WR104XI-A
     def _get_channel_enabled(self, index):
         index = ivi.get_index(self._channel_name, index)
-        if not self._driver_operation_simulate and not self._get_cache_valid(index=index):
+        if not self._driver_operation_simulate and not self._get_cache_valid(
+            index=index
+        ):
             trace = self._ask("%s:TRA?" % self._channel_name[index])
             if trace == "ON":
                 self._channel_enabled[index] = True
@@ -900,19 +1016,25 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
     # TODO: test channel.input_impedance
     def _get_channel_input_impedance(self, index):
         index = ivi.get_index(self._analog_channel_name, index)
-        if not self._driver_operation_simulate and not self._get_cache_valid(index=index):
-            result = str(self._ask("%s:coupling?" % self._channel_name[index])).lower().split()
+        if not self._driver_operation_simulate and not self._get_cache_valid(
+            index=index
+        ):
+            result = (
+                str(self._ask("%s:coupling?" % self._channel_name[index]))
+                .lower()
+                .split()
+            )
             result = result[1]
-            if result == 'a1m':
+            if result == "a1m":
                 impedance = 1000000
                 coupling = "ac"
             elif result == "a1m":
                 impedance = 1000000
                 coupling = "dc"
-            elif result == 'd50':
+            elif result == "d50":
                 impedance = 50
                 coupling = "dc"
-            elif result == 'gnd':
+            elif result == "gnd":
                 impedance = 1000000
                 coupling = "gnd"
             self._channel_input_impedance[index] = impedance
@@ -924,13 +1046,13 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
     def _set_channel_input_impedance(self, index, value):
         index = ivi.get_index(self._analog_channel_name, index)
         if value not in InputImpedance:
-            raise Exception('Invalid input impedance selection')
+            raise Exception("Invalid input impedance selection")
         # Check current coupling setting to know if AC or DC
         result = str(self._ask("%s:coupling?" % self._channel_name[index])).lower()
         if result[0] == "a" and value == 1000000:
             coupling = "a1m"
         elif result[0] == "a" and value == 50:
-            raise Exception('Invalid impedance selection')
+            raise Exception("Invalid impedance selection")
         elif result[0] == "d" and value == 1000000:
             coupling = "d1m"
         elif result[0] == "d" and value == 50:
@@ -941,10 +1063,12 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
             elif value == 1000000:
                 coupling = "d1m"
         else:
-            raise Exception('Invalid impedance selection')
+            raise Exception("Invalid impedance selection")
 
         if not self._driver_operation_simulate:
-            self._write("%s:coupling %s" % (self._channel_name[index], coupling.upper()))
+            self._write(
+                "%s:coupling %s" % (self._channel_name[index], coupling.upper())
+            )
         self._channel_input_impedance[index] = value
         self._set_cache_valid(index=index)
 
@@ -963,9 +1087,12 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
     # Tested, working on WRX104MXiA
     def _get_channel_probe_attenuation(self, index):
         index = ivi.get_index(self._analog_channel_name, index)
-        if not self._driver_operation_simulate and not self._get_cache_valid(index=index):
+        if not self._driver_operation_simulate and not self._get_cache_valid(
+            index=index
+        ):
             self._channel_probe_attenuation[index] = int(
-                (self._ask("%s:attenuation?" % self._channel_name[index])))
+                (self._ask("%s:attenuation?" % self._channel_name[index]))
+            )
             self._set_cache_valid(index=index)
         return self._channel_probe_attenuation[index]
 
@@ -985,8 +1112,12 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
 
     def _get_channel_invert(self, index):
         index = ivi.get_index(self._analog_channel_name, index)
-        if not self._driver_operation_simulate and not self._get_cache_valid(index=index):
-            self._channel_invert[index] = bool(int(self._ask(":%s:invert?" % self._channel_name[index])))
+        if not self._driver_operation_simulate and not self._get_cache_valid(
+            index=index
+        ):
+            self._channel_invert[index] = bool(
+                int(self._ask(":%s:invert?" % self._channel_name[index]))
+            )
             self._set_cache_valid(index=index)
         return self._channel_invert[index]
 
@@ -1000,19 +1131,27 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
 
     def _get_channel_probe_id(self, index):
         index = ivi.get_index(self._analog_channel_name, index)
-        if not self._driver_operation_simulate and not self._get_cache_valid(index=index):
-            self._channel_probe_id[index] = self._ask(":%s:probe:id?" % self._channel_name[index])
+        if not self._driver_operation_simulate and not self._get_cache_valid(
+            index=index
+        ):
+            self._channel_probe_id[index] = self._ask(
+                ":%s:probe:id?" % self._channel_name[index]
+            )
             self._set_cache_valid(index=index)
         return self._channel_probe_id[index]
 
     # Modified for LeCroy, WORKING ON WR104XI-A
     def _get_channel_bw_limit(self, index):
         index = ivi.get_index(self._analog_channel_name, index)
-        if not self._driver_operation_simulate and not self._get_cache_valid(index=index):
+        if not self._driver_operation_simulate and not self._get_cache_valid(
+            index=index
+        ):
             # On WRXiA bandwidth limits are read out all at one time, we need to split the list to get specified channel
-            limits = (self._ask("BWL?").strip()).split(',')
+            limits = (self._ask("BWL?").strip()).split(",")
             if self._channel_name[index] in limits:
-                self._channel_bw_limit[index] = limits[limits.index(self._channel_name[index]) + 1]
+                self._channel_bw_limit[index] = limits[
+                    limits.index(self._channel_name[index]) + 1
+                ]
             self._set_cache_valid(index=index)
         return self._channel_bw_limit[index]
 
@@ -1027,8 +1166,12 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
     # TODO: FIX COUPLING AND IMPEDANCE
     def _get_channel_coupling(self, index):
         index = ivi.get_index(self._analog_channel_name, index)
-        if not self._driver_operation_simulate and not self._get_cache_valid(index=index):
-            result = self._ask("%s:coupling?" % self._channel_name[index]).lower().split()
+        if not self._driver_operation_simulate and not self._get_cache_valid(
+            index=index
+        ):
+            result = (
+                self._ask("%s:coupling?" % self._channel_name[index]).lower().split()
+            )
             self._channel_coupling[index] = result[1]
         return self._channel_coupling[index]
 
@@ -1048,19 +1191,25 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
         elif result[1:3] == "50" and value == "dc":
             coupling = "d50"
         elif result[1:3] == "50" and value == "ac":
-            raise Exception('Invalid coupling selection, set correct impedance')
+            raise Exception("Invalid coupling selection, set correct impedance")
         elif value == "gnd":
             coupling = "gnd"
         if not self._driver_operation_simulate:
-            self._write("%s:coupling %s" % (self._channel_name[index], coupling.upper()))
+            self._write(
+                "%s:coupling %s" % (self._channel_name[index], coupling.upper())
+            )
         self._channel_coupling[index] = value
         self._set_cache_valid(index=index)
 
     # TODO: test
     def _get_channel_offset(self, index):
         index = ivi.get_index(self._channel_name, index)
-        if not self._driver_operation_simulate and not self._get_cache_valid(index=index):
-            self._channel_offset[index] = float(self._ask("%s:offset?" % self._channel_name[index]))
+        if not self._driver_operation_simulate and not self._get_cache_valid(
+            index=index
+        ):
+            self._channel_offset[index] = float(
+                self._ask("%s:offset?" % self._channel_name[index])
+            )
             self._set_cache_valid(index=index)
         return self._channel_offset[index]
 
@@ -1075,9 +1224,15 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
 
     def _get_channel_range(self, index):
         index = ivi.get_index(self._channel_name, index)
-        if not self._driver_operation_simulate and not self._get_cache_valid(index=index):
-            self._channel_range[index] = float(self._ask(":%s:range?" % self._channel_name[index]))
-            self._channel_scale[index] = self._channel_range[index] / self._vertical_divisions
+        if not self._driver_operation_simulate and not self._get_cache_valid(
+            index=index
+        ):
+            self._channel_range[index] = float(
+                self._ask(":%s:range?" % self._channel_name[index])
+            )
+            self._channel_scale[index] = (
+                self._channel_range[index] / self._vertical_divisions
+            )
             self._set_cache_valid(index=index)
             self._set_cache_valid(True, "channel_scale", index)
         return self._channel_range[index]
@@ -1094,9 +1249,15 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
 
     def _get_channel_scale(self, index):
         index = ivi.get_index(self._channel_name, index)
-        if not self._driver_operation_simulate and not self._get_cache_valid(index=index):
-            self._channel_scale[index] = float(self._ask(":%s:scale?" % self._channel_name[index]))
-            self._channel_range[index] = self._channel_scale[index] * self._vertical_divisions
+        if not self._driver_operation_simulate and not self._get_cache_valid(
+            index=index
+        ):
+            self._channel_scale[index] = float(
+                self._ask(":%s:scale?" % self._channel_name[index])
+            )
+            self._channel_range[index] = (
+                self._channel_scale[index] * self._vertical_divisions
+            )
             self._set_cache_valid(index=index)
             self._set_cache_valid(True, "channel_range", index)
         return self._channel_scale[index]
@@ -1151,7 +1312,11 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
     # Modified for LeCroy, WORKING ON WR104XI-A
     def _get_channel_trigger_level(self, index):
         if not self._driver_operation_simulate and not self._get_cache_valid():
-            self._channel_trigger_level[index] = float(self._ask(("%s:TRLV?") % self._channel_name[index]).split(",")[0].split(" ")[0])
+            self._channel_trigger_level[index] = float(
+                self._ask(("%s:TRLV?") % self._channel_name[index])
+                .split(",")[0]
+                .split(" ")[0]
+            )
             self._set_cache_valid()
         return self._channel_trigger_level[index]
 
@@ -1166,7 +1331,9 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
     def _get_trigger_edge_slope(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
             value = self._ask(":trigger:edge:slope?").lower()
-            self._trigger_edge_slope = [k for k, v in SlopeMapping.items() if v == value][0]
+            self._trigger_edge_slope = [
+                k for k, v in SlopeMapping.items() if v == value
+            ][0]
             self._set_cache_valid()
         return self._trigger_edge_slope
 
@@ -1184,8 +1351,8 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
         if not self._driver_operation_simulate and not self._get_cache_valid():
             vals = self._ask("TRSE?")
             vals = vals.split(",")
-            #type = vals[0]
-            source = vals[vals.index('SR')+1]
+            # type = vals[0]
+            source = vals[vals.index("SR") + 1]
             self._trigger_source = source
             self._set_cache_valid()
         return self._trigger_source
@@ -1199,7 +1366,7 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
         if not self._driver_operation_simulate:
             vals = self._ask("TRSE?")
             split_vals = vals.split(",")
-            split_vals[split_vals.index('SR')+1] = value
+            split_vals[split_vals.index("SR") + 1] = value
             vals = ",".join(split_vals)
             self._write("TRSE %s" % vals)
         self._trigger_source = value
@@ -1418,22 +1585,23 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
         self._write("COMM_FORMAT DEF9,WORD,BIN")
 
         # Read wave description and split up parts into variables
-        pre = self._ask("%s:INSPECT? WAVEDESC" % self._channel_name[index]).split("\r\n")
-
+        pre = self._ask("%s:INSPECT? WAVEDESC" % self._channel_name[index]).split(
+            "\r\n"
+        )
 
         # Replace following with a more simple solution, make it < Python 2.7 compatible
         temp = []
         for item in pre:
-            temp.append(item.split(':'))
+            temp.append(item.split(":"))
 
         # Dict comprehension, python 2.7+
-        #mydict = {t[0].strip(): ["".join(elem.strip()) for elem in t[1:]] for t in temp}
-        #format = str(mydict["COMM_TYPE"][0])
-        #points = int(mydict["PNTS_PER_SCREEN"][0])
-        #xincrement = float(mydict["HORIZ_INTERVAL"][0])
-        #xorigin = float(mydict["HORIZ_OFFSET"][0])
-        #yincrement = float(mydict["VERTICAL_GAIN"][0])
-        #yorigin = float(mydict["VERTICAL_OFFSET"][0])
+        # mydict = {t[0].strip(): ["".join(elem.strip()) for elem in t[1:]] for t in temp}
+        # format = str(mydict["COMM_TYPE"][0])
+        # points = int(mydict["PNTS_PER_SCREEN"][0])
+        # xincrement = float(mydict["HORIZ_INTERVAL"][0])
+        # xorigin = float(mydict["HORIZ_OFFSET"][0])
+        # yincrement = float(mydict["VERTICAL_GAIN"][0])
+        # yorigin = float(mydict["VERTICAL_OFFSET"][0])
 
         # Dict with lost comprehension, python 2.6+
         mydict = dict([(d[0].strip(), "".join(d[1:]).strip()) for d in temp])
@@ -1458,14 +1626,14 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
         for i in range(points):
             x = (i * xincrement) + xorigin
 
-            yval = struct.unpack(">H", raw_data[i * 2:i * 2 + 2])[0]
+            yval = struct.unpack(">H", raw_data[i * 2 : i * 2 + 2])[0]
 
             if yval > 32767:
-                yval = yval - (2 ** 16)
+                yval = yval - (2**16)
 
             if yval == 0:
                 # hole value
-                y = float('nan')
+                y = float("nan")
             else:
                 y = (yincrement * yval) - yorigin
 
@@ -1480,51 +1648,71 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
         if not self._driver_operation_simulate:
             self._write(":acquire:complete 100")
             self._write(":digitize")
-            self._set_cache_valid(False, 'trigger_continuous')
+            self._set_cache_valid(False, "trigger_continuous")
 
     def _get_reference_level_high(self):
         return self._reference_level_high
 
     def _set_reference_level_high(self, value):
         value = float(value)
-        if value < 5: value = 5
-        if value > 95: value = 95
+        if value < 5:
+            value = 5
+        if value > 95:
+            value = 95
         self._reference_level_high = value
         if not self._driver_operation_simulate:
-            self._write(":measure:define thresholds, %e, %e, %e" %
-                        (self._reference_level_high,
-                         self._reference_level_middle,
-                         self._reference_level_low))
+            self._write(
+                ":measure:define thresholds, %e, %e, %e"
+                % (
+                    self._reference_level_high,
+                    self._reference_level_middle,
+                    self._reference_level_low,
+                )
+            )
 
     def _get_reference_level_low(self):
         return self._reference_level_low
 
     def _set_reference_level_low(self, value):
         value = float(value)
-        if value < 5: value = 5
-        if value > 95: value = 95
+        if value < 5:
+            value = 5
+        if value > 95:
+            value = 95
         self._reference_level_low = value
         if not self._driver_operation_simulate:
-            self._write(":measure:define thresholds, %e, %e, %e" %
-                        (self._reference_level_high,
-                         self._reference_level_middle,
-                         self._reference_level_low))
+            self._write(
+                ":measure:define thresholds, %e, %e, %e"
+                % (
+                    self._reference_level_high,
+                    self._reference_level_middle,
+                    self._reference_level_low,
+                )
+            )
 
     def _get_reference_level_middle(self):
         return self._reference_level_middle
 
     def _set_reference_level_middle(self, value):
         value = float(value)
-        if value < 5: value = 5
-        if value > 95: value = 95
+        if value < 5:
+            value = 5
+        if value > 95:
+            value = 95
         self._reference_level_middle = value
         if not self._driver_operation_simulate:
-            self._write(":measure:define thresholds, %e, %e, %e" %
-                        (self._reference_level_high,
-                         self._reference_level_middle,
-                         self._reference_level_low))
+            self._write(
+                ":measure:define thresholds, %e, %e, %e"
+                % (
+                    self._reference_level_high,
+                    self._reference_level_middle,
+                    self._reference_level_low,
+                )
+            )
 
-    def _measurement_fetch_waveform_measurement(self, index, measurement_function, ref_channel=None):
+    def _measurement_fetch_waveform_measurement(
+        self, index, measurement_function, ref_channel=None
+    ):
         index = ivi.get_index(self._channel_name, index)
         if index < self._analog_channel_count:
             if measurement_function not in MeasurementFunctionMapping:
@@ -1535,19 +1723,21 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
                 raise ivi.ValueNotSupportedException()
             func = MeasurementFunctionMappingDigital[measurement_function]
         if not self._driver_operation_simulate:
-            l = func.split(' ')
-            l[0] = l[0] + '?'
+            l = func.split(" ")
+            l[0] = l[0] + "?"
             if len(l) > 1:
-                l[-1] = l[-1] + ','
-            func = ' '.join(l)
+                l[-1] = l[-1] + ","
+            func = " ".join(l)
             query = ":measure:%s %s" % (func, self._channel_name[index])
-            if measurement_function in ['ratio', 'phase', 'delay']:
+            if measurement_function in ["ratio", "phase", "delay"]:
                 ref_index = ivi.get_index(self._channel_name, ref_channel)
                 query += ", %s" % self._channel_name[ref_index]
             return float(self._ask(query))
         return 0
 
-    def _measurement_read_waveform_measurement(self, index, measurement_function, maximum_time):
+    def _measurement_read_waveform_measurement(
+        self, index, measurement_function, maximum_time
+    ):
         return self._measurement_fetch_waveform_measurement(index, measurement_function)
 
     def _get_acquisition_number_of_envelopes(self):
@@ -1573,8 +1763,9 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
     def _set_trigger_continuous(self, value):
         value = bool(value)
         if not self._driver_operation_simulate:
-            t = 'stop'
-            if value: t = 'run'
+            t = "stop"
+            if value:
+                t = "run"
             self._write(":%s" % t)
         self._trigger_continuous = value
         self._set_cache_valid()
@@ -1596,7 +1787,9 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
     def _get_acquisition_sample_mode(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
             value = self._ask(":acquire:mode?").lower()
-            self._acquisition_sample_mode = [k for k, v in SampleModeMapping.items() if v == value][0]
+            self._acquisition_sample_mode = [
+                k for k, v in SampleModeMapping.items() if v == value
+            ][0]
             self._set_cache_valid()
         return self._acquisition_sample_mode
 
@@ -1629,8 +1822,3 @@ class lecroyBaseScope(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.commo
         if not self._driver_operation_simulate:
             self._write("*rcl %d" % index)
             self.driver_operation.invalidate_all_attributes()
-    
-    
-    
-
-

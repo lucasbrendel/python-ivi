@@ -26,26 +26,42 @@ THE SOFTWARE.
 
 from .agilentBaseInfiniiVision import *
 
+
 class agilent6000(agilentBaseInfiniiVision):
     "Agilent InfiniiVision 6000 series IVI oscilloscope driver"
-    
+
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', '')
-        
+        self.__dict__.setdefault("_instrument_id", "")
+
         super(agilent6000, self).__init__(*args, **kwargs)
-        
+
         self._analog_channel_name = list()
         self._analog_channel_count = 4
         self._digital_channel_name = list()
         self._digital_channel_count = 16
         self._channel_count = self._analog_channel_count + self._digital_channel_count
         self._bandwidth = 1e9
-        
-        self._identity_description = "Agilent InfiniiVision 6000 series IVI oscilloscope driver"
-        self._identity_supported_instrument_models = ['DSO6012A','DSO6014A','DSO6032A',
-                'DSO6034A','DSO6052A','DSO6054A','DSO6102A','DSO6104A','MSO6012A','MSO6014A',
-                'MSO6032A','MSO6034A','MSO6052A','MSO6054A','MSO6102A','MSO6104A']
+
+        self._identity_description = (
+            "Agilent InfiniiVision 6000 series IVI oscilloscope driver"
+        )
+        self._identity_supported_instrument_models = [
+            "DSO6012A",
+            "DSO6014A",
+            "DSO6032A",
+            "DSO6034A",
+            "DSO6052A",
+            "DSO6054A",
+            "DSO6102A",
+            "DSO6104A",
+            "MSO6012A",
+            "MSO6014A",
+            "MSO6032A",
+            "MSO6034A",
+            "MSO6052A",
+            "MSO6054A",
+            "MSO6102A",
+            "MSO6104A",
+        ]
 
         self._init_channels()
-    
-    

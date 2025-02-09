@@ -26,11 +26,12 @@ THE SOFTWARE.
 
 from .tektronixDPO4000 import *
 
+
 class tektronixDPO4104B(tektronixDPO4000):
     "Tektronix DPO4104B IVI oscilloscope driver"
 
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', 'DPO4104B')
+        self.__dict__.setdefault("_instrument_id", "DPO4104B")
 
         super(tektronixDPO4104B, self).__init__(*args, **kwargs)
 

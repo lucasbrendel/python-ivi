@@ -26,15 +26,18 @@ THE SOFTWARE.
 
 from .. import ivi
 
+
 class jdsuTB9(ivi.Driver):
     "JDS Uniphase TB9 Series Optical Grating Filter driver"
 
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', 'TB9')
+        self.__dict__.setdefault("_instrument_id", "TB9")
 
         super(jdsuTB9, self).__init__(*args, **kwargs)
 
-        self._identity_description = "JDS Uniphase TB9 Series Optical Grating Filter driver"
+        self._identity_description = (
+            "JDS Uniphase TB9 Series Optical Grating Filter driver"
+        )
         self._identity_identifier = ""
         self._identity_revision = ""
         self._identity_vendor = ""
@@ -43,28 +46,32 @@ class jdsuTB9(ivi.Driver):
         self._identity_instrument_firmware_revision = ""
         self._identity_specification_major_version = 0
         self._identity_specification_minor_version = 0
-        self._identity_supported_instrument_models = ['TB9']
+        self._identity_supported_instrument_models = ["TB9"]
 
         self._wavelength = 0
         self._driver_enable = False
 
-        self._add_property('wavelength',
-                        self._get_wavelength,
-                        self._set_wavelength,
-                        None,
-                        ivi.Doc("""
+        self._add_property(
+            "wavelength",
+            self._get_wavelength,
+            self._set_wavelength,
+            None,
+            ivi.Doc("""
                         Specifies the center wavelength of the optical grating filter. The units
                         are meters.
-                        """))
-        self._add_property('driver_enable',
-                        self._get_driver_enable,
-                        self._set_driver_enable,
-                        None,
-                        ivi.Doc("""
+                        """),
+        )
+        self._add_property(
+            "driver_enable",
+            self._get_driver_enable,
+            self._set_driver_enable,
+            None,
+            ivi.Doc("""
                         Control relay driver.  Set to True to enable 5v output, False to disable.
-                        """))
+                        """),
+        )
 
-    def _initialize(self, resource = None, id_query = False, reset = False, **keywargs):
+    def _initialize(self, resource=None, id_query=False, reset=False, **keywargs):
         "Opens an I/O session to the instrument."
 
         super(jdsuTB9, self)._initialize(resource, id_query, reset, **keywargs)
@@ -77,28 +84,31 @@ class jdsuTB9(ivi.Driver):
         if id_query and not self._driver_operation_simulate:
             id = self.identity.instrument_model
             id_check = self._instrument_id
-            id_short = id[:len(id_check)]
+            id_short = id[: len(id_check)]
             if id_short != id_check:
-                raise Exception("Instrument ID mismatch, expecting %s, got %s", id_check, id_short)
+                raise Exception(
+                    "Instrument ID mismatch, expecting %s, got %s", id_check, id_short
+                )
 
         # reset
         if reset:
             self.utility_reset()
 
-
     def _load_id_string(self):
         if self._driver_operation_simulate:
             self._identity_instrument_manufacturer = "Not available while simulating"
             self._identity_instrument_model = "Not available while simulating"
-            self._identity_instrument_firmware_revision = "Not available while simulating"
+            self._identity_instrument_firmware_revision = (
+                "Not available while simulating"
+            )
         else:
             lst = self._ask("IDN?").split(",")
             self._identity_instrument_manufacturer = lst[0].strip()
             self._identity_instrument_model = lst[1].strip()
             self._identity_instrument_firmware_revision = lst[3].strip()
-            self._set_cache_valid(True, 'identity_instrument_manufacturer')
-            self._set_cache_valid(True, 'identity_instrument_model')
-            self._set_cache_valid(True, 'identity_instrument_firmware_revision')
+            self._set_cache_valid(True, "identity_instrument_manufacturer")
+            self._set_cache_valid(True, "identity_instrument_model")
+            self._set_cache_valid(True, "identity_instrument_firmware_revision")
 
     def _get_identity_instrument_manufacturer(self):
         if self._get_cache_valid():
@@ -127,7 +137,7 @@ class jdsuTB9(ivi.Driver):
         if not self._driver_operation_simulate:
             error_message = self._ask("err?").strip('"')
             error_code = 1
-            if error_message == '0':
+            if error_message == "0":
                 error_code = 0
         return (error_code, error_message)
 
@@ -154,8 +164,6 @@ class jdsuTB9(ivi.Driver):
 
     def _utility_unlock_object(self):
         pass
-
-
 
     def _get_wavelength(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
@@ -184,4 +192,3 @@ class jdsuTB9(ivi.Driver):
             self._write("xdr %d" % (int(value)))
         self._driver_enable = value
         self._set_cache_valid()
-

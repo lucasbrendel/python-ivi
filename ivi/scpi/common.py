@@ -26,8 +26,8 @@ THE SOFTWARE.
 
 import time
 
-from .. import ivi
-from .. import extra
+from ivi import OutOfRangeException
+from ivi import extra
 
 
 class IdnCommand(extra.common.SerialNumber):
@@ -38,17 +38,19 @@ class IdnCommand(extra.common.SerialNumber):
             self._identity_instrument_manufacturer = "Not available while simulating"
             self._identity_instrument_model = "Not available while simulating"
             self._identity_instrument_serial_number = "Not available while simulating"
-            self._identity_instrument_firmware_revision = "Not available while simulating"
+            self._identity_instrument_firmware_revision = (
+                "Not available while simulating"
+            )
         else:
             lst = self._ask("*IDN?").split(",")
             self._identity_instrument_manufacturer = lst[0].strip()
             self._identity_instrument_model = lst[1].strip()
             self._identity_instrument_serial_number = lst[2].strip()
             self._identity_instrument_firmware_revision = lst[3].strip()
-            self._set_cache_valid(True, 'identity_instrument_manufacturer')
-            self._set_cache_valid(True, 'identity_instrument_model')
-            self._set_cache_valid(True, 'identity_instrument_serial_number')
-            self._set_cache_valid(True, 'identity_instrument_firmware_revision')
+            self._set_cache_valid(True, "identity_instrument_manufacturer")
+            self._set_cache_valid(True, "identity_instrument_model")
+            self._set_cache_valid(True, "identity_instrument_serial_number")
+            self._set_cache_valid(True, "identity_instrument_firmware_revision")
 
     def _get_identity_instrument_manufacturer(self):
         if not self._get_cache_valid():
@@ -78,7 +80,7 @@ class ErrorQuery(object):
         error_code = 0
         error_message = "No error"
         if not self._driver_operation_simulate:
-            error_code, error_message = self._ask("system:error?").split(',')
+            error_code, error_message = self._ask("system:error?").split(",")
             error_code = int(error_code)
             error_message = error_message.strip(' "')
         return (error_code, error_message)
@@ -120,20 +122,20 @@ class SelfTest(object):
 
 class Memory(extra.common.Memory):
     "Extension IVI methods for instruments that support storing configurations in internal memory"
-    
+
     def __init__(self, *args, **kwargs):
         super(Memory, self).__init__(*args, **kwargs)
-        
+
         self._memory_size = 10
         self._memory_offset = 0
-    
+
     def _memory_save(self, index):
         index = int(index)
         if index < 0 or index >= self._memory_size:
             raise OutOfRangeException()
         if not self._driver_operation_simulate:
             self._write("*sav %d" % (index + self._memory_offset))
-    
+
     def _memory_recall(self, index):
         index = int(index)
         if index < 0 or index >= self._memory_size:
@@ -145,19 +147,19 @@ class Memory(extra.common.Memory):
 
 class SystemSetup(extra.common.SystemSetup):
     "Extension IVI methods for instruments that support fetching and reloading of the system setup"
-    
+
     def _system_fetch_setup(self):
         if self._driver_operation_simulate:
-            return b''
-        
+            return b""
+
         self._write("*lrn?")
-        
+
         return self._read_raw()
-    
+
     def _system_load_setup(self, data):
         if self._driver_operation_simulate:
             return
-        
+
         self._write_raw(data)
-        
+
         self.driver_operation.invalidate_all_attributes()

@@ -26,11 +26,12 @@ THE SOFTWARE.
 
 from .lecroyWRXIA import *
 
+
 class lecroyWR44XIA(lecroyWRXIA):
     "Lecroy WaveRunner 44Xi-A IVI oscilloscope driver"
 
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', 'WaveRunner 44Xi-A')
+        self.__dict__.setdefault("_instrument_id", "WaveRunner 44Xi-A")
 
         super(lecroy104XiA, self).__init__(*args, **kwargs)
 
@@ -40,5 +41,3 @@ class lecroyWR44XIA(lecroyWRXIA):
         self._bandwidth = 400e6
 
         self._init_channels()
-
-

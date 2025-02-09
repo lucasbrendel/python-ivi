@@ -26,6 +26,7 @@ THE SOFTWARE.
 
 from .. import ivi
 
+
 class SerialNumber(ivi.IviContainer):
     "Extension IVI methods for instruments that can report a serial number"
 
@@ -34,11 +35,12 @@ class SerialNumber(ivi.IviContainer):
 
         self._identity_instrument_serial_number = "Cannot query from instrument"
 
-        self._add_property('identity.instrument_serial_number',
-                        self._get_identity_instrument_serial_number,
-                        None,
-                        None,
-                        """
+        self._add_property(
+            "identity.instrument_serial_number",
+            self._get_identity_instrument_serial_number,
+            None,
+            None,
+            """
                         Returns the serial number of the physical instrument. The IVI specific
                         driver returns the value it queries from the instrument or a string
                         indicating that it cannot query the instrument identity.
@@ -56,7 +58,8 @@ class SerialNumber(ivi.IviContainer):
 
                         The string that this attribute returns does not have a predefined maximum
                         length.
-                        """)
+                        """,
+        )
 
     def _get_identity_instrument_serial_number(self):
         return self._identity_instrument_serial_number
@@ -70,18 +73,22 @@ class Memory(ivi.IviContainer):
 
         self._memory_size = 10
 
-        self._add_method('memory.save',
-                        self._memory_save,
-                        ivi.Doc("""
+        self._add_method(
+            "memory.save",
+            self._memory_save,
+            ivi.Doc("""
                         Stores the current state of the instrument into an internal storage
                         register.  Use memory.recall to restore the saved state.
-                        """))
-        self._add_method('memory.recall',
-                        self._memory_recall,
-                        ivi.Doc("""
+                        """),
+        )
+        self._add_method(
+            "memory.recall",
+            self._memory_recall,
+            ivi.Doc("""
                         Recalls the state of the instrument from an internal storage register
                         that was previously saved with memory.save.
-                        """))
+                        """),
+        )
 
     def _memory_save(self, index):
         index = int(index)
@@ -104,13 +111,15 @@ class Title(ivi.IviContainer):
 
         self._display_title = ""
 
-        self._add_property('display.title',
-                        self._get_display_title,
-                        self._set_display_title,
-                        None,
-                        ivi.Doc("""
+        self._add_property(
+            "display.title",
+            self._get_display_title,
+            self._set_display_title,
+            None,
+            ivi.Doc("""
                         Sets the instrument display title.
-                        """))
+                        """),
+        )
 
     def _get_display_title(self):
         return self._display_title
@@ -122,46 +131,49 @@ class Title(ivi.IviContainer):
 
 class SystemSetup(ivi.IviContainer):
     "Extension IVI methods for instruments that support fetching and reloading of the system setup"
-    
+
     def __init__(self, *args, **kwargs):
         super(SystemSetup, self).__init__(*args, **kwargs)
-        
-        self._add_method('system.fetch_setup',
-                        self._system_fetch_setup,
-                        ivi.Doc("""
+
+        self._add_method(
+            "system.fetch_setup",
+            self._system_fetch_setup,
+            ivi.Doc("""
                         Returns the current instrument setup in the form of a binary block.  The
                         setup can be stored in memory or written to a file and then reloaded to the
                         instrument at a later time with system.load_setup.
-                        """))
-        self._add_method('system.load_setup',
-                        self._system_load_setup,
-                        ivi.Doc("""
+                        """),
+        )
+        self._add_method(
+            "system.load_setup",
+            self._system_load_setup,
+            ivi.Doc("""
                         Transfers a binary block of setup data to the instrument to reload a setup
                         previously saved with system.fetch_setup.
-                        """))
-    
+                        """),
+        )
+
     def _system_fetch_setup(self):
-        return b''
-    
+        return b""
+
     def _system_load_setup(self, data):
         pass
 
 
 class Screenshot(ivi.IviContainer):
     "Extension IVI methods for instruments that support fetching screenshots"
-    
+
     def __init__(self, *args, **kwargs):
         super(Screenshot, self).__init__(*args, **kwargs)
-        
-        self._add_method('display.fetch_screenshot',
-                        self._display_fetch_screenshot,
-                        ivi.Doc("""
+
+        self._add_method(
+            "display.fetch_screenshot",
+            self._display_fetch_screenshot,
+            ivi.Doc("""
                         Captures the screen and transfers it in the specified format.
                         The display graticule is optionally inverted.
-                        """))
-    
-    def _display_fetch_screenshot(self, format='png', invert=False):
-        return b''
-    
-    
+                        """),
+        )
 
+    def _display_fetch_screenshot(self, format="png", invert=False):
+        return b""

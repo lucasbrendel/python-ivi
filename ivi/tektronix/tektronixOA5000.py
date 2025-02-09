@@ -26,14 +26,15 @@ THE SOFTWARE.
 
 from .. import ivi
 
+
 class tektronixOA5000(ivi.Driver):
     "Tektronix OA5000 series optical attenuator driver"
-    
+
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', '')
-        
+        self.__dict__.setdefault("_instrument_id", "")
+
         super(tektronixOA5000, self).__init__(*args, **kwargs)
-        
+
         self._identity_description = "Tektronix OA5000 series optical attenuator driver"
         self._identity_identifier = ""
         self._identity_revision = ""
@@ -43,46 +44,59 @@ class tektronixOA5000(ivi.Driver):
         self._identity_instrument_firmware_revision = ""
         self._identity_specification_major_version = 0
         self._identity_specification_minor_version = 0
-        self._identity_supported_instrument_models = ['OA5002', 'OA5012', 'OA5022', 'OA5032']
-        
+        self._identity_supported_instrument_models = [
+            "OA5002",
+            "OA5012",
+            "OA5022",
+            "OA5032",
+        ]
+
         self._attenuation = 0.0
         self._reference = 0.0
         self._wavelength = 1300.0
         self._disable = False
 
-        self._add_property('attenuation',
-                        self._get_attenuation,
-                        self._set_attenuation,
-                        None,
-                        ivi.Doc("""
+        self._add_property(
+            "attenuation",
+            self._get_attenuation,
+            self._set_attenuation,
+            None,
+            ivi.Doc("""
                         Specifies the attenuation of the optical path.  The units are dB.
-                        """))
-        self._add_property('reference',
-                        self._get_reference,
-                        self._set_reference,
-                        None,
-                        ivi.Doc("""
+                        """),
+        )
+        self._add_property(
+            "reference",
+            self._get_reference,
+            self._set_reference,
+            None,
+            ivi.Doc("""
                         Specifies the zero dB reference level for the attenuation setting. The
                         units are dB.
-                        """))
-        self._add_property('wavelength',
-                        self._get_wavelength,
-                        self._set_wavelength,
-                        None,
-                        ivi.Doc("""
+                        """),
+        )
+        self._add_property(
+            "wavelength",
+            self._get_wavelength,
+            self._set_wavelength,
+            None,
+            ivi.Doc("""
                         Specifies the wavelength of light used for accurate attenuation.  The
                         units are meters.
-                        """))
-        self._add_property('disable',
-                        self._get_disable,
-                        self._set_disable,
-                        None,
-                        ivi.Doc("""
+                        """),
+        )
+        self._add_property(
+            "disable",
+            self._get_disable,
+            self._set_disable,
+            None,
+            ivi.Doc("""
                         Controls a shutter in the optical path.  Shutter is closed when disable is
                         set to True.
-                        """))
+                        """),
+        )
 
-    def _initialize(self, resource = None, id_query = False, reset = False, **keywargs):
+    def _initialize(self, resource=None, id_query=False, reset=False, **keywargs):
         "Opens an I/O session to the instrument."
 
         super(tektronixOA5000, self)._initialize(resource, id_query, reset, **keywargs)
@@ -95,28 +109,31 @@ class tektronixOA5000(ivi.Driver):
         if id_query and not self._driver_operation_simulate:
             id = self.identity.instrument_model
             id_check = self._instrument_id
-            id_short = id[:len(id_check)]
+            id_short = id[: len(id_check)]
             if id_short != id_check:
-                raise Exception("Instrument ID mismatch, expecting %s, got %s", id_check, id_short)
+                raise Exception(
+                    "Instrument ID mismatch, expecting %s, got %s", id_check, id_short
+                )
 
         # reset
         if reset:
             self.utility_reset()
 
-
     def _load_id_string(self):
         if self._driver_operation_simulate:
             self._identity_instrument_manufacturer = "Not available while simulating"
             self._identity_instrument_model = "Not available while simulating"
-            self._identity_instrument_firmware_revision = "Not available while simulating"
+            self._identity_instrument_firmware_revision = (
+                "Not available while simulating"
+            )
         else:
             lst = self._ask("*IDN?").split(",")
             self._identity_instrument_manufacturer = lst[0]
             self._identity_instrument_model = lst[1]
             self._identity_instrument_firmware_revision = lst[3]
-            self._set_cache_valid(True, 'identity_instrument_manufacturer')
-            self._set_cache_valid(True, 'identity_instrument_model')
-            self._set_cache_valid(True, 'identity_instrument_firmware_revision')
+            self._set_cache_valid(True, "identity_instrument_manufacturer")
+            self._set_cache_valid(True, "identity_instrument_model")
+            self._set_cache_valid(True, "identity_instrument_firmware_revision")
 
     def _get_identity_instrument_manufacturer(self):
         if self._get_cache_valid():
@@ -145,7 +162,7 @@ class tektronixOA5000(ivi.Driver):
         if not self._driver_operation_simulate:
             error_message = self._ask("err?").strip('"')
             error_code = 1
-            if error_message == '0':
+            if error_message == "0":
                 error_code = 0
         return (error_code, error_message)
 
@@ -173,11 +190,9 @@ class tektronixOA5000(ivi.Driver):
     def _utility_unlock_object(self):
         pass
 
-
-
     def _get_attenuation(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
-            resp = self._ask("attenuation:dbr?").split(' ')[1]
+            resp = self._ask("attenuation:dbr?").split(" ")[1]
             self._attenuation = float(resp)
             self._set_cache_valid()
         return self._attenuation
@@ -191,7 +206,7 @@ class tektronixOA5000(ivi.Driver):
 
     def _get_reference(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
-            resp = self._ask("reference?").split(' ')[1]
+            resp = self._ask("reference?").split(" ")[1]
             self._reference = float(resp)
             self._set_cache_valid()
         return self._reference
@@ -202,11 +217,11 @@ class tektronixOA5000(ivi.Driver):
             self._write("reference %e" % (value))
         self._reference = value
         self._set_cache_valid()
-        self._set_cache_valid(False, 'attenuation')
+        self._set_cache_valid(False, "attenuation")
 
     def _get_wavelength(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
-            resp = self._ask("wavelength?").split(' ')[1]
+            resp = self._ask("wavelength?").split(" ")[1]
             self._wavelength = float(resp)
             self._set_cache_valid()
         return self._wavelength
@@ -220,7 +235,7 @@ class tektronixOA5000(ivi.Driver):
 
     def _get_disable(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
-            resp = self._ask("disable?").split(' ')[1]
+            resp = self._ask("disable?").split(" ")[1]
             self._disable = bool(int(resp))
             self._set_cache_valid()
         return self._disable
@@ -231,5 +246,3 @@ class tektronixOA5000(ivi.Driver):
             self._write("disable %d" % (int(value)))
         self._disable = value
         self._set_cache_valid()
-
- 

@@ -30,6 +30,7 @@ from distutils.version import StrictVersion
 
 try:
     import visa
+
     try:
         # New style PyVISA
         visa_rm = visa.ResourceManager()
@@ -43,17 +44,21 @@ except ImportError:
 except:
     # any other error
     e = sys.exc_info()[1]
-    sys.stderr.write("python-ivi: PyVISA is installed, but could not be loaded (%s: %s)\n" %
-        (e.__class__.__name__, e.args[0]))
+    sys.stderr.write(
+        "python-ivi: PyVISA is installed, but could not be loaded (%s: %s)\n"
+        % (e.__class__.__name__, e.args[0])
+    )
     raise ImportError
+
 
 class PyVisaInstrument:
     "PyVisa wrapper instrument interface client"
+
     def __init__(self, resource, *args, **kwargs):
         if type(resource) is str:
             self.instrument = visa_instrument_opener(resource, *args, **kwargs)
             # For compatibility with new style PyVISA
-            if not hasattr(self.instrument, 'trigger'):
+            if not hasattr(self.instrument, "trigger"):
                 self.instrument.trigger = self.instrument.assert_trigger
         else:
             self.instrument = resource
@@ -66,7 +71,7 @@ class PyVisaInstrument:
     def read_raw(self, num=-1):
         "Read binary data from instrument"
         # PyVISA only supports reading entire buffer
-        #return self.instrument.read_raw()
+        # return self.instrument.read_raw()
         data = self.buffer.read(num)
         if len(data) == 0:
             self.buffer = io.BytesIO(self.instrument.read_raw())
@@ -78,7 +83,7 @@ class PyVisaInstrument:
         self.write_raw(data)
         return self.read_raw(num)
 
-    def write(self, message, encoding = 'utf-8'):
+    def write(self, message, encoding="utf-8"):
         "Write string to instrument"
         if type(message) is tuple or type(message) is list:
             # recursive call for a list of commands
@@ -87,11 +92,11 @@ class PyVisaInstrument:
             return
         self.write_raw(str(message).encode(encoding))
 
-    def read(self, num=-1, encoding = 'utf-8'):
+    def read(self, num=-1, encoding="utf-8"):
         "Read string from instrument"
-        return self.read_raw(num).decode(encoding).rstrip('\r\n')
+        return self.read_raw(num).decode(encoding).rstrip("\r\n")
 
-    def ask(self, message, num=-1, encoding = 'utf-8'):
+    def ask(self, message, num=-1, encoding="utf-8"):
         "Write then read string"
         if type(message) is tuple or type(message) is list:
             # recursive call for a list of commands

@@ -26,46 +26,39 @@ THE SOFTWARE.
 
 from .rigolDP800 import *
 
+
 class rigolDP831A(rigolDP800):
     "Rigol DP831A IVI DC power supply driver"
-    
+
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', 'DP831A')
-        
+        self.__dict__.setdefault("_instrument_id", "DP831A")
+
         super(rigolDP831A, self).__init__(*args, **kwargs)
-        
+
         self._output_count = 3
-        
+
         self._output_spec = [
             {
-                'range': {
-                    'P8V': (8.0, 5.0)
-                },
-                'ovp_max': 8.8,
-                'ocp_max': 5.5,
-                'voltage_max': 8.0,
-                'current_max': 5.0
+                "range": {"P8V": (8.0, 5.0)},
+                "ovp_max": 8.8,
+                "ocp_max": 5.5,
+                "voltage_max": 8.0,
+                "current_max": 5.0,
             },
             {
-                'range': {
-                    'P30V': (30.0, 2.0)
-                },
-                'ovp_max': 33.0,
-                'ocp_max': 2.2,
-                'voltage_max': 30.0,
-                'current_max': 2.0
+                "range": {"P30V": (30.0, 2.0)},
+                "ovp_max": 33.0,
+                "ocp_max": 2.2,
+                "voltage_max": 30.0,
+                "current_max": 2.0,
             },
             {
-                'range': {
-                    'N30V': (-30.0, 2.0)
-                },
-                'ovp_max': -33.0,
-                'ocp_max': 2.2,
-                'voltage_max': -30.0,
-                'current_max': 2.0
-            }
+                "range": {"N30V": (-30.0, 2.0)},
+                "ovp_max": -33.0,
+                "ocp_max": 2.2,
+                "voltage_max": -30.0,
+                "current_max": 2.0,
+            },
         ]
-        
+
         self._init_outputs()
-    
-    

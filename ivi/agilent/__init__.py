@@ -38,6 +38,7 @@ from .agilentMSOX2012A import agilentMSOX2012A
 from .agilentMSOX2014A import agilentMSOX2014A
 from .agilentMSOX2022A import agilentMSOX2022A
 from .agilentMSOX2024A import agilentMSOX2024A
+
 # InfiniiVision 3000A
 from .agilentDSOX3012A import agilentDSOX3012A
 from .agilentDSOX3014A import agilentDSOX3014A
@@ -57,6 +58,7 @@ from .agilentMSOX3052A import agilentMSOX3052A
 from .agilentMSOX3054A import agilentMSOX3054A
 from .agilentMSOX3102A import agilentMSOX3102A
 from .agilentMSOX3104A import agilentMSOX3104A
+
 # InfiniiVision 4000A
 from .agilentDSOX4022A import agilentDSOX4022A
 from .agilentDSOX4024A import agilentDSOX4024A
@@ -74,6 +76,7 @@ from .agilentMSOX4052A import agilentMSOX4052A
 from .agilentMSOX4054A import agilentMSOX4054A
 from .agilentMSOX4104A import agilentMSOX4104A
 from .agilentMSOX4154A import agilentMSOX4154A
+
 # InfiniiVision 6000A
 from .agilentDSO6012A import agilentDSO6012A
 from .agilentDSO6014A import agilentDSO6014A
@@ -91,6 +94,7 @@ from .agilentMSO6052A import agilentMSO6052A
 from .agilentMSO6054A import agilentMSO6054A
 from .agilentMSO6102A import agilentMSO6102A
 from .agilentMSO6104A import agilentMSO6104A
+
 # InfiniiVision 7000A
 from .agilentDSO7012A import agilentDSO7012A
 from .agilentDSO7014A import agilentDSO7014A
@@ -106,6 +110,7 @@ from .agilentMSO7034A import agilentMSO7034A
 from .agilentMSO7052A import agilentMSO7052A
 from .agilentMSO7054A import agilentMSO7054A
 from .agilentMSO7104A import agilentMSO7104A
+
 # InfiniiVision 7000B
 from .agilentDSO7012B import agilentDSO7012B
 from .agilentDSO7014B import agilentDSO7014B
@@ -121,6 +126,7 @@ from .agilentMSO7034B import agilentMSO7034B
 from .agilentMSO7052B import agilentMSO7052B
 from .agilentMSO7054B import agilentMSO7054B
 from .agilentMSO7104B import agilentMSO7104B
+
 # Infiniium 90000A
 from .agilentDSO90254A import agilentDSO90254A
 from .agilentDSO90404A import agilentDSO90404A
@@ -134,6 +140,7 @@ from .agilentDSA90604A import agilentDSA90604A
 from .agilentDSA90804A import agilentDSA90804A
 from .agilentDSA91204A import agilentDSA91204A
 from .agilentDSA91304A import agilentDSA91304A
+
 # Infiniium 90000X
 from .agilentDSOX91304A import agilentDSOX91304A
 from .agilentDSOX91604A import agilentDSOX91604A
@@ -164,6 +171,7 @@ from .agilent8592B import agilent8592B
 from .agilent8593A import agilent8593A
 from .agilent8594A import agilent8594A
 from .agilent8595A import agilent8595A
+
 # 859xE series
 from .agilent8590E import agilent8590E
 from .agilent8590L import agilent8590L
@@ -196,6 +204,7 @@ from .agilent6032A import agilent6032A
 from .agilent6033A import agilent6033A
 from .agilent6035A import agilent6035A
 from .agilent6038A import agilent6038A
+
 # E3600A
 from .agilentE3631A import agilentE3631A
 from .agilentE3632A import agilentE3632A
@@ -219,6 +228,7 @@ from .agilentU2723A import agilentU2723A
 # RF Power Meters
 from .agilent436A import agilent436A
 from .agilent437B import agilent437B
+
 # U2000 series
 from .agilentU2000A import agilentU2000A
 from .agilentU2000B import agilentU2000B
@@ -234,6 +244,7 @@ from .agilentU2004A import agilentU2004A
 # 8642A/B
 from .agilent8642A import agilent8642A
 from .agilent8642B import agilent8642B
+
 # E4400B ESG
 from .agilentE4400B import agilentE4400B
 from .agilentE4420B import agilentE4420B
@@ -272,5 +283,3 @@ from .agilent86146B import agilent86146B
 
 # Optical attenuators
 from .agilent8156A import agilent8156A
-
-

@@ -26,5 +26,3 @@ THE SOFTWARE.
 
 # Programmable fiberoptic instrument
 from .diconGP700 import diconGP700
-
-

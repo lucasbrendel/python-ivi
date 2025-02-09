@@ -26,18 +26,31 @@ THE SOFTWARE.
 
 from .agilentBase8590 import *
 
+
 class agilentBase8590E(agilentBase8590):
     "Agilent 8590E series IVI spectrum analyzer driver"
 
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', '')
+        self.__dict__.setdefault("_instrument_id", "")
 
         super(agilentBase8590E, self).__init__(*args, **kwargs)
 
         self._identity_description = "Agilent 8590 series IVI spectrum analyzer driver"
-        self._identity_supported_instrument_models = ['8590E', '8590L', '8591C', '8591E', '8591EM', '8592L',
-                        '8593E', '8593EM', '8594E', '8594EM', '8594L', '8594Q', '8595E', '8595EM', '8596E',
-                        '8596EM']
-
-
-
+        self._identity_supported_instrument_models = [
+            "8590E",
+            "8590L",
+            "8591C",
+            "8591E",
+            "8591EM",
+            "8592L",
+            "8593E",
+            "8593EM",
+            "8594E",
+            "8594EM",
+            "8594L",
+            "8594Q",
+            "8595E",
+            "8595EM",
+            "8596E",
+            "8596EM",
+        ]

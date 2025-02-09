@@ -33,15 +33,24 @@ from .. import rfsiggen
 
 from .agilentBaseESG import *
 
-IQSource = set(['digital_modulation_base', 'cdma_base', 'tdma_base', 'arb_generator', 'external'])
+IQSource = set(
+    ["digital_modulation_base", "cdma_base", "tdma_base", "arb_generator", "external"]
+)
 
-class agilentBaseESGD(agilentBaseESG, rfsiggen.ModulateIQ, rfsiggen.IQImpairment,
-        rfsiggen.ArbGenerator, rfsiggen.DigitalModulationBase, rfsiggen.CDMABase,
-        rfsiggen.TDMABase):
+
+class agilentBaseESGD(
+    agilentBaseESG,
+    rfsiggen.ModulateIQ,
+    rfsiggen.IQImpairment,
+    rfsiggen.ArbGenerator,
+    rfsiggen.DigitalModulationBase,
+    rfsiggen.CDMABase,
+    rfsiggen.TDMABase,
+):
     "Agilent ESG-D series IVI RF signal generator driver"
 
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', '')
+        self.__dict__.setdefault("_instrument_id", "")
 
         super(agilentBaseESGD, self).__init__(*args, **kwargs)
 
@@ -52,19 +61,31 @@ class agilentBaseESGD(agilentBaseESG, rfsiggen.ModulateIQ, rfsiggen.IQImpairment
         self._digital_modulation_arb_waveform_size_min = 16
         self._digital_modulation_arb_waveform_size_max = 10240
 
-        self._identity_description = "Agilent ESG-D series IVI RF signal generator driver"
-        self._identity_supported_instrument_models = list(['E4430B', 'E4431B', 'E4432B', 'E4433B',
-                'E4434B', 'E4435B', 'E4436B', 'E4437B'])
+        self._identity_description = (
+            "Agilent ESG-D series IVI RF signal generator driver"
+        )
+        self._identity_supported_instrument_models = list(
+            [
+                "E4430B",
+                "E4431B",
+                "E4432B",
+                "E4433B",
+                "E4434B",
+                "E4435B",
+                "E4436B",
+                "E4437B",
+            ]
+        )
 
     def _load_arb_catalog(self):
         self._arb_catalog = list()
         self._arb_catalog_names = list()
         if not self._driver_operation_simulate:
-            raw = self._ask("mmemory:catalog? \"arbi:\"").lower()
+            raw = self._ask('mmemory:catalog? "arbi:"').lower()
 
-            l = raw.split(',')
+            l = raw.split(",")
             l = [s.strip('"') for s in l]
-            self._arb_catalog = [l[i:i+3] for i in range(2, len(l), 3)]
+            self._arb_catalog = [l[i : i + 3] for i in range(2, len(l), 3)]
             self._arb_catalog_names = [l[0] for l in self._arb_catalog]
 
     def _get_iq_enabled(self):
@@ -87,7 +108,7 @@ class agilentBaseESGD(agilentBaseESG, rfsiggen.ModulateIQ, rfsiggen.IQImpairment
         if value not in IQSource:
             raise ivi.ValueNotSupportedException()
         if not self._driver_operation_simulate:
-            if value == 'arb_generator':
+            if value == "arb_generator":
                 self._write("radio:arb:state 1")
         self._iq_source = value
 
@@ -100,14 +121,14 @@ class agilentBaseESGD(agilentBaseESG, rfsiggen.ModulateIQ, rfsiggen.IQImpairment
 
     def _get_iq_swap_enabled(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
-            self._iq_swap_enabled = self._ask("dm:polarity?").lower() == 'inv'
+            self._iq_swap_enabled = self._ask("dm:polarity?").lower() == "inv"
             self._set_cache_valid()
         return self._iq_swap_enabled
 
     def _set_iq_swap_enabled(self, value):
         value = bool(value)
         if not self._driver_operation_simulate:
-            self._write("dm:polarity %s" % ('inverted' if value else 'normal'))
+            self._write("dm:polarity %s" % ("inverted" if value else "normal"))
         self._iq_swap_enabled = value
         self._set_cache_valid()
 
@@ -158,14 +179,20 @@ class agilentBaseESGD(agilentBaseESG, rfsiggen.ModulateIQ, rfsiggen.IQImpairment
         if not self._driver_operation_simulate and not self._get_cache_valid():
             # instrument value is in dB, but driver value is in percent
             value = float(self._ask("dm:iqadjustment:gain?"))
-            self._iq_impairment_iq_ratio = math.copysign(100*(10**(abs(value)/10)-1), value)
+            self._iq_impairment_iq_ratio = math.copysign(
+                100 * (10 ** (abs(value) / 10) - 1), value
+            )
             self._set_cache_valid()
         return self._iq_impairment_iq_ratio
 
     def _set_iq_impairment_iq_ratio(self, value):
         value = float(value)
         if not self._driver_operation_simulate:
-            self._write("dm:iqadjustment:gain %e" % math.copysign(10*math.log10(1+(abs(value)/100))), value)
+            self._write(
+                "dm:iqadjustment:gain %e"
+                % math.copysign(10 * math.log10(1 + (abs(value) / 100))),
+                value,
+            )
         self._iq_impairment_iq_ratio = value
         self._set_cache_valid()
 
@@ -184,18 +211,22 @@ class agilentBaseESGD(agilentBaseESG, rfsiggen.ModulateIQ, rfsiggen.IQImpairment
 
     def _get_digital_modulation_arb_selected_waveform(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
-            self._digital_modulation_arb_selected_waveform = self._ask("radio:arb:waveform?").lower().strip('"')[5:]
+            self._digital_modulation_arb_selected_waveform = (
+                self._ask("radio:arb:waveform?").lower().strip('"')[5:]
+            )
         return self._digital_modulation_arb_selected_waveform
 
     def _set_digital_modulation_arb_selected_waveform(self, value):
         value = str(value).lower()
         if not self._driver_operation_simulate:
-            self._write("radio:arb:waveform \"ARBI:%s\"" % value)
+            self._write('radio:arb:waveform "ARBI:%s"' % value)
         self._digital_modulation_arb_selected_waveform = value
 
     def _get_digital_modulation_arb_clock_frequency(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
-            self._digital_modulation_arb_clock_frequency = float(self._ask("radio:arb:clock:srate?"))
+            self._digital_modulation_arb_clock_frequency = float(
+                self._ask("radio:arb:clock:srate?")
+            )
             self._set_cache_valid()
         return self._digital_modulation_arb_clock_frequency
 
@@ -208,7 +239,9 @@ class agilentBaseESGD(agilentBaseESG, rfsiggen.ModulateIQ, rfsiggen.IQImpairment
 
     def _get_digital_modulation_arb_filter_frequency(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
-            self._digital_modulation_arb_filter_frequency = float(self._ask("radio:arb:clock:rfilter?"))
+            self._digital_modulation_arb_filter_frequency = float(
+                self._ask("radio:arb:clock:rfilter?")
+            )
             self._set_cache_valid()
         return self._digital_modulation_arb_filter_frequency
 
@@ -247,7 +280,9 @@ class agilentBaseESGD(agilentBaseESG, rfsiggen.ModulateIQ, rfsiggen.IQImpairment
             raise ivi.ValueNotSupportedException()
         self._digital_modulation_arb_external_trigger_slope = value
 
-    def _digital_modulation_arb_write_waveform(self, name, idata, qdata, more_data_pending=False):
+    def _digital_modulation_arb_write_waveform(
+        self, name, idata, qdata, more_data_pending=False
+    ):
         yi = None
         yq = None
 
@@ -257,12 +292,16 @@ class agilentBaseESGD(agilentBaseESG, rfsiggen.ModulateIQ, rfsiggen.IQImpairment
         elif type(idata) == np.ndarray and len(idata.shape) == 1:
             # 1D array
             yi = idata
-        elif type(idata) == np.ndarray and len(idata.shape) == 2 and idata.shape[0] == 1:
+        elif (
+            type(idata) == np.ndarray and len(idata.shape) == 2 and idata.shape[0] == 1
+        ):
             # 2D array, hieght 1
             yi = idata[0]
-        elif type(idata) == np.ndarray and len(idata.shape) == 2 and idata.shape[1] == 1:
+        elif (
+            type(idata) == np.ndarray and len(idata.shape) == 2 and idata.shape[1] == 1
+        ):
             # 2D array, width 1
-            yi = idata[:,0]
+            yi = idata[:, 0]
         else:
             xi, yi = ivi.get_sig(idata)
 
@@ -272,12 +311,16 @@ class agilentBaseESGD(agilentBaseESG, rfsiggen.ModulateIQ, rfsiggen.IQImpairment
         elif type(qdata) == np.ndarray and len(qdata.shape) == 1:
             # 1D array
             yq = qdata
-        elif type(qdata) == np.ndarray and len(qdata.shape) == 2 and qdata.shape[0] == 1:
+        elif (
+            type(qdata) == np.ndarray and len(qdata.shape) == 2 and qdata.shape[0] == 1
+        ):
             # 2D array, hieght 1
             yq = qdata[0]
-        elif type(qdata) == np.ndarray and len(qdata.shape) == 2 and qdata.shape[1] == 1:
+        elif (
+            type(qdata) == np.ndarray and len(qdata.shape) == 2 and qdata.shape[1] == 1
+        ):
             # 2D array, width 1
-            yq = qdata[:,0]
+            yq = qdata[:, 0]
         else:
             xq, yq = ivi.get_sig(qdata)
 
@@ -291,15 +334,15 @@ class agilentBaseESGD(agilentBaseESG, rfsiggen.ModulateIQ, rfsiggen.IQImpairment
             raise ivi.ValueNotSupportedException()
 
         # clip on [-1,1] and rescale to [0,1]
-        yic = (yi.clip(-1, 1)+1)/2
-        yqc = (yq.clip(-1, 1)+1)/2
+        yic = (yi.clip(-1, 1) + 1) / 2
+        yqc = (yq.clip(-1, 1) + 1) / 2
 
         # scale to 14 bits
-        yib = np.rint(yic * ((1 << 14)-1)).astype(int) & 0x00003fff
-        yqb = np.rint(yqc * ((1 << 14)-1)).astype(int) & 0x00003fff
+        yib = np.rint(yic * ((1 << 14) - 1)).astype(int) & 0x00003FFF
+        yqb = np.rint(yqc * ((1 << 14) - 1)).astype(int) & 0x00003FFF
 
-        raw_i_data = yib.astype('>i2').tobytes()
-        raw_q_data = yqb.astype('>i2').tobytes()
+        raw_i_data = yib.astype(">i2").tobytes()
+        raw_q_data = yqb.astype(">i2").tobytes()
 
         self._write_ieee_block(raw_i_data, 'mmemory:data "ARBI:%s", ' % name)
         self._write_ieee_block(raw_q_data, 'mmemory:data "ARBQ:%s", ' % name)
@@ -360,7 +403,9 @@ class agilentBaseESGD(agilentBaseESG, rfsiggen.ModulateIQ, rfsiggen.IQImpairment
         self._set_digital_modulation_base_clock_source(source)
         self._set_digital_modulation_base_external_clock_type(type)
 
-    def _digital_modulation_base_create_bit_sequence(self, name, bit_count, sequence, more_data_pending):
+    def _digital_modulation_base_create_bit_sequence(
+        self, name, bit_count, sequence, more_data_pending
+    ):
         pass
 
     def _digital_modulation_base_clear_all_bit_sequences(self):
@@ -465,4 +510,3 @@ class agilentBaseESGD(agilentBaseESG, rfsiggen.ModulateIQ, rfsiggen.IQImpairment
     def _digital_modulation_tdma_configure_clock_source(self, source, type):
         self._set_digital_modulation_tdma_clock_source(source)
         self._set_digital_modulation_tdma_external_clock_type(type)
-

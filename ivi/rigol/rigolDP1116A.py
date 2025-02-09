@@ -26,29 +26,25 @@ THE SOFTWARE.
 
 from .rigolDP1000 import *
 
+
 class rigolDP1116A(rigolDP1000):
     "Rigol DP1116A IVI DC power supply driver"
-    
+
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', 'DP1116A')
-        
+        self.__dict__.setdefault("_instrument_id", "DP1116A")
+
         super(rigolDP1116A, self).__init__(*args, **kwargs)
-        
+
         self._output_count = 1
-        
+
         self._output_spec = [
             {
-                'range': {
-                    'P16V': (16.0, 10.0),
-                    'P32V': (32.0, 5.0)
-                },
-                'ovp_max': 35.2,
-                'ocp_max': 11.0,
-                'voltage_max': 16.0,
-                'current_max': 10.0
+                "range": {"P16V": (16.0, 10.0), "P32V": (32.0, 5.0)},
+                "ovp_max": 35.2,
+                "ocp_max": 11.0,
+                "voltage_max": 16.0,
+                "current_max": 10.0,
             }
         ]
-        
+
         self._init_outputs()
-    
-    

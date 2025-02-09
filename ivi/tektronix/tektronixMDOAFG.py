@@ -30,33 +30,35 @@ import struct
 from .. import ivi
 from .. import fgen
 
-OutputMode = set(['function', 'arbitrary'])
-OperationMode = set(['continuous'])
+OutputMode = set(["function", "arbitrary"])
+OperationMode = set(["continuous"])
 StandardWaveformMapping = {
-        'sine': 'sine',
-        'square': 'square',
-        'triangle': 'ramp',
-        'ramp_up': 'ramp',
-        'ramp_down': 'ramp',
-        'dc': 'dc',
-        'pulse': 'pulse',
-        'noise': 'noise',
-        'dc': 'dc',
-        'sinc': 'sinc',
-        'exprise': 'erise',
-        'expfall': 'edecay',
-        'cardiac': 'cardiac',
-        'gaussian': 'gaussian',
-        'lorentz': 'lorentz',
-        'haversine': 'haversine'
-        }
+    "sine": "sine",
+    "square": "square",
+    "triangle": "ramp",
+    "ramp_up": "ramp",
+    "ramp_down": "ramp",
+    "dc": "dc",
+    "pulse": "pulse",
+    "noise": "noise",
+    "dc": "dc",
+    "sinc": "sinc",
+    "exprise": "erise",
+    "expfall": "edecay",
+    "cardiac": "cardiac",
+    "gaussian": "gaussian",
+    "lorentz": "lorentz",
+    "haversine": "haversine",
+}
 
-class tektronixMDOAFG(fgen.Base, fgen.StdFunc, fgen.ArbWfm, fgen.ArbFrequency,
-                fgen.ArbChannelWfm):
+
+class tektronixMDOAFG(
+    fgen.Base, fgen.StdFunc, fgen.ArbWfm, fgen.ArbFrequency, fgen.ArbChannelWfm
+):
     "Tektronix MDO series AFG option IVI function generator driver"
 
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', 'MDO3000')
+        self.__dict__.setdefault("_instrument_id", "MDO3000")
 
         self._output_standard_waveform_pulse_width = list()
         self._output_standard_waveform_symmetry = list()
@@ -73,43 +75,63 @@ class tektronixMDOAFG(fgen.Base, fgen.StdFunc, fgen.ArbWfm, fgen.ArbFrequency,
         self._arbitrary_waveform_size_min = 2
         self._arbitrary_waveform_quantum = 1
 
-        self._add_property('outputs[].standard_waveform.pulse_width',
-                        self._get_output_standard_waveform_pulse_width,
-                        self._set_output_standard_waveform_pulse_width,
-                        None,
-                        """
+        self._add_property(
+            "outputs[].standard_waveform.pulse_width",
+            self._get_output_standard_waveform_pulse_width,
+            self._set_output_standard_waveform_pulse_width,
+            None,
+            """
                         Specifies the pulse width for a pulse waveform. This attribute affects
                         function generator behavior only when the Waveform attribute is set to
                         Waveform Pulse. The units are seconds.
-                        """)
-        self._add_property('outputs[].standard_waveform.symmetry',
-                        self._get_output_standard_waveform_symmetry,
-                        self._set_output_standard_waveform_symmetry,
-                        None,
-                        """
+                        """,
+        )
+        self._add_property(
+            "outputs[].standard_waveform.symmetry",
+            self._get_output_standard_waveform_symmetry,
+            self._set_output_standard_waveform_symmetry,
+            None,
+            """
                         Specifies the symmetry for a ramp or triangle waveform. This attribute
                         affects function generator behavior only when the Waveform attribute is
                         set to Waveform Triangle, Ramp Up, or Ramp Down. The value is expressed
                         as a percentage.
-                        """)
-        self._add_property('outputs[].noise.enabled',
-                        self._get_output_noise_enabled,
-                        self._set_output_noise_enabled,
-                        None,
-                        """
+                        """,
+        )
+        self._add_property(
+            "outputs[].noise.enabled",
+            self._get_output_noise_enabled,
+            self._set_output_noise_enabled,
+            None,
+            """
                         Enables additive noise on the selected channel.
-                        """)
-        self._add_property('outputs[].noise.percent',
-                        self._get_output_noise_percent,
-                        self._set_output_noise_percent,
-                        None,
-                        """
+                        """,
+        )
+        self._add_property(
+            "outputs[].noise.percent",
+            self._get_output_noise_percent,
+            self._set_output_noise_percent,
+            None,
+            """
                         Specifies the level of the added noise in percent of the amplitude.
-                        """)
+                        """,
+        )
 
-        self._identity_description = "Tektronix MDO series AFG option IVI function generator driver"
-        self._identity_supported_instrument_models = ['MDO3012', 'MDO3014', 'MDO3022',
-                'MDO3024', 'MDO3032', 'MDO3034', 'MDO3052', 'MDO3054', 'MDO3102', 'MDO3104']
+        self._identity_description = (
+            "Tektronix MDO series AFG option IVI function generator driver"
+        )
+        self._identity_supported_instrument_models = [
+            "MDO3012",
+            "MDO3014",
+            "MDO3022",
+            "MDO3024",
+            "MDO3032",
+            "MDO3034",
+            "MDO3052",
+            "MDO3054",
+            "MDO3102",
+            "MDO3104",
+        ]
 
         self._init_outputs()
 
@@ -132,12 +154,12 @@ class tektronixMDOAFG(fgen.Base, fgen.StdFunc, fgen.ArbWfm, fgen.ArbFrequency,
             if self._output_count == 1:
                 self._output_name.append("afg")
             else:
-                self._output_name.append("afg%d" % (i+1))
-            self._output_operation_mode.append('continuous')
+                self._output_name.append("afg%d" % (i + 1))
+            self._output_operation_mode.append("continuous")
             self._output_enabled.append(False)
             self._output_impedance.append(50)
-            self._output_mode.append('function')
-            self._output_reference_clock_source.append('internal')
+            self._output_mode.append("function")
+            self._output_reference_clock_source.append("internal")
             self._output_standard_waveform_pulse_width.append(100e-6)
             self._output_standard_waveform_symmetry.append(50.0)
             self._output_noise_enabled.append(False)
@@ -158,7 +180,9 @@ class tektronixMDOAFG(fgen.Base, fgen.StdFunc, fgen.ArbWfm, fgen.ArbFrequency,
 
     def _get_output_enabled(self, index):
         index = ivi.get_index(self._output_name, index)
-        if not self._driver_operation_simulate and not self._get_cache_valid(index=index):
+        if not self._driver_operation_simulate and not self._get_cache_valid(
+            index=index
+        ):
             resp = self._ask(":%s:output:state?" % self._output_name[index])
             self._output_enabled[index] = bool(int(resp))
             self._set_cache_valid(index=index)
@@ -174,11 +198,13 @@ class tektronixMDOAFG(fgen.Base, fgen.StdFunc, fgen.ArbWfm, fgen.ArbFrequency,
 
     def _get_output_impedance(self, index):
         index = ivi.get_index(self._analog_channel_name, index)
-        if not self._driver_operation_simulate and not self._get_cache_valid(index=index):
+        if not self._driver_operation_simulate and not self._get_cache_valid(
+            index=index
+        ):
             val = self._ask(":%s:output:load:impedance?" % self._output_name[index])
-            if val == 'HIGHZ':
+            if val == "HIGHZ":
                 self._output_impedance[index] = 1000000
-            elif val == 'FIF':
+            elif val == "FIF":
                 self._output_impedance[index] = 50
             self._set_cache_valid(index=index)
         return self._output_impedance[index]
@@ -187,24 +213,30 @@ class tektronixMDOAFG(fgen.Base, fgen.StdFunc, fgen.ArbWfm, fgen.ArbFrequency,
         value = float(value)
         index = ivi.get_index(self._analog_channel_name, index)
         if value != 50 and value != 1000000:
-            raise Exception('Invalid impedance selection')
+            raise Exception("Invalid impedance selection")
         if not self._driver_operation_simulate:
             if value == 1000000:
-                self._write(":%s:output:load:impedance highz" % self._output_name[index])
+                self._write(
+                    ":%s:output:load:impedance highz" % self._output_name[index]
+                )
             elif value == 50:
-                self._write(":%s:output:load:impedance fifty" % self._output_name[index])
+                self._write(
+                    ":%s:output:load:impedance fifty" % self._output_name[index]
+                )
         self._output_impedance[index] = value
         self._set_cache_valid(index=index)
-        self._set_cache_valid(False, 'output_standard_waveform_amplitude', index)
+        self._set_cache_valid(False, "output_standard_waveform_amplitude", index)
 
     def _get_output_mode(self, index):
         index = ivi.get_index(self._output_name, index)
-        if not self._driver_operation_simulate and not self._get_cache_valid(index=index):
+        if not self._driver_operation_simulate and not self._get_cache_valid(
+            index=index
+        ):
             resp = self._ask(":%s:function?" % self._output_name[index]).lower()
-            if resp == 'arbitrary':
-                self._output_mode[index] = 'arbitrary'
+            if resp == "arbitrary":
+                self._output_mode[index] = "arbitrary"
             else:
-                self._output_mode[index] = 'function'
+                self._output_mode[index] = "function"
             self._set_cache_valid(index=index)
         return self._output_mode[index]
 
@@ -213,13 +245,17 @@ class tektronixMDOAFG(fgen.Base, fgen.StdFunc, fgen.ArbWfm, fgen.ArbFrequency,
         if value not in OutputMode:
             raise ivi.ValueNotSupportedException()
         if not self._driver_operation_simulate:
-            if value == 'arbitrary':
+            if value == "arbitrary":
                 self._write(":%s:function arbitrary" % self._output_name[index])
             else:
-                if self._get_cache_valid('output_standard_waveform_waveform', index=index):
-                    self._set_output_standard_waveform_waveform(index, self._output_standard_waveform_waveform[index])
+                if self._get_cache_valid(
+                    "output_standard_waveform_waveform", index=index
+                ):
+                    self._set_output_standard_waveform_waveform(
+                        index, self._output_standard_waveform_waveform[index]
+                    )
                 else:
-                    self._set_output_standard_waveform_waveform(index, 'sine')
+                    self._set_output_standard_waveform_waveform(index, "sine")
         self._output_mode[index] = value
         self._set_cache_valid(index=index)
 
@@ -229,7 +265,7 @@ class tektronixMDOAFG(fgen.Base, fgen.StdFunc, fgen.ArbWfm, fgen.ArbFrequency,
 
     def _set_output_reference_clock_source(self, index, value):
         index = ivi.get_index(self._output_name, index)
-        value = 'internal'
+        value = "internal"
         self._output_reference_clock_source[index] = value
 
     def abort_generation(self):
@@ -240,7 +276,9 @@ class tektronixMDOAFG(fgen.Base, fgen.StdFunc, fgen.ArbWfm, fgen.ArbFrequency,
 
     def _get_output_standard_waveform_amplitude(self, index):
         index = ivi.get_index(self._output_name, index)
-        if not self._driver_operation_simulate and not self._get_cache_valid(index=index):
+        if not self._driver_operation_simulate and not self._get_cache_valid(
+            index=index
+        ):
             resp = self._ask(":%s:amplitude?" % self._output_name[index])
             self._output_standard_waveform_amplitude[index] = float(resp)
             self._set_cache_valid(index=index)
@@ -258,7 +296,9 @@ class tektronixMDOAFG(fgen.Base, fgen.StdFunc, fgen.ArbWfm, fgen.ArbFrequency,
 
     def _get_output_standard_waveform_dc_offset(self, index):
         index = ivi.get_index(self._output_name, index)
-        if not self._driver_operation_simulate and not self._get_cache_valid(index=index):
+        if not self._driver_operation_simulate and not self._get_cache_valid(
+            index=index
+        ):
             resp = self._ask(":%s:offset?" % self._output_name[index])
             self._output_standard_waveform_dc_offset[index] = float(resp)
             self._set_cache_valid(index=index)
@@ -274,7 +314,9 @@ class tektronixMDOAFG(fgen.Base, fgen.StdFunc, fgen.ArbWfm, fgen.ArbFrequency,
 
     def _get_output_standard_waveform_duty_cycle_high(self, index):
         index = ivi.get_index(self._output_name, index)
-        if not self._driver_operation_simulate and not self._get_cache_valid(index=index):
+        if not self._driver_operation_simulate and not self._get_cache_valid(
+            index=index
+        ):
             resp = self._ask(":%s:square:duty?" % self._output_name[index])
             self._output_standard_waveform_duty_cycle_high[index] = float(resp)
             self._set_cache_valid(index=index)
@@ -292,7 +334,9 @@ class tektronixMDOAFG(fgen.Base, fgen.StdFunc, fgen.ArbWfm, fgen.ArbFrequency,
 
     def _get_output_standard_waveform_pulse_width(self, index):
         index = ivi.get_index(self._output_name, index)
-        if not self._driver_operation_simulate and not self._get_cache_valid(index=index):
+        if not self._driver_operation_simulate and not self._get_cache_valid(
+            index=index
+        ):
             resp = self._ask(":%s:pulse:width?" % self._output_name[index])
             self._output_standard_waveform_pulse_width[index] = float(resp)
             self._set_cache_valid(index=index)
@@ -308,7 +352,9 @@ class tektronixMDOAFG(fgen.Base, fgen.StdFunc, fgen.ArbWfm, fgen.ArbFrequency,
 
     def _get_output_standard_waveform_symmetry(self, index):
         index = ivi.get_index(self._output_name, index)
-        if not self._driver_operation_simulate and not self._get_cache_valid(index=index):
+        if not self._driver_operation_simulate and not self._get_cache_valid(
+            index=index
+        ):
             resp = self._ask(":%s:ramp:symmetry?" % self._output_name[index])
             self._output_standard_waveform_symmetry[index] = float(resp)
             self._set_cache_valid(index=index)
@@ -326,7 +372,9 @@ class tektronixMDOAFG(fgen.Base, fgen.StdFunc, fgen.ArbWfm, fgen.ArbFrequency,
 
     def _get_output_standard_waveform_start_phase(self, index):
         index = ivi.get_index(self._output_name, index)
-        if not self._driver_operation_simulate and not self._get_cache_valid(index=index):
+        if not self._driver_operation_simulate and not self._get_cache_valid(
+            index=index
+        ):
             resp = self._ask(":%s:phase?" % self._output_name[index])
             self._output_standard_waveform_start_phase[index] = float(resp)
             self._set_cache_valid(index=index)
@@ -344,7 +392,9 @@ class tektronixMDOAFG(fgen.Base, fgen.StdFunc, fgen.ArbWfm, fgen.ArbFrequency,
 
     def _get_output_standard_waveform_frequency(self, index):
         index = ivi.get_index(self._output_name, index)
-        if not self._driver_operation_simulate and not self._get_cache_valid(index=index):
+        if not self._driver_operation_simulate and not self._get_cache_valid(
+            index=index
+        ):
             resp = self._ask(":%s:frequency?" % self._output_name[index])
             self._output_standard_waveform_frequency[index] = float(resp)
             self._set_cache_valid(index=index)
@@ -362,18 +412,20 @@ class tektronixMDOAFG(fgen.Base, fgen.StdFunc, fgen.ArbWfm, fgen.ArbFrequency,
 
     def _get_output_standard_waveform_waveform(self, index):
         index = ivi.get_index(self._output_name, index)
-        if not self._driver_operation_simulate and not self._get_cache_valid(index=index):
+        if not self._driver_operation_simulate and not self._get_cache_valid(
+            index=index
+        ):
             resp = self._ask(":%s:function?" % self._output_name[index]).lower()
-            if resp == 'arbitrary':
-                resp = 'sine'
-            resp = [k for k,v in StandardWaveformMapping.items() if v==resp][0]
-            if resp == 'ramp_up':
+            if resp == "arbitrary":
+                resp = "sine"
+            resp = [k for k, v in StandardWaveformMapping.items() if v == resp][0]
+            if resp == "ramp_up":
                 if self._get_output_standard_waveform_symmetry(index) <= 10.0:
-                    resp = 'ramp_down'
+                    resp = "ramp_down"
                 elif self._get_output_standard_waveform_symmetry(index) >= 90.0:
-                    resp = 'ramp_up'
+                    resp = "ramp_up"
                 else:
-                    resp = 'triangle'
+                    resp = "triangle"
             self._output_standard_waveform_waveform[index] = resp
             self._set_cache_valid(index=index)
         return self._output_standard_waveform_waveform[index]
@@ -383,22 +435,30 @@ class tektronixMDOAFG(fgen.Base, fgen.StdFunc, fgen.ArbWfm, fgen.ArbFrequency,
         if value not in StandardWaveformMapping:
             raise ivi.ValueNotSupportedException()
         if not self._driver_operation_simulate:
-            self._write(":%s:function %s" % (self._output_name[index], StandardWaveformMapping[value]))
-            if value == 'triangle':
-                if self._get_output_standard_waveform_symmetry(index) <= 10.0 or self._get_output_standard_waveform_symmetry(index) >= 90:
+            self._write(
+                ":%s:function %s"
+                % (self._output_name[index], StandardWaveformMapping[value])
+            )
+            if value == "triangle":
+                if (
+                    self._get_output_standard_waveform_symmetry(index) <= 10.0
+                    or self._get_output_standard_waveform_symmetry(index) >= 90
+                ):
                     self._set_output_standard_waveform_symmetry(index, 50.0)
-            elif value == 'ramp_up':
+            elif value == "ramp_up":
                 self._set_output_standard_waveform_symmetry(index, 100.0)
-            elif value == 'ramp_down':
+            elif value == "ramp_down":
                 self._set_output_standard_waveform_symmetry(index, 0.0)
         self._output_standard_waveform_waveform[index] = value
         self._set_cache_valid(index=index)
-        self._output_mode[index] = 'function'
-        self._set_cache_valid(True, 'output_mode', index=index)
+        self._output_mode[index] = "function"
+        self._set_cache_valid(True, "output_mode", index=index)
 
     def _get_output_noise_enabled(self, index):
         index = ivi.get_index(self._output_name, index)
-        if not self._driver_operation_simulate and not self._get_cache_valid(index=index):
+        if not self._driver_operation_simulate and not self._get_cache_valid(
+            index=index
+        ):
             resp = self._ask(":%s:noiseadd:state?" % self._output_name[index])
             self._output_noise_enabled[index] = bool(int(resp))
             self._set_cache_valid(index=index)
@@ -414,7 +474,9 @@ class tektronixMDOAFG(fgen.Base, fgen.StdFunc, fgen.ArbWfm, fgen.ArbFrequency,
 
     def _get_output_noise_percent(self, index):
         index = ivi.get_index(self._output_name, index)
-        if not self._driver_operation_simulate and not self._get_cache_valid(index=index):
+        if not self._driver_operation_simulate and not self._get_cache_valid(
+            index=index
+        ):
             resp = self._ask(":%s:noiseadd:percent?" % self._output_name[index])
             self._output_noise_percent[index] = float(resp)
             self._set_cache_valid(index=index)
@@ -443,7 +505,7 @@ class tektronixMDOAFG(fgen.Base, fgen.StdFunc, fgen.ArbWfm, fgen.ArbFrequency,
         self._set_output_standard_waveform_dc_offset(index, value)
 
     def _get_output_arbitrary_waveform(self, index):
-        index = ivi.get_index(self._output_name, index) 
+        index = ivi.get_index(self._output_name, index)
         return self._output_arbitrary_waveform[index]
 
     def _set_output_arbitrary_waveform(self, index, value):
@@ -501,7 +563,7 @@ class tektronixMDOAFG(fgen.Base, fgen.StdFunc, fgen.ArbWfm, fgen.ArbFrequency,
             y = data[0]
         elif type(data) == np.ndarray and len(data.shape) == 2 and data.shape[1] == 1:
             # 2D array, width 1
-            y = data[:,0]
+            y = data[:, 0]
         else:
             x, y = ivi.get_sig(data)
 
@@ -511,9 +573,11 @@ class tektronixMDOAFG(fgen.Base, fgen.StdFunc, fgen.ArbWfm, fgen.ArbFrequency,
         # clip on [-1,1]
         yc = y.clip(-1, 1)
 
-        raw_data = yc.astype('<f').tobytes()
+        raw_data = yc.astype("<f").tobytes()
 
-        self._write(':%s:arbitrary:emem:points:encdg binary' % self._output_name[index])
-        self._write_ieee_block(raw_data, ':%s:arbitrary:emem:points ' % self._output_name[index])
+        self._write(":%s:arbitrary:emem:points:encdg binary" % self._output_name[index])
+        self._write_ieee_block(
+            raw_data, ":%s:arbitrary:emem:points " % self._output_name[index]
+        )
 
         return self._output_name[index]

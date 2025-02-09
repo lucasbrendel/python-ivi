@@ -26,30 +26,26 @@ THE SOFTWARE.
 
 from .agilentE3600A import *
 
+
 class agilentE3645A(agilentE3600A):
     "Agilent E3645A IVI DC power supply driver"
-    
+
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', 'E3645A')
-        
+        self.__dict__.setdefault("_instrument_id", "E3645A")
+
         super(agilentE3645A, self).__init__(*args, **kwargs)
-        
+
         self._output_count = 1
-        
+
         self._output_spec = [
             {
-                'range': {
-                    'P35V': (36.05, 2.266),
-                    'P60V': (61.8, 1.339)
-                },
-                'ovp_max': 66.0,
-                'voltage_max': 36.05,
-                'current_max': 2.266
+                "range": {"P35V": (36.05, 2.266), "P60V": (61.8, 1.339)},
+                "ovp_max": 66.0,
+                "voltage_max": 36.05,
+                "current_max": 2.266,
             }
         ]
-        
+
         self._memory_size = 5
-        
+
         self._init_outputs()
-    
-    

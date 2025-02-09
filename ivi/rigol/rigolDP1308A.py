@@ -26,46 +26,39 @@ THE SOFTWARE.
 
 from .rigolDP1000 import *
 
+
 class rigolDP1308A(rigolDP1000):
     "Rigol DP1308A IVI DC power supply driver"
-    
+
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', 'DP1308A')
-        
+        self.__dict__.setdefault("_instrument_id", "DP1308A")
+
         super(rigolDP1308A, self).__init__(*args, **kwargs)
-        
+
         self._output_count = 3
-        
+
         self._output_spec = [
             {
-                'range': {
-                    'P6V': (6.0, 5.0)
-                },
-                'ovp_max': 6.5,
-                'ocp_max': 5.5,
-                'voltage_max': 6.0,
-                'current_max': 5.0
+                "range": {"P6V": (6.0, 5.0)},
+                "ovp_max": 6.5,
+                "ocp_max": 5.5,
+                "voltage_max": 6.0,
+                "current_max": 5.0,
             },
             {
-                'range': {
-                    'P25V': (25.0, 1.0)
-                },
-                'ovp_max': 27.0,
-                'ocp_max': 1.2,
-                'voltage_max': 25.0,
-                'current_max': 1.0
+                "range": {"P25V": (25.0, 1.0)},
+                "ovp_max": 27.0,
+                "ocp_max": 1.2,
+                "voltage_max": 25.0,
+                "current_max": 1.0,
             },
             {
-                'range': {
-                    'N25V': (-25.0, 1.0)
-                },
-                'ovp_max': -27.0,
-                'ocp_max': 1.2,
-                'voltage_max': -25.0,
-                'current_max': 1.0
-            }
+                "range": {"N25V": (-25.0, 1.0)},
+                "ovp_max": -27.0,
+                "ocp_max": 1.2,
+                "voltage_max": -25.0,
+                "current_max": 1.0,
+            },
         ]
-        
+
         self._init_outputs()
-    
-    

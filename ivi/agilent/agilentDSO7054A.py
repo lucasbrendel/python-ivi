@@ -26,19 +26,18 @@ THE SOFTWARE.
 
 from .agilent7000A import *
 
+
 class agilentDSO7054A(agilent7000A):
     "Agilent InfiniiVision DSO7054A IVI oscilloscope driver"
-    
+
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', 'DSO7054A')
-        
+        self.__dict__.setdefault("_instrument_id", "DSO7054A")
+
         super(agilentDSO7054A, self).__init__(*args, **kwargs)
-        
+
         self._analog_channel_count = 4
         self._digital_channel_count = 0
         self._channel_count = self._analog_channel_count + self._digital_channel_count
         self._bandwidth = 500e6
-        
+
         self._init_channels()
-    
-    

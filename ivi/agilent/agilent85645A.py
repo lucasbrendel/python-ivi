@@ -28,27 +28,28 @@ import time
 
 from .agilent85644A import *
 
-OutputCoupling = set(['ac', 'dc'])
+OutputCoupling = set(["ac", "dc"])
+
 
 class agilent85645A(agilent85644A):
     "Agilent 85645A IVI tracking source driver"
 
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', '85645A')
+        self.__dict__.setdefault("_instrument_id", "85645A")
 
-        self._rf_output_coupling = 'ac'
+        self._rf_output_coupling = "ac"
 
         super(agilent85645A, self).__init__(*args, **kwargs)
 
         self._frequency_low = 300e3
         self._frequency_high = 26.5e9
 
-        self._add_property('rf.output_coupling',
-                        self._get_rf_output_coupling,
-                        self._set_rf_output_coupling)
-        self._add_method('rf.ytm_peak',
-                        self._rf_ytm_peak)
-
+        self._add_property(
+            "rf.output_coupling",
+            self._get_rf_output_coupling,
+            self._set_rf_output_coupling,
+        )
+        self._add_method("rf.ytm_peak", self._rf_ytm_peak)
 
     def _get_rf_output_coupling(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():

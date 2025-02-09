@@ -26,39 +26,32 @@ THE SOFTWARE.
 
 from .agilentE3600A import *
 
+
 class agilentE3646A(agilentE3600A):
     "Agilent E3646A IVI DC power supply driver"
-    
+
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', 'E3646A')
-        
+        self.__dict__.setdefault("_instrument_id", "E3646A")
+
         super(agilentE3646A, self).__init__(*args, **kwargs)
-        
+
         self._output_count = 2
-        
+
         self._output_spec = [
             {
-                'range': {
-                    'P8V': (8.24, 3.09),
-                    'P20V': (20.6, 1.545)
-                },
-                'ovp_max': 22.0,
-                'voltage_max': 8.24,
-                'current_max': 3.09
+                "range": {"P8V": (8.24, 3.09), "P20V": (20.6, 1.545)},
+                "ovp_max": 22.0,
+                "voltage_max": 8.24,
+                "current_max": 3.09,
             },
             {
-                'range': {
-                    'P8V': (8.24, 3.09),
-                    'P20V': (20.6, 1.545)
-                },
-                'ovp_max': 22.0,
-                'voltage_max': 8.24,
-                'current_max': 3.09
-            }
+                "range": {"P8V": (8.24, 3.09), "P20V": (20.6, 1.545)},
+                "ovp_max": 22.0,
+                "voltage_max": 8.24,
+                "current_max": 3.09,
+            },
         ]
-        
+
         self._memory_size = 5
-        
+
         self._init_outputs()
-    
-    

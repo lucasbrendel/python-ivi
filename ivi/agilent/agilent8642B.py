@@ -26,15 +26,14 @@ THE SOFTWARE.
 
 from .agilent8642A import *
 
+
 class agilent8642B(agilent8642A):
     "Agilent 8642B IVI RF signal generator driver"
-    
+
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', 'HP8642B')
-        
+        self.__dict__.setdefault("_instrument_id", "HP8642B")
+
         super(agilent8642B, self).__init__(*args, **kwargs)
-        
+
         self._frequency_low = 10e3
         self._frequency_high = 2100e6
-    
-    

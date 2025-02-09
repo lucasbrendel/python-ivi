@@ -26,24 +26,23 @@ THE SOFTWARE.
 
 from .chroma62000p import *
 
+
 class chroma62012p8060(chroma62000p):
     "Chroma ATE 62012P-80-60 series IVI DC power supply driver"
-    
+
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', '62012P-80-60')
-        
+        self.__dict__.setdefault("_instrument_id", "62012P-80-60")
+
         super(chroma62012p8060, self).__init__(*args, **kwargs)
-        
+
         self._output_count = 1
-        
+
         self._output_spec = [
             {
-                'range': {
-                    'P80V': (80.0, 60.0)
-                },
-                'ovp_max': 88.0, # 1.1 x max voltage
-                'ocp_max': 63.0, # 1.05 x max current
-                'voltage_max': 80.0,
-                'current_max': 60.0
+                "range": {"P80V": (80.0, 60.0)},
+                "ovp_max": 88.0,  # 1.1 x max voltage
+                "ocp_max": 63.0,  # 1.05 x max current
+                "voltage_max": 80.0,
+                "current_max": 60.0,
             }
         ]

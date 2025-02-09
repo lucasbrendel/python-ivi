@@ -26,5 +26,3 @@ THE SOFTWARE.
 
 # Phase shifters
 from .colbyPDL10A import colbyPDL10A
-
-

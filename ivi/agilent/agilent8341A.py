@@ -26,16 +26,14 @@ THE SOFTWARE.
 
 from .agilentBase8340 import *
 
+
 class agilent8341A(agilentBase8340):
     "Agilent 8341A IVI RF sweep generator driver"
 
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', 'HP8341A')
+        self.__dict__.setdefault("_instrument_id", "HP8341A")
 
         super(agilent8341A, self).__init__(*args, **kwargs)
 
         self._frequency_low = 10e6
         self._frequency_high = 26.5e9
-
-
-

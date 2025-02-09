@@ -26,13 +26,11 @@ THE SOFTWARE.
 
 from .agilent86140B import *
 
+
 class agilent86142B(agilent86140B):
     "Agilent 86142B OSA driver"
-    
+
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', '86142B')
-        
+        self.__dict__.setdefault("_instrument_id", "86142B")
+
         super(agilent86142B, self).__init__(*args, **kwargs)
-        
-    
-    

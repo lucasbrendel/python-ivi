@@ -26,11 +26,11 @@ THE SOFTWARE.
 
 from .agilentU2722A import *
 
+
 class agilentU2723A(agilentU2722A):
     "Agilent U2723A IVI modular source measure unit driver"
 
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', 'U2723A')
+        self.__dict__.setdefault("_instrument_id", "U2723A")
 
         super(agilentU2723A, self).__init__(*args, **kwargs)
-

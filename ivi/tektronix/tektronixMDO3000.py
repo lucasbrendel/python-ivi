@@ -27,11 +27,12 @@ THE SOFTWARE.
 from .tektronixMDO4000 import *
 from .tektronixMDOAFG import *
 
+
 class tektronixMDO3000(tektronixMDO4000, tektronixMDOAFG):
     "Tektronix MDO3000 series IVI oscilloscope driver"
 
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', 'MDO3000')
+        self.__dict__.setdefault("_instrument_id", "MDO3000")
 
         super(tektronixMDO3000, self).__init__(*args, **kwargs)
 
@@ -43,8 +44,18 @@ class tektronixMDO3000(tektronixMDO4000, tektronixMDOAFG):
         self._output_count = 1
 
         self._identity_description = "Tektronix MDO3000 series IVI oscilloscope driver"
-        self._identity_supported_instrument_models = ['MDO3012', 'MDO3014', 'MDO3022',
-                'MDO3024', 'MDO3032', 'MDO3034', 'MDO3052', 'MDO3054', 'MDO3102', 'MDO3104']
+        self._identity_supported_instrument_models = [
+            "MDO3012",
+            "MDO3014",
+            "MDO3022",
+            "MDO3024",
+            "MDO3032",
+            "MDO3034",
+            "MDO3052",
+            "MDO3054",
+            "MDO3102",
+            "MDO3104",
+        ]
 
         self._init_channels()
         self._init_outputs()

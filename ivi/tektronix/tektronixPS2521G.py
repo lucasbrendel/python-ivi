@@ -26,43 +26,36 @@ THE SOFTWARE.
 
 from .tektronixPS2520G import *
 
+
 class tektronixPS2521G(tektronixPS2520G):
     "Tektronix PS2521G DC power supply driver"
-    
+
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', 'PS2521G')
-        
+        self.__dict__.setdefault("_instrument_id", "PS2521G")
+
         super(tektronixPS2521G, self).__init__(*args, **kwargs)
-        
+
         self._output_count = 3
-        
+
         self._output_spec = [
             {
-                'range': {
-                    'P20V': (21.0, 2.5)
-                },
-                'ovp_max': 22.5,
-                'voltage_max': 21.0,
-                'current_max': 2.5
+                "range": {"P20V": (21.0, 2.5)},
+                "ovp_max": 22.5,
+                "voltage_max": 21.0,
+                "current_max": 2.5,
             },
             {
-                'range': {
-                    'P20V': (21.0, 2.5)
-                },
-                'ovp_max': 22.5,
-                'voltage_max': 21.0,
-                'current_max': 2.5
+                "range": {"P20V": (21.0, 2.5)},
+                "ovp_max": 22.5,
+                "voltage_max": 21.0,
+                "current_max": 2.5,
             },
             {
-                'range': {
-                    'P6V': (6.5, 5.0)
-                },
-                'ovp_max': 7.0,
-                'voltage_max': 6.5,
-                'current_max': 5.0
-            }
+                "range": {"P6V": (6.5, 5.0)},
+                "ovp_max": 7.0,
+                "voltage_max": 6.5,
+                "current_max": 5.0,
+            },
         ]
-        
+
         self._init_outputs()
-    
-    

@@ -28,15 +28,23 @@ from .. import ivi
 from .. import rfsiggen
 from .. import extra
 
-class agilentBase8340(rfsiggen.Base, rfsiggen.ModulateAM, rfsiggen.ModulateFM,
-        rfsiggen.ModulatePulse, rfsiggen.Sweep, rfsiggen.FrequencySweep, rfsiggen.PowerSweep,
-        extra.common.Memory,
-        extra.common.SystemSetup,
-        ivi.Driver):
+
+class agilentBase8340(
+    rfsiggen.Base,
+    rfsiggen.ModulateAM,
+    rfsiggen.ModulateFM,
+    rfsiggen.ModulatePulse,
+    rfsiggen.Sweep,
+    rfsiggen.FrequencySweep,
+    rfsiggen.PowerSweep,
+    extra.common.Memory,
+    extra.common.SystemSetup,
+    ivi.Driver,
+):
     "Agilent 8340A IVI RF sweep generator driver"
 
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', '')
+        self.__dict__.setdefault("_instrument_id", "")
 
         super(agilentBase8340, self).__init__(*args, **kwargs)
 
@@ -49,21 +57,27 @@ class agilentBase8340(rfsiggen.Base, rfsiggen.ModulateAM, rfsiggen.ModulateFM,
         self._identity_instrument_firmware_revision = ""
         self._identity_specification_major_version = 2
         self._identity_specification_minor_version = 0
-        self._identity_supported_instrument_models = list(['8340A','8340B', '8341A', '8341B'])
+        self._identity_supported_instrument_models = list(
+            ["8340A", "8340B", "8341A", "8341B"]
+        )
 
         self._frequency_low = 10e6
         self._frequency_high = 26.5e9
 
         self._memory_size = 8
 
-        self._add_property('sweep.frequency_sweep.center',
-                        self._get_sweep_frequency_sweep_center,
-                        self._set_sweep_frequency_sweep_center)
-        self._add_property('sweep.frequency_sweep.span',
-                        self._get_sweep_frequency_sweep_span,
-                        self._set_sweep_frequency_sweep_span)
+        self._add_property(
+            "sweep.frequency_sweep.center",
+            self._get_sweep_frequency_sweep_center,
+            self._set_sweep_frequency_sweep_center,
+        )
+        self._add_property(
+            "sweep.frequency_sweep.span",
+            self._get_sweep_frequency_sweep_span,
+            self._set_sweep_frequency_sweep_span,
+        )
 
-    def _initialize(self, resource = None, id_query = False, reset = False, **keywargs):
+    def _initialize(self, resource=None, id_query=False, reset=False, **keywargs):
         "Opens an I/O session to the instrument."
 
         super(agilentBase8340, self)._initialize(resource, id_query, reset, **keywargs)
@@ -76,14 +90,15 @@ class agilentBase8340(rfsiggen.Base, rfsiggen.ModulateAM, rfsiggen.ModulateFM,
         if id_query and not self._driver_operation_simulate:
             id = self.identity.instrument_model
             id_check = self._instrument_id
-            id_short = id[:len(id_check)]
+            id_short = id[: len(id_check)]
             if id_short != id_check:
-                raise Exception("Instrument ID mismatch, expecting %s, got %s", id_check, id_short)
+                raise Exception(
+                    "Instrument ID mismatch, expecting %s, got %s", id_check, id_short
+                )
 
         # reset
         if reset:
             self.utility_reset()
-
 
     def _get_identity_instrument_manufacturer(self):
         return self._identity_instrument_manufacturer
@@ -94,7 +109,7 @@ class agilentBase8340(rfsiggen.Base, rfsiggen.ModulateAM, rfsiggen.ModulateFM,
         if self._driver_operation_simulate:
             self._identity_instrument_model = "Not available while simulating"
         else:
-            self._identity_instrument_model = self._ask("OI").split('REV')[0]
+            self._identity_instrument_model = self._ask("OI").split("REV")[0]
             self._set_cache_valid()
         return self._identity_instrument_model
 
@@ -102,9 +117,13 @@ class agilentBase8340(rfsiggen.Base, rfsiggen.ModulateAM, rfsiggen.ModulateFM,
         if self._get_cache_valid():
             return self._identity_instrument_firmware_revision
         if self._driver_operation_simulate:
-            self._identity_instrument_firmware_revision = "Not available while simulating"
+            self._identity_instrument_firmware_revision = (
+                "Not available while simulating"
+            )
         else:
-            self._identity_instrument_firmware_revision = self._ask("OI").split('REV')[1]
+            self._identity_instrument_firmware_revision = self._ask("OI").split("REV")[
+                1
+            ]
             self._set_cache_valid()
         return self._identity_instrument_firmware_revision
 
@@ -114,7 +133,7 @@ class agilentBase8340(rfsiggen.Base, rfsiggen.ModulateAM, rfsiggen.ModulateFM,
     def _utility_error_query(self):
         error_code = 0
         error_message = "No error"
-        #if not self._driver_operation_simulate:
+        # if not self._driver_operation_simulate:
         #    error_code = int(self._ask("OE"))
         #    if error_code == 0:
         #        error_code = int(self._ask("OH"))
@@ -143,24 +162,23 @@ class agilentBase8340(rfsiggen.Base, rfsiggen.ModulateAM, rfsiggen.ModulateFM,
     def _utility_unlock_object(self):
         pass
 
-
     def _memory_save(self, index):
         index = int(index)
         if index < 0 or index >= self._memory_size:
             raise OutOfRangeException()
         if not self._driver_operation_simulate:
-            self._write("SV %d" % (index+1))
+            self._write("SV %d" % (index + 1))
 
     def _memory_recall(self, index):
         index = int(index)
         if index < 0 or index >= self._memory_size:
             raise OutOfRangeException()
         if not self._driver_operation_simulate:
-            self._write("RC %d" % (index+1))
+            self._write("RC %d" % (index + 1))
 
     def _system_fetch_setup(self):
         if self._driver_operation_simulate:
-            return b''
+            return b""
 
         self._write("OL?")
 
@@ -170,7 +188,7 @@ class agilentBase8340(rfsiggen.Base, rfsiggen.ModulateAM, rfsiggen.ModulateFM,
         if self._driver_operation_simulate:
             return
 
-        self._write_raw(b'IL'+data)
+        self._write_raw(b"IL" + data)
 
         self.driver_operation.invalidate_all_attributes()
 
@@ -201,7 +219,7 @@ class agilentBase8340(rfsiggen.Base, rfsiggen.ModulateAM, rfsiggen.ModulateFM,
         self._set_cache_valid()
 
     def _get_rf_output_enabled(self):
-        #if not self._driver_operation_simulate and not self._get_cache_valid():
+        # if not self._driver_operation_simulate and not self._get_cache_valid():
         #    self._rf_output_enabled = bool(int(self._ask("OPRF")))
         #    self._set_cache_valid()
         return self._rf_output_enabled
@@ -232,7 +250,7 @@ class agilentBase8340(rfsiggen.Base, rfsiggen.ModulateAM, rfsiggen.ModulateFM,
             t = t + 0.01
 
     def _get_analog_modulation_am_enabled(self):
-        #if not self._driver_operation_simulate and not self._get_cache_valid():
+        # if not self._driver_operation_simulate and not self._get_cache_valid():
         #    self._analog_modulation_am_enabled = bool(int(self._ask("OPAM")))
         #    self._set_cache_valid()
         return self._analog_modulation_am_enabled
@@ -315,10 +333,10 @@ class agilentBase8340(rfsiggen.Base, rfsiggen.ModulateAM, rfsiggen.ModulateFM,
 
     def _set_analog_modulation_fm_deviation(self, value):
         value = float(value)
-        #if not self._driver_operation_simulate:
+        # if not self._driver_operation_simulate:
         #    self._write("FM %e HZ" % value)
         self._analog_modulation_fm_deviation = value
-        #self._set_cache_valid()
+        # self._set_cache_valid()
 
     def _get_pulse_modulation_enabled(self):
         return self._pulse_modulation_enabled
@@ -370,8 +388,8 @@ class agilentBase8340(rfsiggen.Base, rfsiggen.ModulateAM, rfsiggen.ModulateFM,
             self._write("FA%fHZ" % value)
         self._sweep_frequency_sweep_start = value
         self._set_cache_valid()
-        self._set_cache_valid(False, 'sweep_frequency_sweep_center')
-        self._set_cache_valid(False, 'sweep_frequency_sweep_span')
+        self._set_cache_valid(False, "sweep_frequency_sweep_center")
+        self._set_cache_valid(False, "sweep_frequency_sweep_span")
 
     def _get_sweep_frequency_sweep_stop(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
@@ -385,8 +403,8 @@ class agilentBase8340(rfsiggen.Base, rfsiggen.ModulateAM, rfsiggen.ModulateFM,
             self._write("FB%fHZ" % value)
         self._sweep_frequency_sweep_stop = value
         self._set_cache_valid()
-        self._set_cache_valid(False, 'sweep_frequency_sweep_center')
-        self._set_cache_valid(False, 'sweep_frequency_sweep_span')
+        self._set_cache_valid(False, "sweep_frequency_sweep_center")
+        self._set_cache_valid(False, "sweep_frequency_sweep_span")
 
     def _get_sweep_frequency_sweep_center(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
@@ -400,8 +418,8 @@ class agilentBase8340(rfsiggen.Base, rfsiggen.ModulateAM, rfsiggen.ModulateFM,
             self._write("CF%fHZ" % value)
         self._sweep_frequency_sweep_center = value
         self._set_cache_valid()
-        self._set_cache_valid(False, 'sweep_frequency_sweep_start')
-        self._set_cache_valid(False, 'sweep_frequency_sweep_stop')
+        self._set_cache_valid(False, "sweep_frequency_sweep_start")
+        self._set_cache_valid(False, "sweep_frequency_sweep_stop")
 
     def _get_sweep_frequency_sweep_span(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
@@ -415,8 +433,8 @@ class agilentBase8340(rfsiggen.Base, rfsiggen.ModulateAM, rfsiggen.ModulateFM,
             self._write("DF%fHZ" % value)
         self._sweep_frequency_sweep_span = value
         self._set_cache_valid()
-        self._set_cache_valid(False, 'sweep_frequency_sweep_start')
-        self._set_cache_valid(False, 'sweep_frequency_sweep_stop')
+        self._set_cache_valid(False, "sweep_frequency_sweep_start")
+        self._set_cache_valid(False, "sweep_frequency_sweep_stop")
 
     def _get_sweep_frequency_sweep_time(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
@@ -454,4 +472,3 @@ class agilentBase8340(rfsiggen.Base, rfsiggen.ModulateAM, rfsiggen.ModulateFM,
 
     def _set_sweep_power_sweep_time(self, value):
         self._set_sweep_frequency_sweep_time(value)
-

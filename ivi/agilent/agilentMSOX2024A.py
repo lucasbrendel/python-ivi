@@ -26,19 +26,18 @@ THE SOFTWARE.
 
 from .agilent2000A import *
 
+
 class agilentMSOX2024A(agilent2000A):
     "Agilent InfiniiVision MSOX2024A IVI oscilloscope driver"
-    
+
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', 'MSO-X 2024A')
-        
+        self.__dict__.setdefault("_instrument_id", "MSO-X 2024A")
+
         super(agilentMSOX2024A, self).__init__(*args, **kwargs)
-        
+
         self._analog_channel_count = 4
         self._digital_channel_count = 16
         self._channel_count = self._analog_channel_count + self._digital_channel_count
         self._bandwidth = 200e6
-        
+
         self._init_channels()
-    
-    

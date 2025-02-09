@@ -26,15 +26,14 @@ THE SOFTWARE.
 
 from .agilentBaseESG import *
 
+
 class agilentE4400B(agilentBaseESG):
     "Agilent E4400B ESG-A IVI RF signal generator driver"
 
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', 'ESG-A4000B')
+        self.__dict__.setdefault("_instrument_id", "ESG-A4000B")
 
         super(agilentE4400B, self).__init__(*args, **kwargs)
 
         self._frequency_low = 250e3
         self._frequency_high = 1e9
-
-

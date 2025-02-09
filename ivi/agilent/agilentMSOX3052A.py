@@ -26,19 +26,18 @@ THE SOFTWARE.
 
 from .agilent3000A import *
 
+
 class agilentMSOX3052A(agilent3000A):
     "Agilent InfiniiVision MSOX3052A IVI oscilloscope driver"
-    
+
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', 'MSO-X 3052A')
-        
+        self.__dict__.setdefault("_instrument_id", "MSO-X 3052A")
+
         super(agilentMSOX3052A, self).__init__(*args, **kwargs)
-        
+
         self._analog_channel_count = 2
         self._digital_channel_count = 16
         self._channel_count = self._analog_channel_count + self._digital_channel_count
         self._bandwidth = 500e6
-        
+
         self._init_channels()
-    
-    

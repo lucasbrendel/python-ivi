@@ -29,10 +29,11 @@ THE SOFTWARE.
 from .rigolDP831A import rigolDP831A
 from .rigolDP832 import rigolDP832
 from .rigolDP832A import rigolDP832A
+
 # DP1000
 from .rigolDP1116A import rigolDP1116A
 from .rigolDP1308A import rigolDP1308A
 
 # Digital Multimeters
-#DM3068
+# DM3068
 from .rigolDM3068Agilent import rigolDM3068Agilent

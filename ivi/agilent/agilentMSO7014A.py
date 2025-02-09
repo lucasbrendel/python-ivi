@@ -26,19 +26,18 @@ THE SOFTWARE.
 
 from .agilent7000A import *
 
+
 class agilentMSO7014A(agilent7000A):
     "Agilent InfiniiVision MSO7014A IVI oscilloscope driver"
-    
+
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', 'MSO7014A')
-        
+        self.__dict__.setdefault("_instrument_id", "MSO7014A")
+
         super(agilentMSO7014A, self).__init__(*args, **kwargs)
-        
+
         self._analog_channel_count = 4
         self._digital_channel_count = 16
         self._channel_count = self._analog_channel_count + self._digital_channel_count
         self._bandwidth = 100e6
-        
+
         self._init_channels()
-    
-    

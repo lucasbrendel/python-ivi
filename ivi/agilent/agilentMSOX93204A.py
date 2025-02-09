@@ -26,19 +26,18 @@ THE SOFTWARE.
 
 from .agilent90000 import *
 
+
 class agilentMSOX93204A(agilent90000):
     "Agilent Infiniium MSOX93204A IVI oscilloscope driver"
-    
+
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', 'MSOX93204A')
-        
+        self.__dict__.setdefault("_instrument_id", "MSOX93204A")
+
         super(agilentMSOX93204A, self).__init__(*args, **kwargs)
-        
+
         self._analog_channel_count = 4
         self._digital_channel_count = 16
         self._channel_count = self._analog_channel_count + self._digital_channel_count
         self._bandwidth = 32e9
-        
+
         self._init_channels()
-    
-    

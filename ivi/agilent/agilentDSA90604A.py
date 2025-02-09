@@ -26,19 +26,18 @@ THE SOFTWARE.
 
 from .agilent90000 import *
 
+
 class agilentDSA90604A(agilent90000):
     "Agilent Infiniium DSA90604A IVI oscilloscope driver"
-    
+
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', 'DSO90604A')
-        
+        self.__dict__.setdefault("_instrument_id", "DSO90604A")
+
         super(agilentDSA90604A, self).__init__(*args, **kwargs)
-        
+
         self._analog_channel_count = 4
         self._digital_channel_count = 0
         self._channel_count = self._analog_channel_count + self._digital_channel_count
         self._bandwidth = 6e9
-        
+
         self._init_channels()
-    
-    

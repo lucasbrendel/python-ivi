@@ -26,19 +26,18 @@ THE SOFTWARE.
 
 from .agilent7000B import *
 
+
 class agilentDSO7014B(agilent7000B):
     "Agilent InfiniiVision DSO7014B IVI oscilloscope driver"
-    
+
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', 'DSO7014B')
-        
+        self.__dict__.setdefault("_instrument_id", "DSO7014B")
+
         super(agilentDSO7014B, self).__init__(*args, **kwargs)
-        
+
         self._analog_channel_count = 4
         self._digital_channel_count = 0
         self._channel_count = self._analog_channel_count + self._digital_channel_count
         self._bandwidth = 100e6
-        
+
         self._init_channels()
-    
-    

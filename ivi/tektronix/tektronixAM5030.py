@@ -26,14 +26,15 @@ THE SOFTWARE.
 
 from .. import ivi
 
-Coupling = set(['ac', 'dc', 'ref'])
-DegaussType = set(['normal', 'force_gain', 'gain_only'])
+Coupling = set(["ac", "dc", "ref"])
+DegaussType = set(["normal", "force_gain", "gain_only"])
+
 
 class tektronixAM5030(ivi.Driver):
     "Tektronix AM5030 current probe amplifier driver"
 
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', 'AM5030')
+        self.__dict__.setdefault("_instrument_id", "AM5030")
 
         super(tektronixAM5030, self).__init__(*args, **kwargs)
 
@@ -46,36 +47,41 @@ class tektronixAM5030(ivi.Driver):
         self._identity_instrument_firmware_revision = ""
         self._identity_specification_major_version = 3
         self._identity_specification_minor_version = 0
-        self._identity_supported_instrument_models = ['AM5030']
+        self._identity_supported_instrument_models = ["AM5030"]
 
         self._amps = 0.001
         self._bw_limit = False
-        self._coupling = 'ref'
+        self._coupling = "ref"
         self._dc_level = 0.0
         self._overload = False
         self._probe_open = False
         self._probe_trim = 1.0
-        self._probe_type = ''
+        self._probe_type = ""
 
-        self._add_property('amps',
-                        self._get_amps,
-                        self._set_amps,
-                        None,
-                        ivi.Doc("""
+        self._add_property(
+            "amps",
+            self._get_amps,
+            self._set_amps,
+            None,
+            ivi.Doc("""
                         Specifies the resolution of the current measurement in amps per 10 mV.
-                        """))
-        self._add_property('bw_limit',
-                        self._get_bw_limit,
-                        self._set_bw_limit,
-                        None,
-                        ivi.Doc("""
+                        """),
+        )
+        self._add_property(
+            "bw_limit",
+            self._get_bw_limit,
+            self._set_bw_limit,
+            None,
+            ivi.Doc("""
                         Sets the 20 MHz bandwidth limit switch.
-                        """))
-        self._add_property('coupling',
-                        self._get_coupling,
-                        self._set_coupling,
-                        None,
-                        ivi.Doc("""
+                        """),
+        )
+        self._add_property(
+            "coupling",
+            self._get_coupling,
+            self._set_coupling,
+            None,
+            ivi.Doc("""
                         Specifies the input coupling of the amplifier.
 
                         Values:
@@ -83,34 +89,42 @@ class tektronixAM5030(ivi.Driver):
                         * 'ac'
                         * 'dc'
                         * 'ref'
-                        """))
-        self._add_property('dc_level',
-                        self._get_dc_level,
-                        self._set_dc_level,
-                        None,
-                        ivi.Doc("""
+                        """),
+        )
+        self._add_property(
+            "dc_level",
+            self._get_dc_level,
+            self._set_dc_level,
+            None,
+            ivi.Doc("""
                         Specifies the DC offset level of the amplifier.  This is the current level
                         that will be displayed at the oscilloscope ground reference level.
-                        """))
-        self._add_property('overload',
-                        self._get_overload,
-                        None,
-                        None,
-                        ivi.Doc("""
+                        """),
+        )
+        self._add_property(
+            "overload",
+            self._get_overload,
+            None,
+            None,
+            ivi.Doc("""
                         Returns the state of the overload indicator.
-                        """))
-        self._add_property('probe_open',
-                        self._get_probe_open,
-                        None,
-                        None,
-                        ivi.Doc("""
+                        """),
+        )
+        self._add_property(
+            "probe_open",
+            self._get_probe_open,
+            None,
+            None,
+            ivi.Doc("""
                         Returns the state of the probe open indicator.
-                        """))
-        self._add_property('probe_trim',
-                        self._get_probe_trim,
-                        self._set_probe_trim,
-                        None,
-                        ivi.Doc("""
+                        """),
+        )
+        self._add_property(
+            "probe_trim",
+            self._get_probe_trim,
+            self._set_probe_trim,
+            None,
+            ivi.Doc("""
                         Lets you specify a multiplicative gain factor (trim adjustment) for probe
                         compensation. There is a trim adjustment value for each type of probe (for
                         example, A6302/A6312, A6302XL, A6303, A6303XL, or A6304XL). This command
@@ -120,19 +134,23 @@ class tektronixAM5030(ivi.Driver):
 
                         Probe trim is used to perform an optional fine-tune calibration of the
                         A6303 Current Probe.
-                        """))
-        self._add_property('probe_type',
-                        self._get_probe_type,
-                        None,
-                        None,
-                        ivi.Doc("""
+                        """),
+        )
+        self._add_property(
+            "probe_type",
+            self._get_probe_type,
+            None,
+            None,
+            ivi.Doc("""
                         Returns the type (model) of current probe connected to the AM 5030 INPUT
                         connector. The return string NOPROBE indicates that no current probe is
                         connected.
-                        """))
-        self._add_method('degauss',
-                        self._degauss,
-                        ivi.Doc("""
+                        """),
+        )
+        self._add_method(
+            "degauss",
+            self._degauss,
+            ivi.Doc("""
                         Initializes the probe degauss/autobalance sequence.
 
                         Argument:
@@ -140,10 +158,10 @@ class tektronixAM5030(ivi.Driver):
                         * 'normal' (default)
                         * 'force_gain'
                         * 'gain_only'
-                        """))
+                        """),
+        )
 
-
-    def _initialize(self, resource = None, id_query = False, reset = False, **keywargs):
+    def _initialize(self, resource=None, id_query=False, reset=False, **keywargs):
         "Opens an I/O session to the instrument."
 
         super(tektronixAM5030, self)._initialize(resource, id_query, reset, **keywargs)
@@ -156,28 +174,31 @@ class tektronixAM5030(ivi.Driver):
         if id_query and not self._driver_operation_simulate:
             id = self.identity.instrument_model
             id_check = self._instrument_id
-            id_short = id[:len(id_check)]
+            id_short = id[: len(id_check)]
             if id_short != id_check:
-                raise Exception("Instrument ID mismatch, expecting %s, got %s", id_check, id_short)
+                raise Exception(
+                    "Instrument ID mismatch, expecting %s, got %s", id_check, id_short
+                )
 
         # reset
         if reset:
             self.utility_reset()
 
-
     def _load_id_string(self):
         if self._driver_operation_simulate:
             self._identity_instrument_manufacturer = "Not available while simulating"
             self._identity_instrument_model = "Not available while simulating"
-            self._identity_instrument_firmware_revision = "Not available while simulating"
+            self._identity_instrument_firmware_revision = (
+                "Not available while simulating"
+            )
         else:
             s = self._ask("ID?").split(" ")[1]
             lst = s.split(",", 1)
-            self._identity_instrument_model = lst[0].split('/')[1]
+            self._identity_instrument_model = lst[0].split("/")[1]
             self._identity_instrument_firmware_revision = lst[1]
-            self._set_cache_valid(True, 'identity_instrument_manufacturer')
-            self._set_cache_valid(True, 'identity_instrument_model')
-            self._set_cache_valid(True, 'identity_instrument_firmware_revision')
+            self._set_cache_valid(True, "identity_instrument_manufacturer")
+            self._set_cache_valid(True, "identity_instrument_model")
+            self._set_cache_valid(True, "identity_instrument_firmware_revision")
 
     def _get_identity_instrument_manufacturer(self):
         if self._get_cache_valid():
@@ -206,7 +227,7 @@ class tektronixAM5030(ivi.Driver):
         if not self._driver_operation_simulate:
             error_message = self._ask("err?").strip('"')
             error_code = 1
-            if error_message == '0':
+            if error_message == "0":
                 error_code = 0
         return (error_code, error_message)
 
@@ -234,11 +255,9 @@ class tektronixAM5030(ivi.Driver):
     def _utility_unlock_object(self):
         pass
 
-
-
     def _get_amps(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
-            resp = self._ask("amps?").split(' ')[1]
+            resp = self._ask("amps?").split(" ")[1]
             self._amps = float(resp)
             self._set_cache_valid()
         return self._amps
@@ -252,21 +271,21 @@ class tektronixAM5030(ivi.Driver):
 
     def _get_bw_limit(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
-            resp = self._ask("bwlimit?").split(' ')[1].lower()
-            self._bw_limit = resp == 'on'
+            resp = self._ask("bwlimit?").split(" ")[1].lower()
+            self._bw_limit = resp == "on"
             self._set_cache_valid()
         return self._bw_limit
 
     def _set_bw_limit(self, value):
         value = bool(value)
         if not self._driver_operation_simulate:
-            self._write("bwlimit %s" % ('on' if value else 'off'))
+            self._write("bwlimit %s" % ("on" if value else "off"))
         self._bw_limit = value
         self._set_cache_valid()
 
     def _get_coupling(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
-            resp = self._ask("coupling?").split(' ')[1].lower()
+            resp = self._ask("coupling?").split(" ")[1].lower()
             self._coupling = resp
             self._set_cache_valid()
         return self._coupling
@@ -281,7 +300,7 @@ class tektronixAM5030(ivi.Driver):
 
     def _get_dc_level(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
-            resp = self._ask("dclevel?").split(' ')[1]
+            resp = self._ask("dclevel?").split(" ")[1]
             self._dc_level = float(resp)
             self._set_cache_valid()
         return self._dc_level
@@ -295,19 +314,19 @@ class tektronixAM5030(ivi.Driver):
 
     def _get_overload(self):
         if not self._driver_operation_simulate:
-            resp = self._ask("overload?").split(' ')[1].lower()
-            self._overload = resp == 'on'
+            resp = self._ask("overload?").split(" ")[1].lower()
+            self._overload = resp == "on"
         return self._overload
 
     def _get_probe_open(self):
         if not self._driver_operation_simulate:
-            resp = self._ask("probeopen?").split(' ')[1].lower()
-            self._probe_open = resp == 'on'
+            resp = self._ask("probeopen?").split(" ")[1].lower()
+            self._probe_open = resp == "on"
         return self._probe_open
 
     def _get_probe_trim(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
-            resp = self._ask("probetrim?").split(' ')[1]
+            resp = self._ask("probetrim?").split(" ")[1]
             self._probe_trim = float(resp)
             self._set_cache_valid()
         return self._probe_trim
@@ -321,19 +340,18 @@ class tektronixAM5030(ivi.Driver):
 
     def _get_probe_type(self):
         if not self._driver_operation_simulate:
-            resp = self._ask("probetype?").split(' ')[1]
+            resp = self._ask("probetype?").split(" ")[1]
             self._probe_type = resp
         return self._probe_type
 
-    def _degauss(self, value = 'normal'):
+    def _degauss(self, value="normal"):
         if value not in DegaussType:
             raise ivi.ValueNotSupportedException()
         if not self._driver_operation_simulate:
-            if value == 'normal':
+            if value == "normal":
                 value = 0
-            elif value == 'force_gain':
+            elif value == "force_gain":
                 value = 1
-            elif value == 'gain_only':
+            elif value == "gain_only":
                 value = 2
             self._write("degauss %e" % (value))
-

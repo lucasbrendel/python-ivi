@@ -26,17 +26,15 @@ THE SOFTWARE.
 
 from .agilentBase8590A import *
 
+
 class agilent8590B(agilentBase8590A):
     "Agilent 8590B IVI spectrum analyzer driver"
 
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', 'HP8590B')
+        self.__dict__.setdefault("_instrument_id", "HP8590B")
 
         super(agilent8590B, self).__init__(*args, **kwargs)
 
         self._input_impedance = 50
         self._frequency_low = 9e3
         self._frequency_high = 1.8e9
-
-
-

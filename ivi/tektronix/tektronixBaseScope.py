@@ -34,145 +34,159 @@ from .. import scpi
 from .. import extra
 
 AcquisitionTypeMapping = {
-        'normal': 'sample',
-        'peak_detect': 'peakdetect',
-        'high_resolution': 'hires',
-        'average': 'average',
-        'envelope': 'envelope'}
-VerticalCoupling = set(['ac', 'dc'])
+    "normal": "sample",
+    "peak_detect": "peakdetect",
+    "high_resolution": "hires",
+    "average": "average",
+    "envelope": "envelope",
+}
+VerticalCoupling = set(["ac", "dc"])
 TriggerTypeMapping = {
-        'edge': 'edge',
-        'runt': 'pulse',
-        'width': 'pulse',
-        'glitch': 'pulse',
-        'tv': 'video',
-        #'immediate': '',
-        'ac_line': 'edge',
-        'logic': 'logic',
-        'bus': 'bus'}
+    "edge": "edge",
+    "runt": "pulse",
+    "width": "pulse",
+    "glitch": "pulse",
+    "tv": "video",
+    #'immediate': '',
+    "ac_line": "edge",
+    "logic": "logic",
+    "bus": "bus",
+}
 TriggerCouplingMapping = {
-        'ac': 'ac',
-        'dc': 'dc',
-        'hf_reject': 'hfrej',
-        'lf_reject': 'lfrej',
-        'noise_reject': 'noiserej'}
-TVTriggerEventMapping = {'field1': 'odd',
-        'field2': 'even',
-        'any_field': 'allfields',
-        'any_line': 'alllines',
-        'line_number': 'numeric'}
-TVTriggerFormatMapping = {'ntsc': 'ntsc',
-        'pal': 'pal',
-        'secam': 'secam',
-        'bilevelcustom': 'bilevelcustom',
-        'trilevelcustom': 'trilevelcustom',
-        'hd480p60' : 'hd480p60',
-        'hd576p50' : 'hd576p50',
-        'hd720p30' : 'hd720p30',
-        'hd720p50' : 'hd720p50',
-        'hd720p60' : 'hd720p60',
-        'hd875i60' : 'hd875i60',
-        'hd1080p24' : 'hd1080p24',
-        'hd1080sf24' : 'hd1080sf24',
-        'hd1080i50' : 'hd1080i50',
-        'hd1080i60' : 'hd1080i60',
-        'hd1080p25' : 'hd1080p25',
-        'hd1080p30' : 'hd1080p30',
-        'hd1080p50' : 'hd1080p50',
-        'hd1080p60' : 'hd1080p60'}
-PolarityMapping = {'positive': 'positive',
-        'negative': 'negative'}
-PolarityMapping3 = {'positive': 'positive',
-        'negative': 'negative',
-        'either': 'either'}
-GlitchConditionMapping = {'less_than': 'lessthan',
-        'greater_than': 'morethan',
-        'equal': 'equal',
-        'unequal': 'unequal'}
-WidthConditionMapping = {'within': 'within', 'outside': 'outside'}
-SampleModeMapping = {'real_time': 'rtim',
-        'equivalent_time': 'etim',
-        'segmented': 'segm'}
-SlopeMapping = {
-        'positive': 'rise',
-        'negative': 'fall',
-        'either': 'either'}
+    "ac": "ac",
+    "dc": "dc",
+    "hf_reject": "hfrej",
+    "lf_reject": "lfrej",
+    "noise_reject": "noiserej",
+}
+TVTriggerEventMapping = {
+    "field1": "odd",
+    "field2": "even",
+    "any_field": "allfields",
+    "any_line": "alllines",
+    "line_number": "numeric",
+}
+TVTriggerFormatMapping = {
+    "ntsc": "ntsc",
+    "pal": "pal",
+    "secam": "secam",
+    "bilevelcustom": "bilevelcustom",
+    "trilevelcustom": "trilevelcustom",
+    "hd480p60": "hd480p60",
+    "hd576p50": "hd576p50",
+    "hd720p30": "hd720p30",
+    "hd720p50": "hd720p50",
+    "hd720p60": "hd720p60",
+    "hd875i60": "hd875i60",
+    "hd1080p24": "hd1080p24",
+    "hd1080sf24": "hd1080sf24",
+    "hd1080i50": "hd1080i50",
+    "hd1080i60": "hd1080i60",
+    "hd1080p25": "hd1080p25",
+    "hd1080p30": "hd1080p30",
+    "hd1080p50": "hd1080p50",
+    "hd1080p60": "hd1080p60",
+}
+PolarityMapping = {"positive": "positive", "negative": "negative"}
+PolarityMapping3 = {"positive": "positive", "negative": "negative", "either": "either"}
+GlitchConditionMapping = {
+    "less_than": "lessthan",
+    "greater_than": "morethan",
+    "equal": "equal",
+    "unequal": "unequal",
+}
+WidthConditionMapping = {"within": "within", "outside": "outside"}
+SampleModeMapping = {
+    "real_time": "rtim",
+    "equivalent_time": "etim",
+    "segmented": "segm",
+}
+SlopeMapping = {"positive": "rise", "negative": "fall", "either": "either"}
 MeasurementFunctionMapping = {
-        'rise_time': 'rise',
-        'fall_time': 'fall',
-        'frequency': 'frequency',
-        'period': 'period',
-        'voltage_rms': 'rms',
-        'voltage_peak_to_peak': 'pk2pk',
-        'voltage_max': 'maximum',
-        'voltage_min': 'minimum',
-        'voltage_high': 'high',
-        'voltage_low': 'low',
-        'voltage_average': 'mean',
-        'width_negative': 'nwidth',
-        'width_positive': 'pwidth',
-        'duty_cycle_negative': 'nduty',
-        'duty_cycle_positive': 'pduty',
-        'amplitude': 'amplitude',
-        'voltage_cycle_rms': 'crms',
-        'voltage_cycle_average': 'cmean',
-        'overshoot': 'tovershoot',
-
-        'area': 'area',
-        'burst': 'burst',
-        'cycle_area': 'carea',
-        'overshoot_negative': 'novershoot',
-        'overshoot_positive': 'povershoot',
-        'edgecount_negative': 'nedgecount',
-        'edgecount_positive': 'pedgecount',
-        'pulsecount_negative': 'npulsecount',
-        'pulsecount_positive': 'ppulsecount',
-
-        'histogram_hits': 'hits',
-        'histogram_peak_hits': 'peakhits',
-        'histogram_median': 'median',
-        'histogram_sigma1': 'sigma1',
-        'histogram_sigma2': 'sigma2',
-        'histogram_sigma3': 'sigma3',
-        'histogram_stdev': 'stdev',
-        'histogram_waveforms': 'waveforms',
-
-        'phase': 'phase',
-        'delay': 'delay'}
+    "rise_time": "rise",
+    "fall_time": "fall",
+    "frequency": "frequency",
+    "period": "period",
+    "voltage_rms": "rms",
+    "voltage_peak_to_peak": "pk2pk",
+    "voltage_max": "maximum",
+    "voltage_min": "minimum",
+    "voltage_high": "high",
+    "voltage_low": "low",
+    "voltage_average": "mean",
+    "width_negative": "nwidth",
+    "width_positive": "pwidth",
+    "duty_cycle_negative": "nduty",
+    "duty_cycle_positive": "pduty",
+    "amplitude": "amplitude",
+    "voltage_cycle_rms": "crms",
+    "voltage_cycle_average": "cmean",
+    "overshoot": "tovershoot",
+    "area": "area",
+    "burst": "burst",
+    "cycle_area": "carea",
+    "overshoot_negative": "novershoot",
+    "overshoot_positive": "povershoot",
+    "edgecount_negative": "nedgecount",
+    "edgecount_positive": "pedgecount",
+    "pulsecount_negative": "npulsecount",
+    "pulsecount_positive": "ppulsecount",
+    "histogram_hits": "hits",
+    "histogram_peak_hits": "peakhits",
+    "histogram_median": "median",
+    "histogram_sigma1": "sigma1",
+    "histogram_sigma2": "sigma2",
+    "histogram_sigma3": "sigma3",
+    "histogram_stdev": "stdev",
+    "histogram_waveforms": "waveforms",
+    "phase": "phase",
+    "delay": "delay",
+}
 MeasurementFunctionMappingDigital = {
-        'rise_time': 'risetime',
-        'fall_time': 'falltime',
-        'frequency': 'frequency',
-        'period': 'period',
-        'width_negative': 'nwidth',
-        'width_positive': 'pwidth',
-        'duty_cycle_positive': 'dutycycle'}
+    "rise_time": "risetime",
+    "fall_time": "falltime",
+    "frequency": "frequency",
+    "period": "period",
+    "width_negative": "nwidth",
+    "width_positive": "pwidth",
+    "duty_cycle_positive": "dutycycle",
+}
 ScreenshotImageFormatMapping = {
-        'tif': 'tiff',
-        'tiff': 'tiff',
-        'bmp': 'bmp',
-        'bmp24': 'bmp',
-        'png': 'png',
-        'png24': 'png'}
-TimebaseModeMapping = {
-        'main': 'main',
-        'window': 'window',
-        'xy': 'xy'}
-TriggerModifierMapping = {'none': 'normal', 'auto': 'auto'}
+    "tif": "tiff",
+    "tiff": "tiff",
+    "bmp": "bmp",
+    "bmp24": "bmp",
+    "png": "png",
+    "png24": "png",
+}
+TimebaseModeMapping = {"main": "main", "window": "window", "xy": "xy"}
+TriggerModifierMapping = {"none": "normal", "auto": "auto"}
 
-class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.Memory,
-                         scpi.common.SystemSetup,
-                         scope.Base, scope.TVTrigger, scope.RuntTrigger,
-                         scope.GlitchTrigger, scope.WidthTrigger, scope.AcLineTrigger,
-                         scope.WaveformMeasurement, scope.MinMaxWaveform,
-                         scope.ContinuousAcquisition, scope.AverageAcquisition,
-                         scope.TriggerModifier, scope.AutoSetup,
-                         extra.common.Screenshot,
-                         ivi.Driver):
+
+class tektronixBaseScope(
+    scpi.common.IdnCommand,
+    scpi.common.Reset,
+    scpi.common.Memory,
+    scpi.common.SystemSetup,
+    scope.Base,
+    scope.TVTrigger,
+    scope.RuntTrigger,
+    scope.GlitchTrigger,
+    scope.WidthTrigger,
+    scope.AcLineTrigger,
+    scope.WaveformMeasurement,
+    scope.MinMaxWaveform,
+    scope.ContinuousAcquisition,
+    scope.AverageAcquisition,
+    scope.TriggerModifier,
+    scope.AutoSetup,
+    extra.common.Screenshot,
+    ivi.Driver,
+):
     "Tektronix generic IVI oscilloscope driver"
 
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', '')
+        self.__dict__.setdefault("_instrument_id", "")
         self._analog_channel_name = list()
         self._analog_channel_count = 4
         self._digital_channel_name = list()
@@ -203,8 +217,8 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
 
         self._acquisition_segmented_count = 2
         self._acquisition_segmented_index = 1
-        self._timebase_mode = 'main'
-        self._timebase_reference = 'center'
+        self._timebase_mode = "main"
+        self._timebase_reference = "center"
         self._timebase_position = 0.0
         self._timebase_range = 1e-3
         self._timebase_scale = 100e-6
@@ -224,156 +238,219 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
         self._identity_instrument_firmware_revision = ""
         self._identity_specification_major_version = 4
         self._identity_specification_minor_version = 1
-        self._identity_supported_instrument_models = ['DPO4032', 'DPO4034', 'DPO4054', 
-                'DPO4104', 'DPO4014B', 'DPO4034B', 'DPO4054B', 'DPO4102B', 'DPO4104B',
-                'MSO4032', 'MSO4034', 'MSO4054', 'MSO4104', 'MSO4014B', 'MSO4034B',
-                'MSO4054B', 'MSO4102B', 'MSO4104B', 'MDO4054', 'MDO4104', 'MDO4014B',
-                'MDO4034B', 'MDO4054B', 'MDO4104B', 'MDO3012', 'MDO3014', 'MDO3022',
-                'MDO3024', 'MDO3032', 'MDO3034', 'MDO3052', 'MDO3054', 'MDO3102',
-                'MDO3104']
+        self._identity_supported_instrument_models = [
+            "DPO4032",
+            "DPO4034",
+            "DPO4054",
+            "DPO4104",
+            "DPO4014B",
+            "DPO4034B",
+            "DPO4054B",
+            "DPO4102B",
+            "DPO4104B",
+            "MSO4032",
+            "MSO4034",
+            "MSO4054",
+            "MSO4104",
+            "MSO4014B",
+            "MSO4034B",
+            "MSO4054B",
+            "MSO4102B",
+            "MSO4104B",
+            "MDO4054",
+            "MDO4104",
+            "MDO4014B",
+            "MDO4034B",
+            "MDO4054B",
+            "MDO4104B",
+            "MDO3012",
+            "MDO3014",
+            "MDO3022",
+            "MDO3024",
+            "MDO3032",
+            "MDO3034",
+            "MDO3052",
+            "MDO3054",
+            "MDO3102",
+            "MDO3104",
+        ]
 
-        self._add_property('channels[].invert',
-                        self._get_channel_invert,
-                        self._set_channel_invert,
-                        None,
-                        ivi.Doc("""
+        self._add_property(
+            "channels[].invert",
+            self._get_channel_invert,
+            self._set_channel_invert,
+            None,
+            ivi.Doc("""
                         Selects whether or not to invert the channel.
-                        """))
-        self._add_property('channels[].label',
-                        self._get_channel_label,
-                        self._set_channel_label,
-                        None,
-                        ivi.Doc("""
+                        """),
+        )
+        self._add_property(
+            "channels[].label",
+            self._get_channel_label,
+            self._set_channel_label,
+            None,
+            ivi.Doc("""
                         Sets the channel label.  Setting a channel label also adds the label to
                         the nonvolatile label list.
-                        """))
-        self._add_property('channels[].probe_id',
-                        self._get_channel_probe_id,
-                        None,
-                        None,
-                        ivi.Doc("""
+                        """),
+        )
+        self._add_property(
+            "channels[].probe_id",
+            self._get_channel_probe_id,
+            None,
+            None,
+            ivi.Doc("""
                         Returns the type of probe attached to the channel.
-                        """))
-        self._add_property('channels[].probe_skew',
-                        self._get_channel_probe_skew,
-                        self._set_channel_probe_skew,
-                        None,
-                        ivi.Doc("""
+                        """),
+        )
+        self._add_property(
+            "channels[].probe_skew",
+            self._get_channel_probe_skew,
+            self._set_channel_probe_skew,
+            None,
+            ivi.Doc("""
                         Specifies the channel-to-channel skew factor for the channel.  Each analog
                         channel can be adjusted + or - 100 ns for a total of 200 ns difference
                         between channels.  This can be used to compensate for differences in cable
                         delay.  Units are seconds.
-                        """))
-        self._add_property('channels[].scale',
-                        self._get_channel_scale,
-                        self._set_channel_scale,
-                        None,
-                        ivi.Doc("""
+                        """),
+        )
+        self._add_property(
+            "channels[].scale",
+            self._get_channel_scale,
+            self._set_channel_scale,
+            None,
+            ivi.Doc("""
                         Specifies the vertical scale, or units per division, of the channel.  Units
                         are volts.
-                        """))
-        self._add_property('channels[].trigger_level',
-                        self._get_channel_trigger_level,
-                        self._set_channel_trigger_level,
-                        None,
-                        ivi.Doc("""
+                        """),
+        )
+        self._add_property(
+            "channels[].trigger_level",
+            self._get_channel_trigger_level,
+            self._set_channel_trigger_level,
+            None,
+            ivi.Doc("""
                         Specifies the trigger level of the channel.  Units are volts.
-                        """))
-        self._add_property('timebase.mode',
-                        self._get_timebase_mode,
-                        self._set_timebase_mode,
-                        None,
-                        ivi.Doc("""
+                        """),
+        )
+        self._add_property(
+            "timebase.mode",
+            self._get_timebase_mode,
+            self._set_timebase_mode,
+            None,
+            ivi.Doc("""
                         Sets the current time base. There are four time base modes:
 
                         * 'main': normal timebase
                         * 'window': zoomed or delayed timebase
                         * 'xy': channels are plotted against each other, no timebase
                         * 'roll': data moves continuously from left to right
-                        """))
-        self._add_property('timebase.position',
-                        self._get_timebase_position,
-                        self._set_timebase_position,
-                        None,
-                        ivi.Doc("""
+                        """),
+        )
+        self._add_property(
+            "timebase.position",
+            self._get_timebase_position,
+            self._set_timebase_position,
+            None,
+            ivi.Doc("""
                         Sets the time interval between the trigger event and the display reference
                         point on the screen. The maximum position value depends on the time/division
                         settings.
-                        """))
-        self._add_property('timebase.range',
-                        self._get_timebase_range,
-                        self._set_timebase_range,
-                        None,
-                        ivi.Doc("""
+                        """),
+        )
+        self._add_property(
+            "timebase.range",
+            self._get_timebase_range,
+            self._set_timebase_range,
+            None,
+            ivi.Doc("""
                         Sets the full-scale horizontal time in seconds for the main window. The
                         range is 10 times the current time-per-division setting.
-                        """))
-        self._add_property('timebase.scale',
-                        self._get_timebase_scale,
-                        self._set_timebase_scale,
-                        None,
-                        ivi.Doc("""
+                        """),
+        )
+        self._add_property(
+            "timebase.scale",
+            self._get_timebase_scale,
+            self._set_timebase_scale,
+            None,
+            ivi.Doc("""
                         Sets the horizontal scale or units per division for the main window.
-                        """))
-        self._add_property('timebase.window.position',
-                        self._get_timebase_window_position,
-                        self._set_timebase_window_position,
-                        None,
-                        ivi.Doc("""
+                        """),
+        )
+        self._add_property(
+            "timebase.window.position",
+            self._get_timebase_window_position,
+            self._set_timebase_window_position,
+            None,
+            ivi.Doc("""
                         Sets the horizontal position in the zoomed (delayed) view of the main
                         sweep. The main sweep range and the main sweep horizontal position
                         determine the range for this command. The value for this command must
                         keep the zoomed view window within the main sweep range.
-                        """))
-        self._add_property('timebase.window.range',
-                        self._get_timebase_window_range,
-                        self._set_timebase_window_range,
-                        None,
-                        ivi.Doc("""
+                        """),
+        )
+        self._add_property(
+            "timebase.window.range",
+            self._get_timebase_window_range,
+            self._set_timebase_window_range,
+            None,
+            ivi.Doc("""
                         Sets the fullscale horizontal time in seconds for the zoomed (delayed)
                         window. The range is 10 times the current zoomed view window seconds per
                         division setting. The main sweep range determines the range for this
                         command. The maximum value is one half of the timebase.range value.
-                        """))
-        self._add_property('timebase.window.scale',
-                        self._get_timebase_window_scale,
-                        self._set_timebase_window_scale,
-                        None,
-                        ivi.Doc("""
+                        """),
+        )
+        self._add_property(
+            "timebase.window.scale",
+            self._get_timebase_window_scale,
+            self._set_timebase_window_scale,
+            None,
+            ivi.Doc("""
                         Sets the zoomed (delayed) window horizontal scale (seconds/division). The
                         main sweep scale determines the range for this command. The maximum value
                         is one half of the timebase.scale value.
-                        """))
-        self._add_property('display.vectors',
-                        self._get_display_vectors,
-                        self._set_display_vectors,
-                        None,
-                        ivi.Doc("""
+                        """),
+        )
+        self._add_property(
+            "display.vectors",
+            self._get_display_vectors,
+            self._set_display_vectors,
+            None,
+            ivi.Doc("""
                         When enabled, draws a line between consecutive waveform data points.
-                        """))
-        self._add_method('display.clear',
-                        self._display_clear,
-                        ivi.Doc("""
+                        """),
+        )
+        self._add_method(
+            "display.clear",
+            self._display_clear,
+            ivi.Doc("""
                         Clears the display and resets all associated measurements. If the
                         oscilloscope is stopped, all currently displayed data is erased. If the
                         oscilloscope is running, all the data in active channels and functions is
                         erased; however, new data is displayed on the next acquisition.
-                        """))
-        self._add_method('system.display_string',
-                        self._system_display_string,
-                        ivi.Doc("""
+                        """),
+        )
+        self._add_method(
+            "system.display_string",
+            self._system_display_string,
+            ivi.Doc("""
                         Writes a string to the advisory line on the instrument display.  Send None
                         or an empty string to clear the advisory line.
-                        """))
+                        """),
+        )
 
         self._init_channels()
 
-    def _initialize(self, resource = None, id_query = False, reset = False, **keywargs):
+    def _initialize(self, resource=None, id_query=False, reset=False, **keywargs):
         "Opens an I/O session to the instrument."
 
         self._channel_count = self._analog_channel_count + self._digital_channel_count
 
-        super(tektronixBaseScope, self)._initialize(resource, id_query, reset, **keywargs)
+        super(tektronixBaseScope, self)._initialize(
+            resource, id_query, reset, **keywargs
+        )
 
         # interface clear
         if not self._driver_operation_simulate:
@@ -383,14 +460,15 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
         if id_query and not self._driver_operation_simulate:
             id = self.identity.instrument_model
             id_check = self._instrument_id
-            id_short = id[:len(id_check)]
+            id_short = id[: len(id_check)]
             if id_short != id_check:
-                raise Exception("Instrument ID mismatch, expecting %s, got %s", id_check, id_short)
+                raise Exception(
+                    "Instrument ID mismatch, expecting %s, got %s", id_check, id_short
+                )
 
         # reset
         if reset:
             self.utility.reset()
-
 
     def _utility_disable(self):
         pass
@@ -418,9 +496,9 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
 
         self._analog_channel_name = list()
         for i in range(self._analog_channel_count):
-            self._channel_name.append("ch%d" % (i+1))
+            self._channel_name.append("ch%d" % (i + 1))
             self._channel_label.append("")
-            self._analog_channel_name.append("ch%d" % (i+1))
+            self._analog_channel_name.append("ch%d" % (i + 1))
             self._channel_probe_skew.append(0)
             self._channel_scale.append(1.0)
             self._channel_trigger_level.append(0.0)
@@ -430,7 +508,7 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
 
         # digital channels
         self._digital_channel_name = list()
-        if (self._digital_channel_count > 0):
+        if self._digital_channel_count > 0:
             for i in range(self._digital_channel_count):
                 self._channel_name.append("d%d" % i)
                 self._channel_label.append("")
@@ -440,7 +518,7 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
                 self._channel_input_impedance[i] = 100000
                 self._channel_input_frequency_max[i] = 1e9
                 self._channel_probe_attenuation[i] = 1
-                self._channel_coupling[i] = 'dc'
+                self._channel_coupling[i] = "dc"
                 self._channel_offset[i] = 0
                 self._channel_range[i] = 1
 
@@ -453,7 +531,7 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
         error_message = "No error"
         if not self._driver_operation_simulate:
             esr = self._ask("*esr?")
-            error_code, error_message = self._ask("evmsg?").split(',')
+            error_code, error_message = self._ask("evmsg?").split(",")
             error_code = int(error_code)
             error_message = error_message.strip(' "')
         return (error_code, error_message)
@@ -466,28 +544,28 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
             self._write("diag:loop:option once")
             self._write("diag:state execute")
             # wait for test to complete
-            res = ''
+            res = ""
             while 1:
                 res = self._ask("diag:result:flag?").strip('"').lower()
-                if res != 'in progress':
+                if res != "in progress":
                     break
                 time.sleep(5)
-            code = 0 if res == 'pass' else 1
+            code = 0 if res == "pass" else 1
             if code != 0:
                 message = "Self test failed"
         return (code, message)
 
-    def _system_display_string(self, string = None):
+    def _system_display_string(self, string=None):
         if string is None:
             string = ""
 
         if not self._driver_operation_simulate:
-            self._write(":message:show \"%s\"" % string)
+            self._write(':message:show "%s"' % string)
             self._write(":message:state 1")
 
-    def _display_fetch_screenshot(self, format='png', invert=False):
+    def _display_fetch_screenshot(self, format="png", invert=False):
         if self._driver_operation_simulate:
-            return b''
+            return b""
 
         if format not in self._display_screenshot_image_format_mapping:
             raise ivi.ValueNotSupportedException()
@@ -515,10 +593,10 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
         if value not in TimebaseModeMapping:
             raise ivi.ValueNotSupportedException()
         if not self._driver_operation_simulate:
-            if value == 'window':
+            if value == "window":
                 self._write(":display:xy off")
                 self._write(":zoom:state 1")
-            elif value == 'xy':
+            elif value == "xy":
                 self._write(":zoom:state 0")
                 self._write(":display:xy triggered")
             else:
@@ -540,8 +618,8 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
             self._write(":horizontal:delay:time %e" % value)
         self._timebase_position = value
         self._set_cache_valid()
-        self._set_cache_valid(False, 'acquisition_start_time')
-        self._set_cache_valid(False, 'timebase_window_position')
+        self._set_cache_valid(False, "acquisition_start_time")
+        self._set_cache_valid(False, "timebase_window_position")
 
     def _get_timebase_range(self):
         return self._get_timebase_scale() * self._horizontal_divisions
@@ -564,18 +642,30 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
         self._timebase_scale = value
         self._timebase_range = value * self._horizontal_divisions
         self._set_cache_valid()
-        self._set_cache_valid(False, 'timebase_window_range')
+        self._set_cache_valid(False, "timebase_window_range")
 
     def _get_timebase_window_position(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
-            self._timebase_window_position = (float(self._ask(":zoom:zoom1:position?"))-50) / 100 * self._get_timebase_range() + self._get_timebase_position()
+            self._timebase_window_position = (
+                float(self._ask(":zoom:zoom1:position?")) - 50
+            ) / 100 * self._get_timebase_range() + self._get_timebase_position()
             self._set_cache_valid()
         return self._timebase_window_position
 
     def _set_timebase_window_position(self, value):
         value = float(value)
         if not self._driver_operation_simulate:
-            self._write(":zoom:zoom1:position %e" % (((value - self._get_timebase_position()) / self._get_timebase_range() * 100) + 50))
+            self._write(
+                ":zoom:zoom1:position %e"
+                % (
+                    (
+                        (value - self._get_timebase_position())
+                        / self._get_timebase_range()
+                        * 100
+                    )
+                    + 50
+                )
+            )
         self._timebase_window_position = value
         self._set_cache_valid()
 
@@ -589,7 +679,9 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
     def _get_timebase_window_scale(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
             self._timebase_window_scale = float(self._ask(":zoom:zoom1:scale?"))
-            self._timebase_window_range = self._timebase_window_scale * self._horizontal_divisions
+            self._timebase_window_range = (
+                self._timebase_window_scale * self._horizontal_divisions
+            )
             self._set_cache_valid()
         return self._timebase_window_scale
 
@@ -621,7 +713,10 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
 
     def _get_acquisition_start_time(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
-            self._acquisition_start_time = float(self._ask(":horizontal:delay:time?")) - self._get_acquisition_time_per_record() / 2
+            self._acquisition_start_time = (
+                float(self._ask(":horizontal:delay:time?"))
+                - self._get_acquisition_time_per_record() / 2
+            )
             self._set_cache_valid()
         return self._acquisition_start_time
 
@@ -636,7 +731,9 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
     def _get_acquisition_type(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
             value = self._ask(":acquire:mode?").lower()
-            self._acquisition_type = [k for k,v in AcquisitionTypeMapping.items() if v==value][0]
+            self._acquisition_type = [
+                k for k, v in AcquisitionTypeMapping.items() if v == value
+            ][0]
             self._set_cache_valid()
         return self._acquisition_type
 
@@ -650,7 +747,9 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
 
     def _get_acquisition_number_of_points_minimum(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
-            self._acquisition_number_of_points_minimum = int(self._ask(":horizontal:recordlength?"))
+            self._acquisition_number_of_points_minimum = int(
+                self._ask(":horizontal:recordlength?")
+            )
             self._set_cache_valid()
         return self._acquisition_number_of_points_minimum
 
@@ -664,7 +763,9 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
 
     def _get_acquisition_record_length(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
-            self._acquisition_record_length = int(self._ask(":horizontal:recordlength?"))
+            self._acquisition_record_length = int(
+                self._ask(":horizontal:recordlength?")
+            )
             self._set_cache_valid()
         return self._acquisition_record_length
 
@@ -676,8 +777,12 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
 
     def _get_channel_label(self, index):
         index = ivi.get_index(self._channel_name, index)
-        if not self._driver_operation_simulate and not self._get_cache_valid(index=index):
-            self._channel_label[index] = self._ask(":%s:label?" % self._channel_name[index]).strip('"')
+        if not self._driver_operation_simulate and not self._get_cache_valid(
+            index=index
+        ):
+            self._channel_label[index] = self._ask(
+                ":%s:label?" % self._channel_name[index]
+            ).strip('"')
             self._set_cache_valid(index=index)
         return self._channel_label[index]
 
@@ -685,14 +790,18 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
         value = str(value)
         index = ivi.get_index(self._channel_name, index)
         if not self._driver_operation_simulate:
-            self._write(":%s:label \"%s\"" % (self._channel_name[index], value))
+            self._write(':%s:label "%s"' % (self._channel_name[index], value))
         self._channel_label[index] = value
         self._set_cache_valid(index=index)
 
     def _get_channel_enabled(self, index):
         index = ivi.get_index(self._channel_name, index)
-        if not self._driver_operation_simulate and not self._get_cache_valid(index=index):
-            self._channel_enabled[index] = bool(int(self._ask(":select:%s?" % self._channel_name[index])))
+        if not self._driver_operation_simulate and not self._get_cache_valid(
+            index=index
+        ):
+            self._channel_enabled[index] = bool(
+                int(self._ask(":select:%s?" % self._channel_name[index]))
+            )
             self._set_cache_valid(index=index)
         return self._channel_enabled[index]
 
@@ -706,8 +815,12 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
 
     def _get_channel_input_impedance(self, index):
         index = ivi.get_index(self._analog_channel_name, index)
-        if not self._driver_operation_simulate and not self._get_cache_valid(index=index):
-            self._channel_input_impedance[index] = float(self._ask(":%s:termination?" % self._channel_name[index]))
+        if not self._driver_operation_simulate and not self._get_cache_valid(
+            index=index
+        ):
+            self._channel_input_impedance[index] = float(
+                self._ask(":%s:termination?" % self._channel_name[index])
+            )
             self._set_cache_valid(index=index)
         return self._channel_input_impedance[index]
 
@@ -715,7 +828,7 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
         value = float(value)
         index = ivi.get_index(self._analog_channel_name, index)
         if value != 50 and value != 1000000:
-            raise Exception('Invalid impedance selection')
+            raise Exception("Invalid impedance selection")
         if not self._driver_operation_simulate:
             self._write(":%s:termination %f" % (self._channel_name[index], value))
         self._channel_input_impedance[index] = value
@@ -723,8 +836,12 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
 
     def _get_channel_input_frequency_max(self, index):
         index = ivi.get_index(self._analog_channel_name, index)
-        if not self._driver_operation_simulate and not self._get_cache_valid(index=index):
-            self._channel_input_frequency_max[index] = float(self._ask(":%s:bandwidth?" % self._channel_name[index]))
+        if not self._driver_operation_simulate and not self._get_cache_valid(
+            index=index
+        ):
+            self._channel_input_frequency_max[index] = float(
+                self._ask(":%s:bandwidth?" % self._channel_name[index])
+            )
             self._set_cache_valid(index=index)
         return self._channel_input_frequency_max[index]
 
@@ -738,25 +855,33 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
 
     def _get_channel_probe_attenuation(self, index):
         index = ivi.get_index(self._analog_channel_name, index)
-        if not self._driver_operation_simulate and not self._get_cache_valid(index=index):
-            self._channel_probe_attenuation[index] = 1/float(self._ask(":%s:probe:gain?" % self._channel_name[index]))
+        if not self._driver_operation_simulate and not self._get_cache_valid(
+            index=index
+        ):
+            self._channel_probe_attenuation[index] = 1 / float(
+                self._ask(":%s:probe:gain?" % self._channel_name[index])
+            )
             self._set_cache_valid(index=index)
         return self._channel_probe_attenuation[index]
 
     def _set_channel_probe_attenuation(self, index, value):
         index = ivi.get_index(self._analog_channel_name, index)
-        value = 1/float(value)
+        value = 1 / float(value)
         if not self._driver_operation_simulate:
             self._write(":%s:probe:gain %e" % (self._channel_name[index], value))
         self._channel_probe_attenuation[index] = value
         self._set_cache_valid(index=index)
-        self._set_cache_valid(False, 'channel_offset', index)
-        self._set_cache_valid(False, 'channel_scale', index)
+        self._set_cache_valid(False, "channel_offset", index)
+        self._set_cache_valid(False, "channel_scale", index)
 
     def _get_channel_probe_skew(self, index):
         index = ivi.get_index(self._analog_channel_name, index)
-        if not self._driver_operation_simulate and not self._get_cache_valid(index=index):
-            self._channel_probe_skew[index] = float(self._ask(":%s:deskew?" % self._channel_name[index]))
+        if not self._driver_operation_simulate and not self._get_cache_valid(
+            index=index
+        ):
+            self._channel_probe_skew[index] = float(
+                self._ask(":%s:deskew?" % self._channel_name[index])
+            )
             self._set_cache_valid(index=index)
         return self._channel_probe_skew[index]
 
@@ -770,8 +895,12 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
 
     def _get_channel_invert(self, index):
         index = ivi.get_index(self._analog_channel_name, index)
-        if not self._driver_operation_simulate and not self._get_cache_valid(index=index):
-            self._channel_invert[index] = bool(int(self._ask(":%s:invert?" % self._channel_name[index])))
+        if not self._driver_operation_simulate and not self._get_cache_valid(
+            index=index
+        ):
+            self._channel_invert[index] = bool(
+                int(self._ask(":%s:invert?" % self._channel_name[index]))
+            )
             self._set_cache_valid(index=index)
         return self._channel_invert[index]
 
@@ -785,15 +914,23 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
 
     def _get_channel_probe_id(self, index):
         index = ivi.get_index(self._analog_channel_name, index)
-        if not self._driver_operation_simulate and not self._get_cache_valid(index=index):
-            self._channel_probe_id[index] = self._ask(":%s:probe:id?" % self._channel_name[index])
+        if not self._driver_operation_simulate and not self._get_cache_valid(
+            index=index
+        ):
+            self._channel_probe_id[index] = self._ask(
+                ":%s:probe:id?" % self._channel_name[index]
+            )
             self._set_cache_valid(index=index)
         return self._channel_probe_id[index]
 
     def _get_channel_coupling(self, index):
         index = ivi.get_index(self._analog_channel_name, index)
-        if not self._driver_operation_simulate and not self._get_cache_valid(index=index):
-            self._channel_coupling[index] = self._ask(":%s:coupling?" % self._channel_name[index]).lower()
+        if not self._driver_operation_simulate and not self._get_cache_valid(
+            index=index
+        ):
+            self._channel_coupling[index] = self._ask(
+                ":%s:coupling?" % self._channel_name[index]
+            ).lower()
             self._set_cache_valid(index=index)
         return self._channel_coupling[index]
 
@@ -808,8 +945,12 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
 
     def _get_channel_offset(self, index):
         index = ivi.get_index(self._channel_name, index)
-        if not self._driver_operation_simulate and not self._get_cache_valid(index=index):
-            self._channel_offset[index] = -float(self._ask(":%s:position?" % self._channel_name[index])) * self._get_channel_scale(index)
+        if not self._driver_operation_simulate and not self._get_cache_valid(
+            index=index
+        ):
+            self._channel_offset[index] = -float(
+                self._ask(":%s:position?" % self._channel_name[index])
+            ) * self._get_channel_scale(index)
             self._set_cache_valid(index=index)
         return self._channel_offset[index]
 
@@ -817,7 +958,10 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
         index = ivi.get_index(self._channel_name, index)
         value = float(value)
         if not self._driver_operation_simulate:
-            self._write(":%s:position %e" % (self._channel_name[index], -value / self._get_channel_scale(index)))
+            self._write(
+                ":%s:position %e"
+                % (self._channel_name[index], -value / self._get_channel_scale(index))
+            )
         self._channel_offset[index] = value
         self._set_cache_valid(index=index)
 
@@ -830,8 +974,12 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
 
     def _get_channel_scale(self, index):
         index = ivi.get_index(self._channel_name, index)
-        if not self._driver_operation_simulate and not self._get_cache_valid(index=index):
-            self._channel_scale[index] = float(self._ask(":%s:scale?" % self._channel_name[index]))
+        if not self._driver_operation_simulate and not self._get_cache_valid(
+            index=index
+        ):
+            self._channel_scale[index] = float(
+                self._ask(":%s:scale?" % self._channel_name[index])
+            )
             self._set_cache_valid(index=index)
         return self._channel_scale[index]
 
@@ -843,11 +991,15 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
         self._channel_scale[index] = value
         self._set_cache_valid(index=index)
         self._set_cache_valid(False, "channel_offset", index)
-    
+
     def _get_channel_trigger_level(self, index):
         index = ivi.get_index(self._channel_name, index)
-        if not self._driver_operation_simulate and not self._get_cache_valid(index=index):
-            self._channel_trigger_level[index] = float(self._ask(":trigger:a:level:%s?" % self._channel_name[index]))
+        if not self._driver_operation_simulate and not self._get_cache_valid(
+            index=index
+        ):
+            self._channel_trigger_level[index] = float(
+                self._ask(":trigger:a:level:%s?" % self._channel_name[index])
+            )
             self._set_cache_valid(index=index)
         return self._channel_trigger_level[index]
 
@@ -873,7 +1025,9 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
     def _get_trigger_coupling(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
             value = self._ask(":trigger:a:edge:coupling?").lower()
-            self._trigger_coupling = [k for k,v in TriggerCouplingMapping.items() if v==value][0]
+            self._trigger_coupling = [
+                k for k, v in TriggerCouplingMapping.items() if v == value
+            ][0]
         return self._trigger_coupling
 
     def _set_trigger_coupling(self, value):
@@ -918,7 +1072,9 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
     def _get_trigger_edge_slope(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
             value = self._ask(":trigger:a:edge:slope?").lower()
-            self._trigger_edge_slope = [k for k,v in SlopeMapping.items() if v==value][0]
+            self._trigger_edge_slope = [
+                k for k, v in SlopeMapping.items() if v == value
+            ][0]
             self._set_cache_valid()
         return self._trigger_edge_slope
 
@@ -933,25 +1089,25 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
     def _get_trigger_source(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
             t = self._ask(":trigger:a:type?").lower()
-            if t == 'edge':
+            if t == "edge":
                 value = self._ask(":trigger:a:edge:source?").lower()
-            elif t == 'logic':
+            elif t == "logic":
                 # TODO
-                value = ''
-            elif t == 'pulse':
+                value = ""
+            elif t == "pulse":
                 pc = self._ask(":trigger:a:pulse:class?").lower()
-                if pc == 'runt':
+                if pc == "runt":
                     value = self._ask(":trigger:a:runt:source?").lower()
-                elif pc == 'width':
+                elif pc == "width":
                     value = self._ask(":trigger:a:pulsewidth:source?").lower()
-                elif pc == 'transition':
+                elif pc == "transition":
                     value = self._ask(":trigger:a:transition:source?").lower()
-                elif pc == 'timeout':
+                elif pc == "timeout":
                     value = self._ask(":trigger:a:timeout:source?").lower()
-            elif t == 'bus':
+            elif t == "bus":
                 # TODO
-                value = ''
-            elif t == 'video':
+                value = ""
+            elif t == "video":
                 value = self._ask(":trigger:a:video:source?").lower()
             # TODO process value
             self._trigger_source = value
@@ -959,67 +1115,68 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
         return self._trigger_source
 
     def _set_trigger_source(self, value):
-        if hasattr(value, 'name'):
+        if hasattr(value, "name"):
             value = value.name
         value = str(value)
         if value not in self._channel_name:
             raise ivi.UnknownPhysicalNameException()
         if not self._driver_operation_simulate:
             t = self._ask(":trigger:a:type?").lower()
-            if t == 'edge':
+            if t == "edge":
                 self._write(":trigger:a:edge:source %s" % value)
-            elif t == 'logic':
+            elif t == "logic":
                 # TODO
                 pass
-            elif t == 'pulse':
+            elif t == "pulse":
                 pc = self._ask(":trigger:a:pulse:class?").lower()
-                if pc == 'runt':
+                if pc == "runt":
                     self._write(":trigger:a:runt:source %s" % value)
-                elif pc == 'width':
+                elif pc == "width":
                     self._write(":trigger:a:pulsewidth:source %s" % value)
-                elif pc == 'transition':
+                elif pc == "transition":
                     self._write(":trigger:a:transition:source %s" % value)
-                elif pc == 'timeout':
+                elif pc == "timeout":
                     self._write(":trigger:a:timeout:source %s" % value)
-            elif t == 'bus':
+            elif t == "bus":
                 # TODO
                 pass
-            elif t == 'video':
+            elif t == "video":
                 self._write(":trigger:a:video:source %s" % value)
-            #self._write(":trigger:source %s" % value)
+            # self._write(":trigger:source %s" % value)
         self._trigger_source = value
         self._set_cache_valid()
-        self._set_cache_valid(False, 'trigger_level')
-        self._set_cache_valid(False, 'trigger_runt_threshold_high')
-        self._set_cache_valid(False, 'trigger_runt_threshold_low')
-        for i in range(self._analog_channel_count): self._set_cache_valid(False, 'channel_trigger_level', i)
+        self._set_cache_valid(False, "trigger_level")
+        self._set_cache_valid(False, "trigger_runt_threshold_high")
+        self._set_cache_valid(False, "trigger_runt_threshold_low")
+        for i in range(self._analog_channel_count):
+            self._set_cache_valid(False, "channel_trigger_level", i)
 
     def _get_trigger_type(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
             value = self._ask(":trigger:a:type?").lower()
-            if value == 'edge':
+            if value == "edge":
                 src = self._ask(":trigger:a:edge:source?").lower()
-                if src == 'line':
-                    value = 'ac_line'
-            elif value == 'logic':
+                if src == "line":
+                    value = "ac_line"
+            elif value == "logic":
                 # TODO
-                value = 'logic'
-            elif value == 'pulse':
+                value = "logic"
+            elif value == "pulse":
                 pc = self._ask(":trigger:a:pulse:class?").lower()
-                if pc == 'width':
+                if pc == "width":
                     wh = self._ask(":trigger:a:pulsewidth:when?").lower()
                     if wh in GlitchConditionMapping.values():
-                        value = 'glitch'
+                        value = "glitch"
                     else:
-                        value = 'width'
+                        value = "width"
                 else:
                     value = pc
-            elif value == 'bus':
+            elif value == "bus":
                 # TODO
-                value = 'bus'
-            elif value == 'video':
-                value = 'tv'
-            #else:
+                value = "bus"
+            elif value == "video":
+                value = "tv"
+            # else:
             #    value = [k for k,v in TriggerTypeMapping.items() if v==value][0]
             self._trigger_type = value
             self._set_cache_valid()
@@ -1030,23 +1187,29 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
             raise ivi.ValueNotSupportedException()
         if not self._driver_operation_simulate:
             self._write(":trigger:a:type %s" % TriggerTypeMapping[value])
-            if value == 'ac_line':
+            if value == "ac_line":
                 self._write(":trigger:a:edge:source line")
-            elif value in ['runt', 'width', 'glitch', 'transition', 'timeout']:
+            elif value in ["runt", "width", "glitch", "transition", "timeout"]:
                 self._write(":trigger:a:pulse:class %s" % value)
                 print(value)
-                if value == 'glitch':
+                if value == "glitch":
                     t = self._ask(":trigger:a:pulsewidth:when?").lower()
                     if t not in GlitchConditionMapping.values():
-                        self._write(":trigger:a:pulsewidth:when %s" % GlitchConditionMapping[self._trigger_glitch_condition])
-                elif value == 'width':
+                        self._write(
+                            ":trigger:a:pulsewidth:when %s"
+                            % GlitchConditionMapping[self._trigger_glitch_condition]
+                        )
+                elif value == "width":
                     t = self._ask(":trigger:a:pulsewidth:when?").lower()
                     if t not in WidthConditionMapping.values():
-                        self._write(":trigger:a:pulsewidth:when %s" % WidthConditionMapping[self._trigger_width_condition])
+                        self._write(
+                            ":trigger:a:pulsewidth:when %s"
+                            % WidthConditionMapping[self._trigger_width_condition]
+                        )
         self._trigger_type = value
         self._set_cache_valid()
-        self._set_cache_valid(False, 'trigger_source')
-        self._set_cache_valid(False, 'trigger_level')
+        self._set_cache_valid(False, "trigger_source")
+        self._set_cache_valid(False, "trigger_level")
 
     def _measurement_abort(self):
         pass
@@ -1055,7 +1218,9 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
         if not self._driver_operation_simulate and not self._get_cache_valid():
             value = self._ask(":trigger:a:video:sync?").lower()
             # may need processing
-            self._trigger_tv_trigger_event = [k for k,v in TVTriggerEventMapping.items() if v==value][0]
+            self._trigger_tv_trigger_event = [
+                k for k, v in TVTriggerEventMapping.items() if v == value
+            ][0]
             self._set_cache_valid()
         return self._trigger_tv_trigger_event
 
@@ -1087,7 +1252,9 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
     def _get_trigger_tv_polarity(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
             value = self._ask(":trigger:a:video:polarity?").lower()
-            self._trigger_tv_polarity = [k for k,v in PolarityMapping.items() if v==value][0]
+            self._trigger_tv_polarity = [
+                k for k, v in PolarityMapping.items() if v == value
+            ][0]
             self._set_cache_valid()
         return self._trigger_tv_polarity
 
@@ -1102,7 +1269,9 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
     def _get_trigger_tv_signal_format(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
             value = self._ask(":trigger:a:video:standard?").lower()
-            self._trigger_tv_signal_format = [k for k,v in TVTriggerFormatMapping.items() if v==value][0]
+            self._trigger_tv_signal_format = [
+                k for k, v in TVTriggerFormatMapping.items() if v == value
+            ][0]
             self._set_cache_valid()
         return self._trigger_tv_signal_format
 
@@ -1117,7 +1286,9 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
     def _get_trigger_runt_threshold_high(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
             ch = self._ask(":trigger:a:runt:source?")
-            self._trigger_runt_threshold_high = float(self._ask(":trigger:a:upperthreshold:%s?" % ch))
+            self._trigger_runt_threshold_high = float(
+                self._ask(":trigger:a:upperthreshold:%s?" % ch)
+            )
             self._set_cache_valid()
         return self._trigger_runt_threshold_high
 
@@ -1132,7 +1303,9 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
     def _get_trigger_runt_threshold_low(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
             ch = self._ask(":trigger:a:runt:source?")
-            self._trigger_runt_threshold_low = float(self._ask(":trigger:a:lowerthreshold:%s?" % ch))
+            self._trigger_runt_threshold_low = float(
+                self._ask(":trigger:a:lowerthreshold:%s?" % ch)
+            )
             self._set_cache_valid()
         return self._trigger_runt_threshold_low
 
@@ -1143,13 +1316,16 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
             self._write(":trigger:a:lowerthreshold:%s %e" % (ch, value))
         self._trigger_runt_threshold_low = value
         self._set_cache_valid()
-        self._set_cache_valid(False, 'trigger_level')
-        for i in range(self._analog_channel_count): self._set_cache_valid(False, 'channel_trigger_level', i)
+        self._set_cache_valid(False, "trigger_level")
+        for i in range(self._analog_channel_count):
+            self._set_cache_valid(False, "channel_trigger_level", i)
 
     def _get_trigger_runt_polarity(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
             value = self._ask(":trigger:a:runt:polarity?").lower()
-            self._trigger_runt_polarity = [k for k,v in PolarityMapping3.items() if v==value][0]
+            self._trigger_runt_polarity = [
+                k for k, v in PolarityMapping3.items() if v == value
+            ][0]
             self._set_cache_valid()
         return self._trigger_runt_polarity
 
@@ -1167,7 +1343,9 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
         if not self._driver_operation_simulate and not self._get_cache_valid():
             value = self._ask(":trigger:a:pulsewidth:when?").lower()
             if value in GlitchConditionMapping.values():
-                self._trigger_glitch_condition = [k for k,v in GlitchConditionMapping.items() if v==value][0]
+                self._trigger_glitch_condition = [
+                    k for k, v in GlitchConditionMapping.items() if v == value
+                ][0]
                 self._set_cache_valid()
         return self._trigger_glitch_condition
 
@@ -1187,7 +1365,9 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
 
     def _get_trigger_glitch_width(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
-            self._trigger_glitch_width = float(self._ask(":trigger:a:pulsewidth:width?"))
+            self._trigger_glitch_width = float(
+                self._ask(":trigger:a:pulsewidth:width?")
+            )
             self._set_cache_valid()
         return self._trigger_glitch_width
 
@@ -1202,7 +1382,9 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
         if not self._driver_operation_simulate and not self._get_cache_valid():
             value = self._ask(":trigger:a:pulsewidth:when?").lower()
             if value in WidthConditionMapping.values():
-                self._trigger_width_condition = [k for k,v in WidthConditionMapping.items() if v==value][0]
+                self._trigger_width_condition = [
+                    k for k, v in WidthConditionMapping.items() if v == value
+                ][0]
                 self._set_cache_valid()
         return self._trigger_width_condition
 
@@ -1216,7 +1398,9 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
 
     def _get_trigger_width_threshold_high(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
-            self._trigger_width_threshold_high = float(self._ask(":trigger:a:pulsewidth:highlimit?"))
+            self._trigger_width_threshold_high = float(
+                self._ask(":trigger:a:pulsewidth:highlimit?")
+            )
             self._set_cache_valid()
         return self._trigger_width_threshold_high
 
@@ -1229,7 +1413,9 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
 
     def _get_trigger_width_threshold_low(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
-            self._trigger_width_threshold_low = float(self._ask(":trigger:a:pulsewidth:lowlimit?"))
+            self._trigger_width_threshold_low = float(
+                self._ask(":trigger:a:pulsewidth:lowlimit?")
+            )
             self._set_cache_valid()
         return self._trigger_width_threshold_low
 
@@ -1243,7 +1429,9 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
     def _get_trigger_width_polarity(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
             value = self._ask(":trigger:a:pulsewidth:polarity?").lower()
-            self._trigger_width_polarity = [k for k,v in PolarityMapping.items() if v==value][0]
+            self._trigger_width_polarity = [
+                k for k, v in PolarityMapping.items() if v == value
+            ][0]
             self._set_cache_valid()
         return self._trigger_width_polarity
 
@@ -1276,7 +1464,7 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
         trace = ivi.TraceYT()
 
         # Read preamble
-        pre = self._ask(":wfmoutpre?").split(';')
+        pre = self._ask(":wfmoutpre?").split(";")
 
         acq_format = pre[7].strip().upper()
         points = int(pre[6])
@@ -1291,34 +1479,34 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
         trace.y_reference = int(float(pre[15]))
         trace.y_origin = float(pre[16])
 
-        if acq_format != 'Y':
+        if acq_format != "Y":
             raise UnexpectedResponseException()
 
-        if point_enc != 'BINARY':
+        if point_enc != "BINARY":
             raise UnexpectedResponseException()
 
         # Read waveform data
         raw_data = self._ask_for_ieee_block(":curve?")
-        self._read_raw() # flush buffer
+        self._read_raw()  # flush buffer
 
         # Store in trace object
-        if point_fmt == 'RP' and point_size == 1:
-            trace.y_raw = array.array('B', raw_data[0:points*2])
-        elif point_fmt == 'RP' and point_size == 2:
-            trace.y_raw = array.array('H', raw_data[0:points*2])
-        elif point_fmt == 'RI' and point_size == 1:
-            trace.y_raw = array.array('b', raw_data[0:points*2])
-        elif point_fmt == 'RI' and point_size == 2:
-            trace.y_raw = array.array('h', raw_data[0:points*2])
-        elif point_fmt == 'FP' and point_size == 4:
+        if point_fmt == "RP" and point_size == 1:
+            trace.y_raw = array.array("B", raw_data[0 : points * 2])
+        elif point_fmt == "RP" and point_size == 2:
+            trace.y_raw = array.array("H", raw_data[0 : points * 2])
+        elif point_fmt == "RI" and point_size == 1:
+            trace.y_raw = array.array("b", raw_data[0 : points * 2])
+        elif point_fmt == "RI" and point_size == 2:
+            trace.y_raw = array.array("h", raw_data[0 : points * 2])
+        elif point_fmt == "FP" and point_size == 4:
             trace.y_increment = 1
             trace.y_reference = 0
             trace.y_origin = 0
-            trace.y_raw = array.array('f', raw_data[0:points*4])
+            trace.y_raw = array.array("f", raw_data[0 : points * 4])
         else:
             raise UnexpectedResponseException()
 
-        if (byte_order == 'LSB') != (sys.byteorder == 'little'):
+        if (byte_order == "LSB") != (sys.byteorder == "little"):
             trace.y_raw.byteswap()
 
         return trace
@@ -1330,18 +1518,22 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
         if not self._driver_operation_simulate:
             self._write(":acquire:stopafter sequence")
             self._write(":acquire:state run")
-            self._set_cache_valid(False, 'trigger_continuous')
+            self._set_cache_valid(False, "trigger_continuous")
 
     def _get_reference_level_high(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
-            self._reference_level_high = float(self._ask(":measurement:reflevel:percent:high?"))
+            self._reference_level_high = float(
+                self._ask(":measurement:reflevel:percent:high?")
+            )
             self._set_cache_valid()
         return self._reference_level_high
 
     def _set_reference_level_high(self, value):
         value = float(value)
-        if value < 0: value = 0
-        if value > 100: value = 100
+        if value < 0:
+            value = 0
+        if value > 100:
+            value = 100
         if not self._driver_operation_simulate:
             self._write(":measurement:reflevel:method percent")
             self._write(":measurement:reflevel:percent:high %e" % value)
@@ -1350,14 +1542,18 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
 
     def _get_reference_level_low(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
-            self._reference_level_low = float(self._ask(":measurement:reflevel:percent:low?"))
+            self._reference_level_low = float(
+                self._ask(":measurement:reflevel:percent:low?")
+            )
             self._set_cache_valid()
         return self._reference_level_low
 
     def _set_reference_level_low(self, value):
         value = float(value)
-        if value < 0: value = 0
-        if value > 100: value = 100
+        if value < 0:
+            value = 0
+        if value > 100:
+            value = 100
         if not self._driver_operation_simulate:
             self._write(":measurement:reflevel:method percent")
             self._write(":measurement:reflevel:percent:low %e" % value)
@@ -1366,14 +1562,18 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
 
     def _get_reference_level_middle(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
-            self._reference_level_middle = float(self._ask(":measurement:reflevel:percent:mid1?"))
+            self._reference_level_middle = float(
+                self._ask(":measurement:reflevel:percent:mid1?")
+            )
             self._set_cache_valid()
         return self._reference_level_middle
 
     def _set_reference_level_middle(self, value):
         value = float(value)
-        if value < 0: value = 0
-        if value > 100: value = 100
+        if value < 0:
+            value = 0
+        if value > 100:
+            value = 100
         if not self._driver_operation_simulate:
             self._write(":measurement:reflevel:method percent")
             self._write(":measurement:reflevel:percent:mid1 %e" % value)
@@ -1381,7 +1581,9 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
         self._reference_level_middle = value
         self._set_cache_valid()
 
-    def _measurement_fetch_waveform_measurement(self, index, measurement_function, ref_channel = None):
+    def _measurement_fetch_waveform_measurement(
+        self, index, measurement_function, ref_channel=None
+    ):
         index = ivi.get_index(self._channel_name, index)
         if index < self._analog_channel_count:
             if measurement_function not in MeasurementFunctionMapping:
@@ -1394,15 +1596,19 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
         if not self._driver_operation_simulate:
             self._write(":measurement:immed:type %s" % func)
             self._write(":measurement:immed:source1 %s" % self._channel_name[index])
-            if measurement_function in ['ratio', 'phase', 'delay']:
-                if hasattr(ref_channel, 'name'):
+            if measurement_function in ["ratio", "phase", "delay"]:
+                if hasattr(ref_channel, "name"):
                     ref_channel = ref_channel.name
                 ref_index = ivi.get_index(self._channel_name, ref_channel)
-                self._write(":measurement:immed:source2 %s" % self._channel_name[ref_index])
+                self._write(
+                    ":measurement:immed:source2 %s" % self._channel_name[ref_index]
+                )
             return float(self._ask(":measurement:immed:value?"))
         return 0
 
-    def _measurement_read_waveform_measurement(self, index, measurement_function, maximum_time):
+    def _measurement_read_waveform_measurement(
+        self, index, measurement_function, maximum_time
+    ):
         return self._measurement_fetch_waveform_measurement(index, measurement_function)
 
     def _get_acquisition_number_of_envelopes(self):
@@ -1421,7 +1627,9 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
 
     def _get_trigger_continuous(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
-            self._trigger_continuous = self._ask(":acquire:stopafter?").lower() == 'runstop'
+            self._trigger_continuous = (
+                self._ask(":acquire:stopafter?").lower() == "runstop"
+            )
             self._set_cache_valid()
         return self._trigger_continuous
 
@@ -1449,11 +1657,13 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
             self._write(":acquire:numavg %d" % value)
         self._acquisition_number_of_averages = value
         self._set_cache_valid()
-    
+
     def _get_trigger_modifier(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
             value = self._ask(":trigger:a:mode?").lower()
-            self._trigger_modifier = [k for k,v in TriggerModifierMapping.items() if v==value][0]
+            self._trigger_modifier = [
+                k for k, v in TriggerModifierMapping.items() if v == value
+            ][0]
             self._set_cache_valid()
         return self._trigger_modifier
 
@@ -1468,4 +1678,3 @@ class tektronixBaseScope(scpi.common.IdnCommand, scpi.common.Reset, scpi.common.
     def _measurement_auto_setup(self):
         if not self._driver_operation_simulate:
             self._write(":autoset execute")
-

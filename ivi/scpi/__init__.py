@@ -25,10 +25,11 @@ THE SOFTWARE.
 """
 
 __all__ = [
-        # Common functions
-        "common",
-        # IVI implementations
-        "dcpwr", "dmm"]
+    # Common functions
+    "common",
+    # IVI implementations
+    "dcpwr",
+    "dmm",
+]
 
 from . import *
-

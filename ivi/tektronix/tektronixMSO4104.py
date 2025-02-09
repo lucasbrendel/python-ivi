@@ -26,11 +26,12 @@ THE SOFTWARE.
 
 from .tektronixMSO4000 import *
 
+
 class tektronixMSO4104(tektronixMSO4000):
     "Tektronix MSO4104 IVI oscilloscope driver"
 
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', 'MSO4104')
+        self.__dict__.setdefault("_instrument_id", "MSO4104")
 
         super(tektronixMSO4104, self).__init__(*args, **kwargs)
 

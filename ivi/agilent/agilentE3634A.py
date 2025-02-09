@@ -27,31 +27,27 @@ THE SOFTWARE.
 from .agilentE3600A import *
 from .. import scpi
 
+
 class agilentE3634A(agilentE3600A, scpi.dcpwr.OCP):
     "Agilent E3634A IVI DC power supply driver"
-    
+
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', 'E3634A')
-        
+        self.__dict__.setdefault("_instrument_id", "E3634A")
+
         super(agilentE3634A, self).__init__(*args, **kwargs)
-        
+
         self._output_count = 1
-        
+
         self._output_spec = [
             {
-                'range': {
-                    'P25V': (25.75, 7.21),
-                    'P50V': (51.5, 4.12)
-                },
-                'ovp_max': 55.0,
-                'ocp_max': 7.5,
-                'voltage_max': 25.75,
-                'current_max': 7.21
+                "range": {"P25V": (25.75, 7.21), "P50V": (51.5, 4.12)},
+                "ovp_max": 55.0,
+                "ocp_max": 7.5,
+                "voltage_max": 25.75,
+                "current_max": 7.21,
             }
         ]
-        
+
         self._memory_size = 3
-        
+
         self._init_outputs()
-    
-    

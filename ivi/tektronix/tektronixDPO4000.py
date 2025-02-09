@@ -26,11 +26,12 @@ THE SOFTWARE.
 
 from .tektronixBaseScope import *
 
+
 class tektronixDPO4000(tektronixBaseScope):
     "Tektronix DPO4000 series IVI oscilloscope driver"
 
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', 'DPO4000')
+        self.__dict__.setdefault("_instrument_id", "DPO4000")
 
         super(tektronixDPO4000, self).__init__(*args, **kwargs)
 
@@ -40,7 +41,16 @@ class tektronixDPO4000(tektronixBaseScope):
         self._bandwidth = 1e9
 
         self._identity_description = "Tektronix DPO4000 series IVI oscilloscope driver"
-        self._identity_supported_instrument_models = ['DPO4032', 'DPO4034', 'DPO4054',
-                'DPO4104', 'DPO4014B', 'DPO4034B', 'DPO4054B', 'DPO4102B', 'DPO4104B']
+        self._identity_supported_instrument_models = [
+            "DPO4032",
+            "DPO4034",
+            "DPO4054",
+            "DPO4104",
+            "DPO4014B",
+            "DPO4034B",
+            "DPO4054B",
+            "DPO4102B",
+            "DPO4104B",
+        ]
 
         self._init_channels()

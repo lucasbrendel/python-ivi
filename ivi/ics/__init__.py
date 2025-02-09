@@ -26,7 +26,3 @@ THE SOFTWARE.
 
 # Ethernet to Modbus bridge
 from .ics8099 import ics8099
-
-
-
-

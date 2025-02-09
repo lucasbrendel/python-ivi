@@ -26,20 +26,19 @@ THE SOFTWARE.
 
 from .agilentU2000 import *
 
+
 class agilentU2001B(agilentU2000):
     "Agilent U2001B RF power sensor driver"
-    
+
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', 'U2001B')
-        
+        self.__dict__.setdefault("_instrument_id", "U2001B")
+
         super(agilentU2001B, self).__init__(*args, **kwargs)
-        
+
         self._channel_count = 1
         self._frequency_low = 10e6
         self._frequency_high = 6e9
         self._power_low = -30
         self._power_high = 44
-        
+
         self._init_channels()
-    
-    

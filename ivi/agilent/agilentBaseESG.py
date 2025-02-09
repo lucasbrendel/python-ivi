@@ -30,29 +30,43 @@ from .. import extra
 from .. import scpi
 
 LFGeneratorWaveformMapping = {
-    'sine': 'sine',
-    'dual_sine': 'dual',
-    'swept_sine': 'swep',
-    'square': 'squ',
-    'triangle': 'tri',
-    'ramp_up': 'ramp',
+    "sine": "sine",
+    "dual_sine": "dual",
+    "swept_sine": "swep",
+    "square": "squ",
+    "triangle": "tri",
+    "ramp_up": "ramp",
     #'ramp_down',
-    'pulse': 'puls',
-    'noise': 'nois',
-    'dc': 'dc'
-    }
+    "pulse": "puls",
+    "noise": "nois",
+    "dc": "dc",
+}
 
-class agilentBaseESG(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.common.Reset,
-                     scpi.common.SelfTest,
-                     rfsiggen.Base, rfsiggen.ModulateAM,
-                     rfsiggen.ModulateFM, rfsiggen.ModulatePM, rfsiggen.AnalogModulationSource,
-                     rfsiggen.ModulatePulse, rfsiggen.LFGenerator, rfsiggen.LFGeneratorOutput,
-                     rfsiggen.Sweep, rfsiggen.FrequencyStep, rfsiggen.PowerStep, rfsiggen.List,
-                     extra.common.Memory, ivi.Driver):
+
+class agilentBaseESG(
+    scpi.common.IdnCommand,
+    scpi.common.ErrorQuery,
+    scpi.common.Reset,
+    scpi.common.SelfTest,
+    rfsiggen.Base,
+    rfsiggen.ModulateAM,
+    rfsiggen.ModulateFM,
+    rfsiggen.ModulatePM,
+    rfsiggen.AnalogModulationSource,
+    rfsiggen.ModulatePulse,
+    rfsiggen.LFGenerator,
+    rfsiggen.LFGeneratorOutput,
+    rfsiggen.Sweep,
+    rfsiggen.FrequencyStep,
+    rfsiggen.PowerStep,
+    rfsiggen.List,
+    extra.common.Memory,
+    ivi.Driver,
+):
     "Agilent ESG series IVI RF signal generator driver"
 
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', '')
+        self.__dict__.setdefault("_instrument_id", "")
 
         super(agilentBaseESG, self).__init__(*args, **kwargs)
 
@@ -81,31 +95,59 @@ class agilentBaseESG(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.common
         self._identity_instrument_firmware_revision = ""
         self._identity_specification_major_version = 2
         self._identity_specification_minor_version = 0
-        self._identity_supported_instrument_models = list(['E4400B', 'E4420B', 'E4421B', 'E4422B',
-                'E4423B', 'E4424B', 'E4425B', 'E4426B', 'E4430B', 'E4431B', 'E4432B', 'E4433B',
-                'E4434B', 'E4435B', 'E4436B', 'E4437B'])
+        self._identity_supported_instrument_models = list(
+            [
+                "E4400B",
+                "E4420B",
+                "E4421B",
+                "E4422B",
+                "E4423B",
+                "E4424B",
+                "E4425B",
+                "E4426B",
+                "E4430B",
+                "E4431B",
+                "E4432B",
+                "E4433B",
+                "E4434B",
+                "E4435B",
+                "E4436B",
+                "E4437B",
+            ]
+        )
 
-        self._add_property('rf.frequency_multiplier',
-                        self._get_rf_frequency_multiplier,
-                        self._set_rf_frequency_multiplier)
-        self._add_property('rf.frequency_offset',
-                        self._get_rf_frequency_offset,
-                        self._set_rf_frequency_offset)
-        self._add_property('rf.frequency_reference',
-                        self._get_rf_frequency_reference,
-                        self._set_rf_frequency_reference)
-        self._add_property('rf.frequency_reference_enabled',
-                        self._get_rf_frequency_reference_enabled,
-                        self._set_rf_frequency_reference_enabled)
-        self._add_property('sweep.frequency_step.points',
-                        self._get_sweep_frequency_step_points,
-                        self._set_sweep_frequency_step_points)
-        self._add_property('sweep.power_step.points',
-                        self._get_sweep_power_step_points,
-                        self._set_sweep_power_step_points)
+        self._add_property(
+            "rf.frequency_multiplier",
+            self._get_rf_frequency_multiplier,
+            self._set_rf_frequency_multiplier,
+        )
+        self._add_property(
+            "rf.frequency_offset",
+            self._get_rf_frequency_offset,
+            self._set_rf_frequency_offset,
+        )
+        self._add_property(
+            "rf.frequency_reference",
+            self._get_rf_frequency_reference,
+            self._set_rf_frequency_reference,
+        )
+        self._add_property(
+            "rf.frequency_reference_enabled",
+            self._get_rf_frequency_reference_enabled,
+            self._set_rf_frequency_reference_enabled,
+        )
+        self._add_property(
+            "sweep.frequency_step.points",
+            self._get_sweep_frequency_step_points,
+            self._set_sweep_frequency_step_points,
+        )
+        self._add_property(
+            "sweep.power_step.points",
+            self._get_sweep_power_step_points,
+            self._set_sweep_power_step_points,
+        )
 
-
-    def _initialize(self, resource = None, id_query = False, reset = False, **keywargs):
+    def _initialize(self, resource=None, id_query=False, reset=False, **keywargs):
         "Opens an I/O session to the instrument."
 
         super(agilentBaseESG, self)._initialize(resource, id_query, reset, **keywargs)
@@ -118,14 +160,15 @@ class agilentBaseESG(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.common
         if id_query and not self._driver_operation_simulate:
             id = self.identity.instrument_model
             id_check = self._instrument_id
-            id_short = id[:len(id_check)]
+            id_short = id[: len(id_check)]
             if id_short != id_check:
-                raise Exception("Instrument ID mismatch, expecting %s, got %s", id_check, id_short)
+                raise Exception(
+                    "Instrument ID mismatch, expecting %s, got %s", id_check, id_short
+                )
 
         # reset
         if reset:
             self.utility_reset()
-
 
     def _utility_disable(self):
         pass
@@ -136,16 +179,15 @@ class agilentBaseESG(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.common
     def _utility_unlock_object(self):
         pass
 
-
     def _load_catalog(self):
         self._catalog = list()
         self._catalog_names = list()
         if not self._driver_operation_simulate:
             raw = self._ask("memory:catalog:all?").lower()
 
-            l = raw.split(',')
+            l = raw.split(",")
             l = [s.strip('"') for s in l]
-            self._catalog = [l[i:i+3] for i in range(2, len(l), 3)]
+            self._catalog = [l[i : i + 3] for i in range(2, len(l), 3)]
             self._catalog_names = [l[0] for l in self._catalog]
 
     def _memory_save(self, index):
@@ -153,7 +195,7 @@ class agilentBaseESG(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.common
         if index < 0 or index >= self._memory_size:
             raise OutOfRangeException()
         reg = index % 100
-        seq = int(index/100)
+        seq = int(index / 100)
         if not self._driver_operation_simulate:
             self._write("*sav %d, %d" % (reg, seq))
 
@@ -162,7 +204,7 @@ class agilentBaseESG(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.common
         if index < 0 or index >= self._memory_size:
             raise OutOfRangeException()
         reg = index % 100
-        seq = int(index/100)
+        seq = int(index / 100)
         if not self._driver_operation_simulate:
             self._write("*rcl %d, %d" % (reg, seq))
             self.driver_operation.invalidate_all_attributes()
@@ -221,7 +263,9 @@ class agilentBaseESG(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.common
 
     def _get_rf_frequency_reference_enabled(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
-            self._rf_frequency_reference_enabled = bool(int(self._ask("frequency:reference:state?")))
+            self._rf_frequency_reference_enabled = bool(
+                int(self._ask("frequency:reference:state?"))
+            )
             self._set_cache_valid()
         return self._rf_frequency_reference_enabled
 
@@ -273,7 +317,9 @@ class agilentBaseESG(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.common
 
     def _get_rf_level_reference_enabled(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
-            self._rf_level_reference_enabled = bool(int(self._ask("power:reference:state?")))
+            self._rf_level_reference_enabled = bool(
+                int(self._ask("power:reference:state?"))
+            )
             self._set_cache_valid()
         return self._rf_level_reference_enabled
 
@@ -312,7 +358,9 @@ class agilentBaseESG(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.common
 
     def _rf_is_settled(self):
         if not self._driver_operation_simulate:
-            return int(self._ask("status:questionable:power:condition?")) & (1 << 1) == 0
+            return (
+                int(self._ask("status:questionable:power:condition?")) & (1 << 1) == 0
+            )
         return True
 
     def _rf_wait_until_settled(self, maximum_time):
@@ -507,12 +555,15 @@ class agilentBaseESG(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.common
         return self._lf_generator_count
 
     def _get_lf_generator_name(self, index):
-        if index < 0 or index >= self._lf_generator_count: raise Exception('Channel out of range')
+        if index < 0 or index >= self._lf_generator_count:
+            raise Exception("Channel out of range")
         return self._lf_generator_name[index]
 
     def _get_lf_generator_frequency(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
-            self._lf_generator_frequency = float(self._ask("lfoutput:function:frequency?"))
+            self._lf_generator_frequency = float(
+                self._ask("lfoutput:function:frequency?")
+            )
             self._set_cache_valid()
         return self._lf_generator_frequency
 
@@ -526,7 +577,9 @@ class agilentBaseESG(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.common
     def _get_lf_generator_waveform(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
             value = self._ask("lfoutput:function:shape?").lower()
-            self._lf_generator_waveform = [k for k,v in LFGeneratorWaveformMapping.items() if v==value][0]
+            self._lf_generator_waveform = [
+                k for k, v in LFGeneratorWaveformMapping.items() if v == value
+            ][0]
             self._set_cache_valid()
         return self._lf_generator_waveform
 
@@ -534,13 +587,17 @@ class agilentBaseESG(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.common
         if value not in LFGeneratorWaveformMapping:
             raise ivi.ValueNotSupportedException()
         if not self._driver_operation_simulate:
-            self._write("lfoutput:function:shape %s" % LFGeneratorWaveformMapping[value])
+            self._write(
+                "lfoutput:function:shape %s" % LFGeneratorWaveformMapping[value]
+            )
         self._lf_generator_waveform = value
         self._set_cache_valid()
 
     def _get_lf_generator_output_amplitude(self):
         if not self._driver_operation_simulate and not self._get_cache_valid():
-            self._lf_generator_output_amplitude = float(self._ask("lfoutput:amplitude?"))
+            self._lf_generator_output_amplitude = float(
+                self._ask("lfoutput:amplitude?")
+            )
             self._set_cache_valid()
         return self._lf_generator_output_amplitude
 
@@ -613,12 +670,24 @@ class agilentBaseESG(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.common
         self._sweep_frequency_step_scaling = value
 
     def _get_sweep_frequency_step_size(self):
-        self._sweep_frequency_step_size = abs((self.sweep.frequency_step.stop - self.sweep.frequency_step.start) / (self.sweep.frequency_step.points-1))
+        self._sweep_frequency_step_size = abs(
+            (self.sweep.frequency_step.stop - self.sweep.frequency_step.start)
+            / (self.sweep.frequency_step.points - 1)
+        )
         return self._sweep_frequency_step_size
 
     def _set_sweep_frequency_step_size(self, value):
         value = float(value)
-        self.sweep.frequency_step.points = max(int(abs((self.sweep.frequency_step.stop - self.sweep.frequency_step.start) / value))+1, 2)
+        self.sweep.frequency_step.points = max(
+            int(
+                abs(
+                    (self.sweep.frequency_step.stop - self.sweep.frequency_step.start)
+                    / value
+                )
+            )
+            + 1,
+            2,
+        )
         self._sweep_frequency_step_size = value
 
     def _get_sweep_frequency_step_points(self):
@@ -626,7 +695,7 @@ class agilentBaseESG(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.common
             self._sweep_frequency_step_points = int(self._ask("sweep:points?"))
             self._sweep_power_step_points = self._sweep_frequency_step_points
             self._set_cache_valid()
-            self._set_cache_valid(True, 'sweep_frequency_step_points')
+            self._set_cache_valid(True, "sweep_frequency_step_points")
         return self._sweep_frequency_step_points
 
     def _set_sweep_frequency_step_points(self, value):
@@ -636,7 +705,7 @@ class agilentBaseESG(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.common
         self._sweep_frequency_step_points = value
         self._sweep_power_step_points = value
         self._set_cache_valid()
-        self._set_cache_valid(True, 'sweep_frequency_step_points')
+        self._set_cache_valid(True, "sweep_frequency_step_points")
 
     def _get_sweep_frequency_step_single_step_enabled(self):
         return self._sweep_frequency_step_single_step_enabled
@@ -650,7 +719,7 @@ class agilentBaseESG(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.common
             self._sweep_frequency_step_dwell = float(self._ask("sweep:dwell?"))
             self._sweep_power_step_dwell = self._sweep_frequency_step_dwell
             self._set_cache_valid()
-            self._set_cache_valid(True, 'sweep_power_step_dwell')
+            self._set_cache_valid(True, "sweep_power_step_dwell")
         return self._sweep_frequency_step_dwell
 
     def _set_sweep_frequency_step_dwell(self, value):
@@ -660,7 +729,7 @@ class agilentBaseESG(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.common
         self._sweep_frequency_step_dwell = value
         self._sweep_power_step_dwell = value
         self._set_cache_valid()
-        self._set_cache_valid(True, 'sweep_power_step_dwell')
+        self._set_cache_valid(True, "sweep_power_step_dwell")
 
     def _sweep_frequency_step_reset(self):
         pass
@@ -692,12 +761,19 @@ class agilentBaseESG(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.common
         self._set_cache_valid()
 
     def _get_sweep_power_step_size(self):
-        self._sweep_power_step_size = abs((self.sweep.power_step.stop - self.sweep.power_step.start) / (self.sweep.power_step.points-1))
+        self._sweep_power_step_size = abs(
+            (self.sweep.power_step.stop - self.sweep.power_step.start)
+            / (self.sweep.power_step.points - 1)
+        )
         return self._sweep_power_step_size
 
     def _set_sweep_power_step_size(self, value):
         value = float(value)
-        self.sweep.power_step.points = max(int(abs((self.sweep.power_step.stop - self.sweep.power_step.start) / value))+1, 2)
+        self.sweep.power_step.points = max(
+            int(abs((self.sweep.power_step.stop - self.sweep.power_step.start) / value))
+            + 1,
+            2,
+        )
         self._sweep_power_step_size = value
 
     def _get_sweep_power_step_points(self):
@@ -705,7 +781,7 @@ class agilentBaseESG(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.common
             self._sweep_power_step_points = int(self._ask("sweep:points?"))
             self._sweep_frequency_step_points = self._sweep_power_step_points
             self._set_cache_valid()
-            self._set_cache_valid(True, 'sweep_frequency_step_points')
+            self._set_cache_valid(True, "sweep_frequency_step_points")
         return self._sweep_power_step_points
 
     def _set_sweep_power_step_points(self, value):
@@ -715,7 +791,7 @@ class agilentBaseESG(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.common
         self._sweep_power_step_points = value
         self._sweep_frequency_step_points = value
         self._set_cache_valid()
-        self._set_cache_valid(True, 'sweep_frequency_step_points')
+        self._set_cache_valid(True, "sweep_frequency_step_points")
 
     def _get_sweep_power_step_single_step_enabled(self):
         return self._sweep_power_step_single_step_enabled
@@ -729,7 +805,7 @@ class agilentBaseESG(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.common
             self._sweep_power_step_dwell = float(self._ask("sweep:dwell?"))
             self._sweep_frequency_step_dwell = self._sweep_power_step_dwell
             self._set_cache_valid()
-            self._set_cache_valid(True, 'sweep_frequency_step_dwell')
+            self._set_cache_valid(True, "sweep_frequency_step_dwell")
         return self._sweep_power_step_dwell
 
     def _set_sweep_power_step_dwell(self, value):
@@ -739,7 +815,7 @@ class agilentBaseESG(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.common
         self._sweep_power_step_dwell = value
         self._sweep_frequency_step_dwell = value
         self._set_cache_valid()
-        self._set_cache_valid(True, 'sweep_frequency_step_dwell')
+        self._set_cache_valid(True, "sweep_frequency_step_dwell")
 
     def _sweep_power_step_reset(self):
         pass
@@ -779,4 +855,3 @@ class agilentBaseESG(scpi.common.IdnCommand, scpi.common.ErrorQuery, scpi.common
 
     def _sweep_list_reset(self):
         pass
-

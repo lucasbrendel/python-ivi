@@ -27,38 +27,45 @@ THE SOFTWARE.
 import Gpib
 import re
 
+
 def parse_visa_resource_string(resource_string):
     # valid resource strings:
     # GPIB::10::INSTR
     # GPIB0::10::INSTR
-    m = re.match('^(?P<prefix>(?P<type>GPIB)\d*)(::(?P<arg1>[^\s:]+))(::(?P<suffix>INSTR))$',
-            resource_string, re.I)
+    m = re.match(
+        "^(?P<prefix>(?P<type>GPIB)\d*)(::(?P<arg1>[^\s:]+))(::(?P<suffix>INSTR))$",
+        resource_string,
+        re.I,
+    )
 
     if m is not None:
         return dict(
-                type = m.group('type').upper(),
-                prefix = m.group('prefix'),
-                arg1 = m.group('arg1'),
-                suffix = m.group('suffix'),
+            type=m.group("type").upper(),
+            prefix=m.group("prefix"),
+            arg1=m.group("arg1"),
+            suffix=m.group("suffix"),
         )
+
 
 class LinuxGpibInstrument:
     "Linux GPIB wrapper instrument interface client"
-    def __init__(self, name = 'gpib0', pad = None, sad = 0, timeout = 13, send_eoi = 1, eos_mode = 0):
 
-        if name.upper().startswith('GPIB') and '::' in name:
+    def __init__(
+        self, name="gpib0", pad=None, sad=0, timeout=13, send_eoi=1, eos_mode=0
+    ):
+        if name.upper().startswith("GPIB") and "::" in name:
             res = parse_visa_resource_string(name)
 
             if res is None:
                 raise IOError("Invalid resource string")
 
-            index = res['prefix'][4:]
+            index = res["prefix"][4:]
             if len(index) > 0:
                 index = int(index)
             else:
                 index = 0
 
-            addr = int(res['arg1'])
+            addr = int(res["arg1"])
 
             name = index
             pad = addr
@@ -67,23 +74,23 @@ class LinuxGpibInstrument:
 
     def write_raw(self, data):
         "Write binary data to instrument"
-        
+
         self.gpib.write(data)
 
     def read_raw(self, num=-1):
         "Read binary data from instrument"
-        
+
         if num < 0:
             num = 512
-        
+
         return self.gpib.read(num)
-    
+
     def ask_raw(self, data, num=-1):
         "Write then read binary data"
         self.write_raw(data)
         return self.read_raw(num)
-    
-    def write(self, message, encoding = 'utf-8'):
+
+    def write(self, message, encoding="utf-8"):
         "Write string to instrument"
         if type(message) is tuple or type(message) is list:
             # recursive call for a list of commands
@@ -93,11 +100,11 @@ class LinuxGpibInstrument:
 
         self.write_raw(str(message).encode(encoding))
 
-    def read(self, num=-1, encoding = 'utf-8'):
+    def read(self, num=-1, encoding="utf-8"):
         "Read string from instrument"
-        return self.read_raw(num).decode(encoding).rstrip('\r\n')
+        return self.read_raw(num).decode(encoding).rstrip("\r\n")
 
-    def ask(self, message, num=-1, encoding = 'utf-8'):
+    def ask(self, message, num=-1, encoding="utf-8"):
         "Write then read string"
         if type(message) is tuple or type(message) is list:
             # recursive call for a list of commands
@@ -108,34 +115,33 @@ class LinuxGpibInstrument:
 
         self.write(message, encoding)
         return self.read(num, encoding)
-    
+
     def read_stb(self):
         "Read status byte"
         raise NotImplementedError()
-    
+
     def trigger(self):
         "Send trigger command"
-        
+
         self.gpib.trigger()
-    
+
     def clear(self):
         "Send clear command"
-        
+
         self.gpib.clear()
-    
+
     def remote(self):
         "Send remote command"
         raise NotImplementedError()
-    
+
     def local(self):
         "Send local command"
         raise NotImplementedError()
-    
+
     def lock(self):
         "Send lock command"
         raise NotImplementedError()
-    
+
     def unlock(self):
         "Send unlock command"
         raise NotImplementedError()
-

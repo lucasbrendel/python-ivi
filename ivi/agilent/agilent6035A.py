@@ -26,25 +26,22 @@ THE SOFTWARE.
 
 from .agilent603xA import *
 
+
 class agilent6035A(agilent603xA):
     "Agilent 6035A IVI DC power supply driver"
-    
+
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', '6035A')
-        
+        self.__dict__.setdefault("_instrument_id", "6035A")
+
         super(agilent6035A, self).__init__(*args, **kwargs)
-        
+
         self._output_count = 1
-        
+
         self._output_spec = [
             {
-                'range': {
-                    'P500V': (511.875, 5.119)
-                },
-                'ovp_max': 535.0,
-                'voltage_max': 511.875,
-                'current_max': 5.119
+                "range": {"P500V": (511.875, 5.119)},
+                "ovp_max": 535.0,
+                "voltage_max": 511.875,
+                "current_max": 5.119,
             }
         ]
-    
-    

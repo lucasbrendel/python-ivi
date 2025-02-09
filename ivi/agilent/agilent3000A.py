@@ -32,40 +32,40 @@ import struct
 from .. import ivi
 from .. import fgen
 
-OutputMode = set(['function', 'arbitrary'])
+OutputMode = set(["function", "arbitrary"])
 StandardWaveformMapping = {
-        'sine': 'sin',
-        'square': 'squ',
-        #'triangle': 'tri',
-        'ramp_up': 'ramp',
-        #'ramp_down',
-        #'dc'
-        'pulse': 'puls',
-        'noise': 'nois',
-        'dc': 'dc',
-        'sinc': 'sinc',
-        'exprise': 'expr',
-        'expfall': 'expf',
-        'cardiac': 'card',
-        'gaussian': 'gaus'
-        }
+    "sine": "sin",
+    "square": "squ",
+    #'triangle': 'tri',
+    "ramp_up": "ramp",
+    #'ramp_down',
+    #'dc'
+    "pulse": "puls",
+    "noise": "nois",
+    "dc": "dc",
+    "sinc": "sinc",
+    "exprise": "expr",
+    "expfall": "expf",
+    "cardiac": "card",
+    "gaussian": "gaus",
+}
 
-class agilent3000A(agilent2000A, fgen.ArbWfm, fgen.ArbFrequency,
-                fgen.ArbChannelWfm):
+
+class agilent3000A(agilent2000A, fgen.ArbWfm, fgen.ArbFrequency, fgen.ArbChannelWfm):
     "Agilent InfiniiVision 3000A series IVI oscilloscope driver"
-    
+
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', '')
-        
+        self.__dict__.setdefault("_instrument_id", "")
+
         super(agilent3000A, self).__init__(*args, **kwargs)
-        
+
         self._analog_channel_name = list()
         self._analog_channel_count = 4
         self._digital_channel_name = list()
         self._digital_channel_count = 16
         self._channel_count = self._analog_channel_count + self._digital_channel_count
         self._bandwidth = 1e9
-        
+
         self._horizontal_divisions = 10
         self._vertical_divisions = 8
 
@@ -78,16 +78,32 @@ class agilent3000A(agilent2000A, fgen.ArbWfm, fgen.ArbFrequency,
         self._arbitrary_waveform_size_max = 8192
         self._arbitrary_waveform_size_min = 2
         self._arbitrary_waveform_quantum = 1
-        
-        self._identity_description = "Agilent InfiniiVision 3000A X-series IVI oscilloscope driver"
-        self._identity_supported_instrument_models = ['DSOX3012A','DSOX3014A','DSOX3024A',
-                'DSOX3032A','DSOX3034A','DSOX3052A','DSOX3054A','DSOX3104A','MSOX3012A','MSOX3014A',
-                'MSOX3024A','MSOX3032A','MSOX3034A','MSOX3052A','MSOX3054A','MSOX3104A']
+
+        self._identity_description = (
+            "Agilent InfiniiVision 3000A X-series IVI oscilloscope driver"
+        )
+        self._identity_supported_instrument_models = [
+            "DSOX3012A",
+            "DSOX3014A",
+            "DSOX3024A",
+            "DSOX3032A",
+            "DSOX3034A",
+            "DSOX3052A",
+            "DSOX3054A",
+            "DSOX3104A",
+            "MSOX3012A",
+            "MSOX3014A",
+            "MSOX3024A",
+            "MSOX3032A",
+            "MSOX3034A",
+            "MSOX3052A",
+            "MSOX3054A",
+            "MSOX3104A",
+        ]
 
         self._init_outputs()
         self._init_channels()
-        
-    
+
     def _get_output_arbitrary_gain(self, index):
         index = ivi.get_index(self._output_name, index)
         return self._output_arbitrary_gain[index]
@@ -168,25 +184,26 @@ class agilent3000A(agilent2000A, fgen.ArbWfm, fgen.ArbFrequency,
             y = data[0]
         elif type(data) == np.ndarray and len(data.shape) == 2 and data.shape[1] == 1:
             # 2D array, width 1
-            y = data[:,0]
+            y = data[:, 0]
         else:
             x, y = ivi.get_sig(data)
 
         if len(y) % self._arbitrary_waveform_quantum != 0:
             raise ivi.ValueNotSupportedException()
 
-        raw_data = b''
+        raw_data = b""
 
         for f in y:
             # clip at -1 and 1
-            if f > 1.0: f = 1.0
-            if f < -1.0: f = -1.0
+            if f > 1.0:
+                f = 1.0
+            if f < -1.0:
+                f = -1.0
 
-            raw_data = raw_data + struct.pack('<f', f)
+            raw_data = raw_data + struct.pack("<f", f)
 
-        self._write_ieee_block(raw_data, ':%s:arbitrary:data ' % self._output_name[index])
+        self._write_ieee_block(
+            raw_data, ":%s:arbitrary:data " % self._output_name[index]
+        )
 
         return self._output_name[index]
-
-
-    

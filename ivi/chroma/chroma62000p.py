@@ -28,11 +28,12 @@ from .chromaBaseDCPwr import *
 
 OCPLevels = set(["low", "high"])
 
+
 class chroma62000p(chromaBaseDCPwr):
     "Chroma ATE 62000P series IVI DC power supply driver"
 
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', '')
+        self.__dict__.setdefault("_instrument_id", "")
 
         super(chroma62000p, self).__init__(*args, **kwargs)
 
@@ -40,13 +41,11 @@ class chroma62000p(chromaBaseDCPwr):
 
         self._output_spec = [
             {
-                'range': {
-                    'P600V': (600.0, 120.0)
-                },
-                'ovp_max': 660.0,
-                'ocp_max': 132.0,
-                'voltage_max': 600.0,
-                'current_max': 120.0
+                "range": {"P600V": (600.0, 120.0)},
+                "ovp_max": 660.0,
+                "ocp_max": 132.0,
+                "voltage_max": 600.0,
+                "current_max": 120.0,
             }
         ]
 
@@ -61,15 +60,25 @@ class chroma62000p(chromaBaseDCPwr):
         self._identity_instrument_firmware_revision = ""
         self._identity_specification_major_version = 3
         self._identity_specification_minor_version = 0
-        self._identity_supported_instrument_models = ['62006P-100-25', '62012P-80-60', '62012P-100-50', '62012P-600-8',
-                                                      '62006P-30-80', '62006P-300-8', '62012P-40-120', '62024P-40-120',
-                                                      '62024P-80-60', '62024P-100-50', '62024P-600-8', '62050P-100-100']
+        self._identity_supported_instrument_models = [
+            "62006P-100-25",
+            "62012P-80-60",
+            "62012P-100-50",
+            "62012P-600-8",
+            "62006P-30-80",
+            "62006P-300-8",
+            "62012P-40-120",
+            "62024P-40-120",
+            "62024P-80-60",
+            "62024P-100-50",
+            "62024P-600-8",
+            "62050P-100-100",
+        ]
 
-        self._add_property('outputs.slew_rate',
-                         self._get_output_slew_rate,
-                         self._set_output_slew_rate)
+        self._add_property(
+            "outputs.slew_rate", self._get_output_slew_rate, self._set_output_slew_rate
+        )
         self._init_outputs()
-
 
     # Tested on Chroma 62012P-80-60; working
     def _get_output_current_limit(self, index):
@@ -77,7 +86,9 @@ class chroma62000p(chromaBaseDCPwr):
         This function fetches the output current limit setting of the instrument.
         """
         index = ivi.get_index(self._output_name, index)
-        if not self._driver_operation_simulate and not self._get_cache_valid(index=index):
+        if not self._driver_operation_simulate and not self._get_cache_valid(
+            index=index
+        ):
             self._output_current_limit[index] = float(self._ask("SOUR:CURR?"))
             self._set_cache_valid(index=index)
         return self._output_current_limit[index]
@@ -89,7 +100,7 @@ class chroma62000p(chromaBaseDCPwr):
         """
         index = ivi.get_index(self._output_name, index)
         value = float(value)
-        if value < 0 or value > self._output_spec[index]['current_max']:
+        if value < 0 or value > self._output_spec[index]["current_max"]:
             raise ivi.OutOfRangeException()
         if not self._driver_operation_simulate:
             self._write("SOUR:CURR %.2f" % float(value))
@@ -104,7 +115,9 @@ class chroma62000p(chromaBaseDCPwr):
         * 1, True = ON
         """
         index = ivi.get_index(self._output_name, index)
-        if not self._driver_operation_simulate and not self._get_cache_valid(index=index):
+        if not self._driver_operation_simulate and not self._get_cache_valid(
+            index=index
+        ):
             result = self._ask("CONF:OUTP?")
             if result == "ON":
                 self._output_enabled[index] = True
@@ -139,7 +152,9 @@ class chroma62000p(chromaBaseDCPwr):
         This function fetches the output voltage setting of the instrument.
         """
         index = ivi.get_index(self._output_name, index)
-        if not self._driver_operation_simulate and not self._get_cache_valid(index=index):
+        if not self._driver_operation_simulate and not self._get_cache_valid(
+            index=index
+        ):
             self._output_voltage_level[index] = float(self._ask("SOUR:VOLT?"))
             self._set_cache_valid(index=index)
         return self._output_voltage_level[index]
@@ -164,7 +179,9 @@ class chroma62000p(chromaBaseDCPwr):
         This function fetches the OVP limit.
         """
         index = ivi.get_index(self._output_name, index)
-        if not self._driver_operation_simulate and not self._get_cache_valid(index=index):
+        if not self._driver_operation_simulate and not self._get_cache_valid(
+            index=index
+        ):
             self._output_ovp_limit[index] = float(self._ask("SOUR:VOLT:PROT:HIGH?"))
             self._set_cache_valid(index=index)
         return self._output_ovp_limit[index]
@@ -176,7 +193,7 @@ class chroma62000p(chromaBaseDCPwr):
         """
         index = ivi.get_index(self._output_name, index)
         value = float(value)
-        if value < 0 or value > self._output_spec[index]['ovp_max']:
+        if value < 0 or value > self._output_spec[index]["ovp_max"]:
             raise ivi.OutOfRangeException()
         if not self._driver_operation_simulate:
             self._write("SOUR:VOLT:PROT:HIGH %.1f" % value)
@@ -184,7 +201,7 @@ class chroma62000p(chromaBaseDCPwr):
         self._set_cache_valid(index=index)
 
     ##TODO: figure out how to handle OCP high and low levels
-    #def _get_output_ocp_limit(self, index):
+    # def _get_output_ocp_limit(self, index):
     #    """
     #    This function fetches the OCP limit.
     #    """
@@ -193,9 +210,9 @@ class chroma62000p(chromaBaseDCPwr):
     #        self._output_ocp_limit[index] = float(self._ask("SOUR:CURR:PROT:HIGH?"))
     #        self._set_cache_valid(index=index)
     #    return self._output_ocp_limit[index]
-#
+    #
     ##TODO: figure out how to handle OCP high and low levels
-    #def _set_output_ocp_limit(self, index, value):
+    # def _set_output_ocp_limit(self, index, value):
     #    """
     #    This function sets the high level OCP limit.
     #    """
@@ -214,12 +231,12 @@ class chroma62000p(chromaBaseDCPwr):
         This function measures the voltage or current of the output.
         """
         index = ivi.get_index(self._output_name, index)
-        if meas_type not in ['voltage', 'current']:
+        if meas_type not in ["voltage", "current"]:
             raise ivi.ValueNotSupportedException()
-        if meas_type == 'voltage':
+        if meas_type == "voltage":
             if not self._driver_operation_simulate:
                 return float(self._ask("FETC:VOLT?"))
-        elif meas_type == 'current':
+        elif meas_type == "current":
             if not self._driver_operation_simulate:
                 return float(self._ask("FETC:CURR?"))
         return 0
@@ -231,7 +248,9 @@ class chroma62000p(chromaBaseDCPwr):
         Values returned are in V/ms
         """
         index = ivi.get_index(self._output_name, index)
-        if not self._driver_operation_simulate and not self._get_cache_valid(index=index):
+        if not self._driver_operation_simulate and not self._get_cache_valid(
+            index=index
+        ):
             self._output_slew_rate[index] = float(self._ask("SOUR:VOLT:SLEW?"))
             self._set_cache_valid(index=index)
         return self._output_slew_rate[index]

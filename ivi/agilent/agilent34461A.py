@@ -28,31 +28,33 @@ from .agilent34401A import *
 from .. import ivi
 from .. import extra
 
+
 class agilent34461A(agilent34401A, extra.common.Title):
     "Agilent 34461A IVI DMM driver"
-    
+
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', '34401A')
-        
+        self.__dict__.setdefault("_instrument_id", "34401A")
+
         super(agilent34461A, self).__init__(*args, **kwargs)
 
-        self._add_method('system.display_string',
+        self._add_method(
+            "system.display_string",
             self._system_display_string,
             ivi.Doc("""
             Writes a string to the instrument display.  Send None
             or an empty string to return to normal operation.
-            """))
+            """),
+        )
 
     def _system_display_string(self, string=None):
         if self._driver_operation_simulate:
             return
         if string:
-            self._write("DISP:TEXT \"%s\"" % string)
+            self._write('DISP:TEXT "%s"' % string)
         else:
             self._write("DISP:TEXT:CLEAR")
 
     def _set_display_title(self, string):
         super(agilent34461A, self)._set_display_title(string)
         if not self._driver_operation_simulate:
-            self._write("SYST:LABEL \"%s\"" % string)
-
+            self._write('SYST:LABEL "%s"' % string)

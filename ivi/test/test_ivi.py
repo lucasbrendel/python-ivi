@@ -28,19 +28,25 @@ import unittest
 
 import ivi
 
-class TestIndex(unittest.TestCase):
 
+class TestIndex(unittest.TestCase):
     def setUp(self):
-        self.index_list = ['item1', 'item2', 'item3']
+        self.index_list = ["item1", "item2", "item3"]
         self.index_dict = ivi.get_index_dict(self.index_list)
 
     def test_get_index_with_list(self):
         for i in range(len(self.index_list)):
             self.assertEqual(ivi.get_index(self.index_list, i), i)
             self.assertEqual(ivi.get_index(self.index_list, self.index_list[i]), i)
-        self.assertRaises(ivi.SelectorRangeException, ivi.get_index, self.index_list, -1);
-        self.assertRaises(ivi.SelectorRangeException, ivi.get_index, self.index_list, 100);
-        self.assertRaises(ivi.SelectorNameException, ivi.get_index, self.index_list, 'bad_item');
+        self.assertRaises(
+            ivi.SelectorRangeException, ivi.get_index, self.index_list, -1
+        )
+        self.assertRaises(
+            ivi.SelectorRangeException, ivi.get_index, self.index_list, 100
+        )
+        self.assertRaises(
+            ivi.SelectorNameException, ivi.get_index, self.index_list, "bad_item"
+        )
 
     def test_get_index_dict(self):
         for i in range(len(self.index_list)):
@@ -53,9 +59,16 @@ class TestIndex(unittest.TestCase):
         for i in range(len(self.index_list)):
             self.assertEqual(ivi.get_index(self.index_dict, i), i)
             self.assertEqual(ivi.get_index(self.index_dict, self.index_list[i]), i)
-        self.assertRaises(ivi.SelectorRangeException, ivi.get_index, self.index_dict, -1);
-        self.assertRaises(ivi.SelectorRangeException, ivi.get_index, self.index_dict, 100);
-        self.assertRaises(ivi.SelectorNameException, ivi.get_index, self.index_dict, 'bad_item');
+        self.assertRaises(
+            ivi.SelectorRangeException, ivi.get_index, self.index_dict, -1
+        )
+        self.assertRaises(
+            ivi.SelectorRangeException, ivi.get_index, self.index_dict, 100
+        )
+        self.assertRaises(
+            ivi.SelectorNameException, ivi.get_index, self.index_dict, "bad_item"
+        )
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

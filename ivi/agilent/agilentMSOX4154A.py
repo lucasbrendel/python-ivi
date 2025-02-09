@@ -26,19 +26,18 @@ THE SOFTWARE.
 
 from .agilent4000A import *
 
+
 class agilentMSOX4154A(agilent4000A):
     "Agilent InfiniiVision MSOX4154A IVI oscilloscope driver"
-    
+
     def __init__(self, *args, **kwargs):
-        self.__dict__.setdefault('_instrument_id', 'MSO-X 4154A')
-        
+        self.__dict__.setdefault("_instrument_id", "MSO-X 4154A")
+
         super(agilentMSOX4154A, self).__init__(*args, **kwargs)
-        
+
         self._analog_channel_count = 4
         self._digital_channel_count = 16
         self._channel_count = self._analog_channel_count + self._digital_channel_count
         self._bandwidth = 1.5e9
-        
+
         self._init_channels()
-    
-    
