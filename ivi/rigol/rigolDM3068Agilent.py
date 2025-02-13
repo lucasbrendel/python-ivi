@@ -25,7 +25,6 @@ THE SOFTWARE.
 
 """
 
-
 import ivi
 import ivi.dmm
 import ivi.scpi
