@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 import time
 
-from .agilent85644A import *
+from agilent85644A import *
 
 OutputCoupling = set(["ac", "dc"])
 

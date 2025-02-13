@@ -24,9 +24,9 @@ THE SOFTWARE.
 
 """
 
-from .agilent34401A import *
-from .. import ivi
-from .. import extra
+from agilent34401A import *
+import ivi
+import ivi.extra
 
 
 class agilent34461A(agilent34401A, extra.common.Title):

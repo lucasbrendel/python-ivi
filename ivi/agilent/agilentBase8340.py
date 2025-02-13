@@ -24,9 +24,9 @@ THE SOFTWARE.
 
 """
 
-from .. import ivi
-from .. import rfsiggen
-from .. import extra
+import ivi
+import ivi.rfsiggen
+import ivi.extra
 
 
 class agilentBase8340(

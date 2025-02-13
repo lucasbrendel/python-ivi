@@ -26,12 +26,12 @@ THE SOFTWARE.
 
 # Oscilloscopes
 # WaveRunner Xi-A / MXi-A Oscilloscopes
-from .lecroyWR204MXIA import lecroyWR204MXIA
-from .lecroyWR204XIA import lecroyWR204XIA
-from .lecroyWR104MXIA import lecroyWR104MXIA
-from .lecroyWR104XIA import lecroyWR104XIA
-from .lecroyWR64MXIA import lecroyWR64MXIA
-from .lecroyWR64XIA import lecroyWR64XIA
-from .lecroyWR62XIA import lecroyWR62XIA
-from .lecroyWR44MXIA import lecroyWR44MXIA
-from .lecroyWR44XIA import lecroyWR44XIA
+from lecroyWR204MXIA import lecroyWR204MXIA
+from lecroyWR204XIA import lecroyWR204XIA
+from lecroyWR104MXIA import lecroyWR104MXIA
+from lecroyWR104XIA import lecroyWR104XIA
+from lecroyWR64MXIA import lecroyWR64MXIA
+from lecroyWR64XIA import lecroyWR64XIA
+from lecroyWR62XIA import lecroyWR62XIA
+from lecroyWR44MXIA import lecroyWR44MXIA
+from lecroyWR44XIA import lecroyWR44XIA

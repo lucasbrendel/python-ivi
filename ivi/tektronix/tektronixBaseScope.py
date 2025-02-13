@@ -28,10 +28,10 @@ import array
 import sys
 import time
 
-from .. import ivi
-from .. import scope
-from .. import scpi
-from .. import extra
+import ivi
+import ivi.scope
+import ivi.scpi
+import ivi.extra
 
 AcquisitionTypeMapping = {
     "normal": "sample",

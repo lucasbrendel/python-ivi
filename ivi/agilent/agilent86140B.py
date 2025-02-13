@@ -24,9 +24,9 @@ THE SOFTWARE.
 
 """
 
-from .. import ivi
-from .. import extra
-from .. import scpi
+import ivi
+import ivi.extra
+import ivi.scpi
 import time
 
 AmplitudeUnitsMapping = {"dBm": "dbm", "watt": "w"}
@@ -161,9 +161,9 @@ class agilent86140B(ivi.Driver, extra.common.Screenshot, scpi.common.Memory):
                         Specifies an offset value, in meters, that is added to the wavelength
                         readout. This changes the driver's Wavelength Start and Wavelength Stop
                         attributes.
-                        
+
                         The equations relating the affected values are:
-                        
+
                           Wavelength Start = Actual Start Wavelength + Wavelength Offset
                           Wavelength Stop = Actual Stop Wavelength + Wavelength Offset
                           Marker Position = Actual Marker Wavelength + Wavelength Offset
@@ -335,10 +335,10 @@ class agilent86140B(ivi.Driver, extra.common.Screenshot, scpi.common.Memory):
                        and the wavelength span. If the span corresponds to zero meters, then the
                        spectrum analyzer operates in time-domain mode. Otherwise, the spectrum
                        analyzer operates in wavelength-domain mode.
-                       
+
                        This function modifies the Wavelength Start and Wavelength Stop attributes as
                        follows:
-                       
+
                          Wavelength Start = CenterWavelength - Span / 2
                          Wavelength Stop = CenterWavelength + Span / 2
                        """,
@@ -379,17 +379,17 @@ class agilent86140B(ivi.Driver, extra.common.Screenshot, scpi.common.Memory):
                        is from a previously initiated acquisition. The user calls the Initiate
                        function to start an acquisition. The user calls the Acquisition Status
                        function to determine when the acquisition is complete.
-                       
+
                        The user may call the Read Y Trace function instead of the Initiate
                        function. This function starts an acquisition, waits for the acquisition
                        to complete, and returns the trace in one function call.
-                       
+
                        The Amplitude array returns data that represents the amplitude of the
                        signals obtained by sweeping from the start wavelength to the stop wavelength
                        (in wavelength domain, in time domain the amplitude array is ordered from
                        beginning of sweep to end). The Amplitude Units attribute determines the
                        units of the points in the Amplitude array.
-                       
+
                        This function does not check the instrument status. The user calls the
                        Error Query function at the conclusion of the sequence to check the
                        instrument status.
@@ -401,7 +401,7 @@ class agilent86140B(ivi.Driver, extra.common.Screenshot, scpi.common.Memory):
             """
                        This function initiates an acquisition. After calling this function, the
                        spectrum analyzer leaves the idle state.
-                       
+
                        This function does not check the instrument status. The user calls the
                        Acquisition Status function to determine when the acquisition is complete.
                        """,
@@ -418,7 +418,7 @@ class agilent86140B(ivi.Driver, extra.common.Screenshot, scpi.common.Memory):
                        domain, in time domain the amplitude array is ordered from beginning of
                        sweep to end). The Amplitude Units attribute determines the units of the
                        points in the amplitude array. This function resets the sweep count.
-                       
+
                        If the spectrum analyzer did not complete the acquisition within the time
                        period the user specified with the MaxTime parameter, the function returns
                        the Max Time Exceeded error.

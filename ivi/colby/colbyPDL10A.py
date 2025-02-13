@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 """
 
-from .. import ivi
-from .. import scpi
+import ivi
+import ivi.scpi
 
 Mode = set(["312.5ps", "625ps"])
 
@@ -62,7 +62,7 @@ class colbyPDL10A(
             self._set_delay,
             None,
             ivi.Doc("""
-                        Specifies the delay of the delay line.  The units are seconds.  
+                        Specifies the delay of the delay line.  The units are seconds.
                         """),
         )
         self._add_property(
@@ -73,7 +73,7 @@ class colbyPDL10A(
             ivi.Doc("""
                         Specifies the mode of the delay line.  If the segments are cascaded, then
                         the mode should be set to '625ps'.  If the segments are not cascaded, then
-                        the mode should be set to '312.5ps'.  
+                        the mode should be set to '312.5ps'.
                         """),
         )
 

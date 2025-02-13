@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 """
 
-from .agilent7000B import *
+from agilent7000B import *
 
 
 class agilentDSO7104B(agilent7000B):

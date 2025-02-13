@@ -27,10 +27,10 @@ THE SOFTWARE.
 import time
 import struct
 
-from .. import ivi
-from .. import scope
-from .. import scpi
-from .. import extra
+import ivi
+import ivi.scope
+import ivi.scpi
+import ivi.extra
 
 AcquisitionTypeMapping = {
     "normal": "norm",
@@ -367,7 +367,7 @@ class lecroyBaseScope(
                         to the center of the screen, or to one division from the right side of the
                         screen. Time reference is the point on the display where the trigger point
                         is referenced.
-                        
+
                         Values:
                         * 'left'
                         * 'center'
@@ -506,7 +506,7 @@ class lecroyBaseScope(
             self._system_display_string,
             ivi.Doc("""
                         Writes a string to the advisory line on the instrument display.  Send None
-                        or an empty string to clear the advisory line.  
+                        or an empty string to clear the advisory line.
                         """),
         )
         self._add_method(

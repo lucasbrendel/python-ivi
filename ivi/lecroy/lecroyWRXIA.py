@@ -28,7 +28,7 @@ THE SOFTWARE.
 # http://cdn.teledynelecroy.com/files/manuals/wm-rcm-e_rev_d.pdf
 # http://cdn.teledynelecroy.com/files/manuals/automation_command_ref_manual_wr.pdf
 
-from .lecroyBaseScope import *
+from lecroyBaseScope import *
 
 
 def clean_vbs(s):

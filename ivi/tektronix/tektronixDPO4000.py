@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 """
 
-from .tektronixBaseScope import *
+from tektronixBaseScope import *
 
 
 class tektronixDPO4000(tektronixBaseScope):

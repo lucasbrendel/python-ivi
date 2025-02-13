@@ -26,8 +26,8 @@ THE SOFTWARE.
 
 import time
 
-from .. import ivi
-from .. import scpi
+import ivi
+import ivi.scpi
 
 
 class diconGP700(
@@ -94,7 +94,7 @@ class diconGP700(
             self._set_attenuator_level,
             None,
             ivi.Doc("""
-                        Specifies the level of the attenuator module.  The units are dB.  
+                        Specifies the level of the attenuator module.  The units are dB.
                         """),
         )
         self._add_property(
@@ -103,7 +103,7 @@ class diconGP700(
             None,
             None,
             ivi.Doc("""
-                        Returns the maximum attenuation level supported.  The units are dB. 
+                        Returns the maximum attenuation level supported.  The units are dB.
                         """),
         )
         self._add_property(

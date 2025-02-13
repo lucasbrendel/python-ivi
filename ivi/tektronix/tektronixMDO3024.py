@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 """
 
-from .tektronixMDO3000 import *
+from tektronixMDO3000 import *
 
 
 class tektronixMDO3024(tektronixMDO3000):

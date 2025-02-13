@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 """
 
-from .agilentBaseESGD import *
+from agilentBaseESGD import *
 
 
 class agilentE4434B(agilentBaseESGD):

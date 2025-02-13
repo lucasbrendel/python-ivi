@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 """
 
-from .. import ivi
-from .. import pwrmeter
+import ivi
+import ivi.pwrmeter
 
 import time
 

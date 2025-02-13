@@ -24,10 +24,10 @@ THE SOFTWARE.
 
 """
 
-from .agilentBaseInfiniiVision import *
+from agilentBaseInfiniiVision import *
 
-from .. import ivi
-from .. import fgen
+import ivi
+import ivi.fgen
 
 ScreenshotImageFormatMapping = {
     "bmp": "bmp",

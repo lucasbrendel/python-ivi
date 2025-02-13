@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 """
 
-from .agilentBaseInfiniiVision import *
+from agilentBaseInfiniiVision import *
 
 
 class agilent6000(agilentBaseInfiniiVision):

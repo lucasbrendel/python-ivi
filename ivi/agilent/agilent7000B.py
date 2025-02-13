@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 """
 
-from .agilent7000 import *
+from agilent7000 import *
 
 
 class agilent7000B(agilent7000):

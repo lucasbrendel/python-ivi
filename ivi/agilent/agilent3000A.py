@@ -24,13 +24,13 @@ THE SOFTWARE.
 
 """
 
-from .agilent2000A import *
+from agilent2000A import *
 
 import numpy as np
 import struct
 
-from .. import ivi
-from .. import fgen
+import ivi
+import ivi.fgen
 
 OutputMode = set(["function", "arbitrary"])
 StandardWaveformMapping = {

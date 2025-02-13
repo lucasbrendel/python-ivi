@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 """
 
-from .tektronixPS2520G import *
+from tektronixPS2520G import *
 
 
 class tektronixPS2521G(tektronixPS2520G):

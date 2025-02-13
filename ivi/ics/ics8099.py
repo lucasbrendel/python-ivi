@@ -25,8 +25,8 @@ THE SOFTWARE.
 
 """
 
-from .. import ivi
-from .. import scpi
+import ivi
+import ivi.scpi
 
 
 class ics8099(

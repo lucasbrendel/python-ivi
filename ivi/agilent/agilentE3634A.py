@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 """
 
-from .agilentE3600A import *
-from .. import scpi
+from agilentE3600A import *
+import ivi.scpi
 
 
 class agilentE3634A(agilentE3600A, scpi.dcpwr.OCP):

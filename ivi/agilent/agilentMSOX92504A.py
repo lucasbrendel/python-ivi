@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 """
 
-from .agilent90000 import *
+from agilent90000 import *
 
 
 class agilentMSOX92504A(agilent90000):

@@ -25,5 +25,5 @@ THE SOFTWARE.
 """
 
 # Enviromental Chambers
-from .testequityf4 import testequityf4
-from .testequity140 import testequity140
+from testequityf4 import testequityf4
+from testequity140 import testequity140

@@ -28,8 +28,8 @@ import time
 import struct
 from numpy import *
 
-from .. import ivi
-from .. import fgen
+import ivi
+import ivi.fgen
 
 StandardWaveformMapping = {
     "sine": "sin",

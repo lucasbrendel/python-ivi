@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 """
 
-from .tektronixMDO4000 import *
-from .tektronixMDOAFG import *
+from tektronixMDO4000 import *
+from tektronixMDOAFG import *
 
 
 class tektronixMDO3000(tektronixMDO4000, tektronixMDOAFG):

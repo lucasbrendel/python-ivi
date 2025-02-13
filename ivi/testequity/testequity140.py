@@ -25,9 +25,8 @@ THE SOFTWARE.
 
 """
 
-from .. import ivi
-from .. import ics
-from .testequityf4 import *
+from ivi import ics
+from ivi.testequity import testequityf4
 
 
 class testequity140(testequityf4, ics.ics8099):

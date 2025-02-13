@@ -26,8 +26,8 @@ THE SOFTWARE.
 
 import time
 
-from .. import ivi
-from .. import scpi
+import ivi
+import ivi.scpi
 
 Source = set(["internal", "external"])
 ALCSourceMapping = {"internal": "int", "external": "diode"}

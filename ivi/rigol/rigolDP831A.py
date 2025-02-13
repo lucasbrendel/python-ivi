@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 """
 
-from .rigolDP800 import *
+from rigolDP800 import *
 
 
 class rigolDP831A(rigolDP800):

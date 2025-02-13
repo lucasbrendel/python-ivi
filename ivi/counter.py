@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 """
 
-from . import ivi
+import ivi
 
 # Parameter Values
 Coupling = set(["ac", "dc"])

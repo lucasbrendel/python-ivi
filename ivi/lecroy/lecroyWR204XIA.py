@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 """
 
-from .lecroyWRXIA import *
+from lecroyWRXIA import *
 
 
 class lecroyWR204XIA(lecroyWRXIA):

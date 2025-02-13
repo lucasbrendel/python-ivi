@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 """
 
-from .chroma62000p import *
+from chroma62000p import *
 
 
 class chroma62006p3008(chroma62000p):

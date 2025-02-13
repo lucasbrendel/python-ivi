@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 """
 
-from . import ivi
+import ivi
 
 # Parameter Values
 ApertureTimeUnits = set(["seconds", "powerline_cycles"])

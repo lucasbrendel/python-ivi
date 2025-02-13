@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 """
 
-from .chromaBaseDCPwr import *
+from chromaBaseDCPwr import *
 
 OCPLevels = set(["low", "high"])
 

@@ -26,8 +26,8 @@ THE SOFTWARE.
 
 import math
 
-from .. import ivi
-from .. import dmm
+import ivi
+import ivi.dmm
 from . import common
 
 MeasurementFunctionMapping = {

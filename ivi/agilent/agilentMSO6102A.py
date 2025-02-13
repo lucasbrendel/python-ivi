@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 """
 
-from .agilent6000 import *
+from agilent6000 import *
 
 
 class agilentMSO6102A(agilent6000):

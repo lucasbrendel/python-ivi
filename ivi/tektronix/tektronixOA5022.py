@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 """
 
-from .tektronixOA5000 import *
+from tektronixOA5000 import *
 
 
 class tektronixOA5022(tektronixOA5000):

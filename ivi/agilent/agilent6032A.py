@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 """
 
-from .agilent603xA import *
+from agilent603xA import *
 
 
 class agilent6032A(agilent603xA):

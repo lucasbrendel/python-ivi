@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 """
 
-from .rigolBaseDCPwr import *
+from rigolBaseDCPwr import *
 
 
 class rigolDP800(rigolBaseDCPwr):

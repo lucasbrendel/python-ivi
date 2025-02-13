@@ -27,7 +27,7 @@ THE SOFTWARE.
 import io
 import unittest
 
-from .. import colbyPDL10A
+import ivi.colbyPDL10A
 
 
 class VirtualPDL10A(object):

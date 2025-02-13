@@ -24,12 +24,8 @@ THE SOFTWARE.
 
 """
 
-import time
-import struct
 
-from .. import ivi
-from .. import dmm
-from .. import scpi
+import ivi.scpi
 
 MeasurementFunctionMapping = {
     "dc_volts": "volt",

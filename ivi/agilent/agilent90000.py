@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 """
 
-from .agilentBaseInfiniium import *
+from agilentBaseInfiniium import *
 
 AcquisitionModeMapping = {
     "etim": ("normal", "equivalent_time"),
@@ -157,7 +157,7 @@ class agilent90000(agilentBaseInfiniium):
             None,
             ivi.Doc("""
                         Sets the differential and common mode display scale and offset to track
-                        the acquisition scale and offset.  
+                        the acquisition scale and offset.
                         """),
         )
         self._add_property(
@@ -167,7 +167,7 @@ class agilent90000(agilentBaseInfiniium):
             None,
             ivi.Doc("""
                         Sets the displayed offset of the selected channel.  Setting this parameter
-                        disables display_auto.  Units are volts.  
+                        disables display_auto.  Units are volts.
                         """),
         )
         self._add_property(
@@ -177,7 +177,7 @@ class agilent90000(agilentBaseInfiniium):
             None,
             ivi.Doc("""
                         Sets the full scale vertical range of the selected channel.  Setting this
-                        parameter disables display_auto.  Units are volts.  
+                        parameter disables display_auto.  Units are volts.
                         """),
         )
         self._add_property(
@@ -187,7 +187,7 @@ class agilent90000(agilentBaseInfiniium):
             None,
             ivi.Doc("""
                         Sets the displayed scale of the selected channel per division.  Setting
-                        this parameter disables display_auto.  Units are volts.  
+                        this parameter disables display_auto.  Units are volts.
                         """),
         )
 

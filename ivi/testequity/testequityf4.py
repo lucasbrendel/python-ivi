@@ -25,8 +25,7 @@ THE SOFTWARE.
 
 """
 
-from .. import ivi
-from .. import ics
+import ivi
 
 
 class testequityf4(ivi.IviContainer):

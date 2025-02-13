@@ -26,7 +26,6 @@ THE SOFTWARE.
 
 import io
 import sys
-from distutils.version import StrictVersion
 
 try:
     import visa

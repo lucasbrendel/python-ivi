@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 """
 
-from .. import ivi
-from .. import rfsiggen
+import ivi
+import ivi.rfsiggen
 
 Messages = {
     0: "No message",

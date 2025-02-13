@@ -25,13 +25,12 @@ THE SOFTWARE.
 """
 
 import math
-import struct
 import numpy as np
 
-from .. import ivi
-from .. import rfsiggen
+import ivi
+import ivi.rfsiggen
 
-from .agilentBaseESG import *
+from agilentBaseESG import *
 
 IQSource = set(
     ["digital_modulation_base", "cdma_base", "tdma_base", "arb_generator", "external"]

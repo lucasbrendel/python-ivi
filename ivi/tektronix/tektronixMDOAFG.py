@@ -25,10 +25,9 @@ THE SOFTWARE.
 """
 
 import numpy as np
-import struct
 
-from .. import ivi
-from .. import fgen
+import ivi
+import ivi.fgen
 
 OutputMode = set(["function", "arbitrary"])
 OperationMode = set(["continuous"])

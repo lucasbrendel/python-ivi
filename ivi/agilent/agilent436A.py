@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 """
 
-from .. import ivi
-from .. import pwrmeter
+import ivi
+from ivi import pwrmeter
 
 import time
 
@@ -217,7 +217,7 @@ class agilent436A(
 
     def _set_channel_units(self, index, value):
         index = ivi.get_index(self._channel_name, index)
-        if value not in Units:
+        if value not in pwrmeter.Units:
             raise ivi.ValueNotSupportedException()
         self._channel_units[index] = value
 

@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 """
 
-from .. import ivi
+import ivi
 
 
 class tektronixOA5000(ivi.Driver):

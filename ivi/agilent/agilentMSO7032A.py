@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 """
 
-from .agilent7000A import *
+from agilent7000A import *
 
 
 class agilentMSO7032A(agilent7000A):

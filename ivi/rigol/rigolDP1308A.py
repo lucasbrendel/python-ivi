@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 """
 
-from .rigolDP1000 import *
+from rigolDP1000 import *
 
 
 class rigolDP1308A(rigolDP1000):

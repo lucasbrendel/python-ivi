@@ -31,4 +31,4 @@ __all__ = [
     "dcpwr",
 ]
 
-from . import *
+import ivi

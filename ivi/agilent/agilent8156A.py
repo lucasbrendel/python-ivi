@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 """
 
-from .. import ivi
+import ivi
 
 
 class agilent8156A(ivi.Driver):
@@ -57,7 +57,7 @@ class agilent8156A(ivi.Driver):
             self._set_attenuation,
             None,
             ivi.Doc("""
-                        Specifies the attenuation of the optical path.  The units are dB. 
+                        Specifies the attenuation of the optical path.  The units are dB.
                         """),
         )
         self._add_property(

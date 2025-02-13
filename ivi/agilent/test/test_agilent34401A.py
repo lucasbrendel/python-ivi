@@ -27,7 +27,7 @@ THE SOFTWARE.
 import io
 import unittest
 
-from .. import agilent34401A
+import ivi.agilent34401A
 
 
 class Virtual34401A(object):

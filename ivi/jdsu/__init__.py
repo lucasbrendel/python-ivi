@@ -25,4 +25,4 @@ THE SOFTWARE.
 """
 
 # Optical Grating Filters
-from .jdsuTB9 import jdsuTB9
+from jdsuTB9 import jdsuTB9

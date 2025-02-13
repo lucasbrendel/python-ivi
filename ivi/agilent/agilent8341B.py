@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 """
 
-from .agilentBase8340 import *
+from agilentBase8340 import *
 
 
 class agilent8341B(agilentBase8340):

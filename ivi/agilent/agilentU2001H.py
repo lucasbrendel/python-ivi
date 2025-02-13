@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 """
 
-from .agilentU2000 import *
+from agilentU2000 import *
 
 
 class agilentU2001H(agilentU2000):

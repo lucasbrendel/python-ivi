@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 """
 
-from .agilentBase8590A import *
+from agilentBase8590A import *
 
 
 class agilent8592A(agilentBase8590A):

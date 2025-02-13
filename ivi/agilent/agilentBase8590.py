@@ -30,13 +30,12 @@ import struct
 import sys
 import time
 
+import hprtl
 import numpy as np
 
-from . import hprtl
-
-from .. import ivi
-from .. import specan
-from .. import extra
+import ivi
+from ivi import extra, specan
+from ivi.ivi import OutOfRangeException
 
 AmplitudeUnitsMapping = {
     "dBm": "dbm",
@@ -137,7 +136,7 @@ class agilentBase8590(
             self._system_display_string,
             ivi.Doc("""
                         Writes a string to the advisory line on the instrument display.  Send None
-                        or an empty string to clear the advisory line.  
+                        or an empty string to clear the advisory line.
                         """),
         )
 

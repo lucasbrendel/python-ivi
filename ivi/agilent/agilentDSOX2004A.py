@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 """
 
-from .agilent2000A import *
+from agilent2000A import *
 
 
 class agilentDSOX2004A(agilent2000A):

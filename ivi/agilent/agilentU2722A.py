@@ -24,10 +24,10 @@ THE SOFTWARE.
 
 """
 
-from .. import ivi
-from .. import dcpwr
-from .. import extra
-from .. import scpi
+import ivi
+import ivi.dcpwr
+import ivi.extra
+import ivi.scpi
 
 CurrentLimitBehavior = set(["regulate"])
 TrackingType = set(["floating"])

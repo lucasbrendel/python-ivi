@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 """
 
-from .tektronixDPO4000 import *
+from tektronixDPO4000 import *
 
 
 class tektronixMSO4000(tektronixDPO4000):

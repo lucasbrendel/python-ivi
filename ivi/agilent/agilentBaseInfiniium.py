@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 """
 
-from .agilentBaseScope import *
+from agilentBaseScope import *
 
 AcquisitionModeMapping = {
     "etim": ("normal", "equivalent_time"),
@@ -125,7 +125,7 @@ class agilentBaseInfiniium(agilentBaseScope):
             None,
             ivi.Doc("""
                         Controls color grade persistance.
-                        
+
                         When in the color grade persistance mode, all waveforms are mapped into a
                         database and shown with different colors representing varying number of
                         hits in a pixel.  Vector display mode is disabled when color grade is
@@ -139,7 +139,7 @@ class agilentBaseInfiniium(agilentBaseScope):
                         Returns the range of hits represented by each color.  Fourteen values are
                         returned, representing the minimum and maximum count for each of seven
                         colors.  The values are returned in the following order:
-                        
+
                         * White minimum value
                         * White maximum value
                         * Yellow minimum value

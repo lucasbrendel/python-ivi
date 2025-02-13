@@ -24,11 +24,10 @@ THE SOFTWARE.
 
 """
 
-from .. import ivi
-from .. import pwrmeter
-from .. import scpi
+import ivi
+import ivi.pwrmeter
+import ivi.scpi
 
-import time
 
 Units = set(["dBm", "Watts"])
 

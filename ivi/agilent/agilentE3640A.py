@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 """
 
-from .agilentE3600A import *
+from agilentE3600A import *
 
 
 class agilentE3640A(agilentE3600A):

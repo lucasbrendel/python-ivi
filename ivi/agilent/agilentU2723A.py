@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 """
 
-from .agilentU2722A import *
+from agilentU2722A import *
 
 
 class agilentU2723A(agilentU2722A):

@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 """
 
-from .tektronixAWG2000 import *
+from tektronixAWG2000 import *
 
 
 class tektronixAWG2020(tektronixAWG2000):

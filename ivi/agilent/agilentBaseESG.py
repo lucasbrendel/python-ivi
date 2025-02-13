@@ -24,10 +24,10 @@ THE SOFTWARE.
 
 """
 
-from .. import ivi
-from .. import rfsiggen
-from .. import extra
-from .. import scpi
+import ivi
+import ivi.rfsiggen
+import ivi.extra
+import ivi.scpi
 
 LFGeneratorWaveformMapping = {
     "sine": "sine",

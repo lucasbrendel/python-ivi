@@ -25,7 +25,7 @@ THE SOFTWARE.
 """
 
 # import libraries
-from .version import __version__
+from version import __version__
 import inspect
 import numpy as np
 import re
@@ -47,19 +47,19 @@ except ImportError:
 # linuxgpib wrapper for linux-gpib Gpib class
 # for GPIB interfaces
 try:
-    from .interface import linuxgpib
+    from interface import linuxgpib
 except ImportError:
     pass
 
 # pySerial wrapper for serial instrument support
 try:
-    from .interface import pyserial
+    from interface import pyserial
 except ImportError:
     pass
 
 # pyvisa wrapper for PyVISA library support
 try:
-    from .interface import pyvisa
+    from interface import pyvisa
 except ImportError:
     pass
 

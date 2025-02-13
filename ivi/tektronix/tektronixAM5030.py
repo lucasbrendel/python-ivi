@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 """
 
-from .. import ivi
+import ivi
 
 Coupling = set(["ac", "dc", "ref"])
 DegaussType = set(["normal", "force_gain", "gain_only"])

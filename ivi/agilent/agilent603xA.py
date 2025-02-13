@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 """
 
-from .. import ivi
-from .. import dcpwr
+import ivi
+import ivi.dcpwr
 
 TrackingType = set(["floating"])
 TriggerSourceMapping = {"immediate": "imm", "bus": "bus"}

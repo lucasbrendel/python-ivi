@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 """
 
-from .. import ivi
+import ivi
 
 
 class OCP(ivi.IviContainer):
@@ -69,11 +69,11 @@ class OCP(ivi.IviContainer):
             None,
             ivi.Doc("""
                         Specifies the current the power supply allows. The units are Amps.
-                        
+
                         If the OCP Enabled attribute is set to True, the power supply disables the
                         output when the output current is greater than or equal to the value of
                         this attribute.
-                        
+
                         If the OCP Enabled is set to False, this attribute does not affect the
                         behavior of the instrument.
                         """),

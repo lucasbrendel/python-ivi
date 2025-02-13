@@ -24,9 +24,9 @@ THE SOFTWARE.
 
 """
 
-from .. import ivi
-from .. import dcpwr
-from .. import extra
+import ivi
+import ivi.dcpwr
+import ivi.extra
 from . import common
 
 TrackingType = set(["floating"])

@@ -24,9 +24,8 @@ THE SOFTWARE.
 
 """
 
-from .. import ivi
-from .. import dcpwr
-from .. import scpi
+import ivi
+import ivi.scpi
 
 TrackingType = set(["parallel", "series"])
 

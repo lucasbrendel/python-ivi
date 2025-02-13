@@ -24,7 +24,7 @@ If everything is working, the instrument's model number will be displayed. Once 
 
 Start by copying in all of the bare function definitions from the driver file. Copy all of the get and _set function definitions from the ivi driver file for the Base class and all of the subclasses that you are implementing. You also need any methods whose only implementation is 'pass'. The ones that call other methods can generally be left out as the default implementation should be fine. You may also want to copy some of the instance variable initializations from the ``__init__`` method as well if you need different defaults. These should be added to the init method you created earlier for your instrument.
 
-Finally, you need to go write python code for all of the functions that the instrument supports. Take a look at some ``_get``/``_set`` pairs for some of the existing drivers to see the format. It's rather straightforward but quite tedious.  
+Finally, you need to go write python code for all of the functions that the instrument supports. Take a look at some ``_get``/``_set`` pairs for some of the existing drivers to see the format. It's rather straightforward but quite tedious.
 
 Driver Template
 ---------------
@@ -60,8 +60,8 @@ This is a sample template driver that incorporates all of the major components. 
 
     import struct
 
-    from .. import ivi
-    from .. import scope
+    import ivi
+    import ivi.scope
 
     AcquisitionTypeMapping = {
             'normal': 'norm',
@@ -76,7 +76,7 @@ This is a sample template driver that incorporates all of the major components. 
                     scope.ContinuousAcquisition, scope.AverageAcquisition,
                     scope.SampleMode, scope.AutoSetup):
         "Agilent InfiniiVision 7000 series IVI oscilloscope driver"
-        
+
         def __init__(self, *args, **kwargs):
             self._analog_channel_name = list()
             self._analog_channel_count = 4
@@ -85,9 +85,9 @@ This is a sample template driver that incorporates all of the major components. 
             self._channel_label = list()
             # other per-channel instrument-specific variables that are
             # referenced in _init_channels
-            
+
             super(agilent7000, self).__init__(*args, **kwargs)
-            
+
             self._instrument_id = 'AGILENT TECHNOLOGIES'
             self._analog_channel_name = list()
             self._analog_channel_count = 4
@@ -96,7 +96,7 @@ This is a sample template driver that incorporates all of the major components. 
             self._channel_count = 20
             self._bandwidth = 1e9
             # initialize other instrument-specific variables
-            
+
             self._identity_description = "Agilent InfiniiVision 7000 series IVI oscilloscope driver"
             self._identity_identifier = ""
             self._identity_revision = ""
@@ -111,7 +111,7 @@ This is a sample template driver that incorporates all of the major components. 
                     'MSO7034A','MSO7052A','MSO7054A','MSO7104A','DSO7012B','DSO7014B','DSO7032B',
                     'DSO7034B','DSO7052B','DSO7054B','DSO7104B','MSO7012B','MSO7014B','MSO7032B',
                     'MSO7034B','MSO7052B','MSO7054B','MSO7104B']
-            
+
             self.channels._add_property('label',
                             self._get_channel_label,
                             self._set_channel_label,
@@ -120,20 +120,20 @@ This is a sample template driver that incorporates all of the major components. 
                             Custom property documentation
                             """)
             # other instrument specific properties
-            
+
             self._init_channels()
-        
+
         def initialize(self, resource = None, id_query = False, reset = False, **keywargs):
             "Opens an I/O session to the instrument."
-            
+
             self._channel_count = self._analog_channel_count + self._digital_channel_count
-            
+
             super(agilent7000, self).initialize(resource, id_query, reset, **keywargs)
-            
+
             # interface clear
             if not self._driver_operation_simulate:
                 self._clear()
-            
+
             # check ID
             if id_query and not self._driver_operation_simulate:
                 id = self.identity.instrument_model
@@ -141,12 +141,12 @@ This is a sample template driver that incorporates all of the major components. 
                 id_short = id[:len(id_check)]
                 if id_short != id_check:
                     raise Exception("Instrument ID mismatch, expecting %s, got %s", id_check, id_short)
-            
+
             # reset
             if reset:
                 self.utility.reset()
-            
-        
+
+
         def _load_id_string(self):
             if self._driver_operation_simulate:
                 self._identity_instrument_manufacturer = "Not available while simulating"
@@ -160,28 +160,28 @@ This is a sample template driver that incorporates all of the major components. 
                 self._set_cache_valid(True, 'identity_instrument_manufacturer')
                 self._set_cache_valid(True, 'identity_instrument_model')
                 self._set_cache_valid(True, 'identity_instrument_firmware_revision')
-        
+
         def _get_identity_instrument_manufacturer(self):
             if self._get_cache_valid():
                 return self._identity_instrument_manufacturer
             self._load_id_string()
             return self._identity_instrument_manufacturer
-        
+
         def _get_identity_instrument_model(self):
             if self._get_cache_valid():
                 return self._identity_instrument_model
             self._load_id_string()
             return self._identity_instrument_model
-        
+
         def _get_identity_instrument_firmware_revision(self):
             if self._get_cache_valid():
                 return self._identity_instrument_firmware_revision
             self._load_id_string()
             return self._identity_instrument_firmware_revision
-        
+
         def _utility_disable(self):
             pass
-        
+
         def _utility_error_query(self):
             error_code = 0
             error_message = "No error"
@@ -190,18 +190,18 @@ This is a sample template driver that incorporates all of the major components. 
                 error_code = int(error_code)
                 error_message = error_message.strip(' "')
             return (error_code, error_message)
-        
+
         def _utility_lock_object(self):
             pass
-        
+
         def _utility_reset(self):
             if not self._driver_operation_simulate:
                 self._write("*RST")
                 self.driver_operation.invalidate_all_attributes()
-        
+
         def _utility_reset_with_defaults(self):
             self._utility_reset()
-        
+
         def _utility_self_test(self):
             code = 0
             message = "Self test passed"
@@ -210,24 +210,24 @@ This is a sample template driver that incorporates all of the major components. 
                 if code != 0:
                     message = "Self test failed"
             return (code, message)
-        
+
         def _utility_unlock_object(self):
             pass
-        
+
         def _init_channels(self):
             super(agilent7000, self)._init_channels()
-            
+
             self._channel_name = list()
             self._channel_label = list()
             # init per-channel instrument-specific variables
-            
+
             for i in range(self._channel_count):
                 self._channel_name.append("channel%d" % (i+1))
                 self._channel_label.append("%d" % (i+1))
                 # init per-channel instrument-specific variables
-            
+
             self.channels._set_list(self._channel_name)
-        
+
         def _get_acquisition_start_time(self):
             pos = 0
             if not self._driver_operation_simulate and not self._get_cache_valid():
@@ -235,7 +235,7 @@ This is a sample template driver that incorporates all of the major components. 
                 self._set_cache_valid()
             self._acquisition_start_time = pos - self._get_acquisition_time_per_record() * 5 / 10
             return self._acquisition_start_time
-        
+
         def _set_acquisition_start_time(self, value):
             value = float(value)
             value = value + self._get_acquisition_time_per_record() * 5 / 10
@@ -243,7 +243,7 @@ This is a sample template driver that incorporates all of the major components. 
                 self._write(":timebase:position %e" % value)
             self._acquisition_start_time = value
             self._set_cache_valid()
-        
+
         # more definitions
-    
+
 

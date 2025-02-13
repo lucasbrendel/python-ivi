@@ -26,12 +26,11 @@ THE SOFTWARE.
 
 import array
 import sys
-import time
 
-from .. import ivi
-from .. import scope
-from .. import scpi
-from .. import extra
+import ivi
+import ivi.scope
+import ivi.scpi
+import ivi.extra
 
 AcquisitionTypeMapping = {
     "normal": "norm",
@@ -310,7 +309,7 @@ class agilentBaseScope(
             ivi.Doc("""
                         Sets the index into the memory segments that have been acquired.
 
-                        The segmented memory acquisition mode is enabled with the 
+                        The segmented memory acquisition mode is enabled with the
                         cquisition.sample_mode property. The number of segments to acquire is set
                         using the acquisition.segmented.count property, and data is acquired using
                         the :DIGitize, :SINGle, or :RUN commands. The number of memory segments
@@ -427,7 +426,7 @@ class agilentBaseScope(
             None,
             ivi.Doc("""
                         Sets the current time base. There are four time base modes:
-                        
+
                         * 'main': normal timebase
                         * 'window': zoomed or delayed timebase
                         * 'xy': channels are plotted against each other, no timebase
@@ -444,7 +443,7 @@ class agilentBaseScope(
                         to the center of the screen, or to one division from the right side of the
                         screen. Time reference is the point on the display where the trigger point
                         is referenced.
-                        
+
                         Values:
                         * 'left'
                         * 'center'
@@ -550,7 +549,7 @@ class agilentBaseScope(
             self._system_display_string,
             ivi.Doc("""
                         Writes a string to the advisory line on the instrument display.  Send None
-                        or an empty string to clear the advisory line.  
+                        or an empty string to clear the advisory line.
                         """),
         )
 

@@ -56,5 +56,4 @@ __all__ = [
     "testequity",
 ]
 
-from .ivi import *
-from . import *
+from ivi import *

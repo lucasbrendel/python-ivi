@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 """
 
-from .agilentBaseScope import *
+from agilentBaseScope import *
 
 
 class agilentBaseInfiniiVision(agilentBaseScope):

@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 """
 
-from .. import ivi
+import ivi
 
 
 class jdsuTB9(ivi.Driver):
