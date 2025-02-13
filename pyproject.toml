@@ -10,5 +10,6 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "esbonio>=0.16.5",
     "ruff>=0.9.5",
 ]
